@@ -1,0 +1,13 @@
+﻿product.txt
+PartnerPartNumber,
+PartNumber,
+ManufacturerName,
+ManufacturerCode,
+CategoryID,
+CategoryName,
+Description,
+DescriptionLong,
+ProductCode,
+IsEol,
+ChangeDate,
+UNSPSC
