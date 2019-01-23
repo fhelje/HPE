@@ -83,12 +83,4 @@
         public int Height => int.TryParse(PixelHeight, out var height) ? height : 0;
         public int Width => int.TryParse(PixelWidth, out var width) ? width : 0;
     }
-
-    public enum SizeCategoryEnum {
-        Wrong,
-        Small,
-        Medium,
-        Large,
-        XLarge,
-    }
 }

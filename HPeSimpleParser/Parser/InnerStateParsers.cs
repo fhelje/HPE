@@ -61,7 +61,7 @@ namespace HPeSimpleParser.Parser {
             }
             var text = await reader.GetValueAsync();
 
-            item.Specifications.Items.Add(new Specification { Name = state.CurrentName, Value = text });
+            item.Specifications.LabeledItems.Add(new Specification { Name = state.CurrentName, Value = text, Label = state.Label });
         }
     }
 }

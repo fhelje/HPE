@@ -15,6 +15,10 @@ namespace HPeSimpleParser.Parser {
             {"technicalspecifications", ParserFunctions.TechnicalSpecificationsParser},
             {"prodnameshort", ParserFunctions.ProdNameShortParser},
             {"keysellingpoints", ParserFunctions.KeySellingPointsParser},
+            {"hierarchy", ParserFunctions.HierarchyRootParser },
+            {"product_type", ParserFunctions.BranchParser },
+            {"marketing_category", ParserFunctions.BranchParser },
+            {"marketing_sub_category", ParserFunctions.BranchParser },
             {"small_series", ParserFunctions.HierarchyParser},
             {"big_series", ParserFunctions.ParentHierarchyParser},
             {"link", ParserFunctions.LinkParser},
@@ -55,7 +59,7 @@ namespace HPeSimpleParser.Parser {
             if (_nodeParser.ContainsKey(state.CurrentName)) {
                 await _nodeParser[state.CurrentName](state, reader, item);
             }
-            else if (_stateParser.ContainsKey(state.InnerState)) {
+            if (_stateParser.ContainsKey(state.InnerState)) {
                 await _stateParser[state.InnerState](state, reader, item);
 
             }

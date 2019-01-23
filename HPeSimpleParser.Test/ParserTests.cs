@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using FluentAssertions;
@@ -15,7 +16,8 @@ namespace HPeSimpleParser.Test {
             var parser = new Parser.HpeParser();
             var data = await parser.ParseDocument(filePath);
             data.Options.Items.Should().HaveCount(optionCount);
-            data.Specifications.Items.Should().HaveCount(specificationCount);
+            data.Options.Items.First().OptionGroupName.Should().NotBeEmpty();
+            data.Specifications.LabeledItems.Should().HaveCount(specificationCount);
             data.ProductVariants.Should().HaveCount(opcCodes);
         }
         [Theory]

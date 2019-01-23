@@ -8,6 +8,7 @@ namespace HPeSimpleParser.HPE.Model {
             Id = Guid.NewGuid();
             OpcCodes = new List<string> ();
             Hierarchy = new List<Hierarchy>();
+            Branch = new List<Hierarchy>();
             Product = new Product();
             Links = new Links();
             Marketing = new Marketing();
@@ -28,6 +29,7 @@ namespace HPeSimpleParser.HPE.Model {
         public List<string> OpcCodes { get; }
 
         public List<Hierarchy> Hierarchy { get; set; }
+        public List<Hierarchy> Branch { get; set; }
         public Product Product { get; set; }
         public Links Links { get; set; }
         public Marketing Marketing { get; set; }

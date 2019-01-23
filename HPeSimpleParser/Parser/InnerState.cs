@@ -5,6 +5,7 @@ namespace HPeSimpleParser.Parser {
         KeySellingPoints,
         Option,
         Upc,
-        Image
+        Image,
+        Hierarchy
     }
 }

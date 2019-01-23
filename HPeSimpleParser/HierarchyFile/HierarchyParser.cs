@@ -8,7 +8,8 @@ namespace HPeSimpleParser.HierarchyFile {
     public class HierarchyParser {
         public async Task<HierarchyNode> Parse(string file) {
             var branch = new Stack<HierarchyNode>();
-            branch.Push(new HierarchyNode { Level = 0, CategoryName = "Root", ParentCategoryID = "1", CategoryID = "1" });
+
+            branch.Push(new HierarchyNode { Level = 1, CategoryName = "HPE Root", CategoryID = "HPE" });
             using (var stream = File.OpenRead(file)) {
                 var settings = new XmlReaderSettings {
                     Async = true
@@ -20,7 +21,7 @@ namespace HPeSimpleParser.HierarchyFile {
                             case XmlNodeType.Element:
                                 if (reader.Name != "hp.products") {
                                     if (!reader.IsEmptyElement) {
-                                        var categoryId = reader.GetAttribute("oid");
+                                        var categoryId = reader.GetAttribute("common.oid");
                                         var categoryName = reader.GetAttribute("name");
                                         indentation++;
                                         var current = branch.Peek();
@@ -28,7 +29,8 @@ namespace HPeSimpleParser.HierarchyFile {
                                             CategoryID = categoryId,
                                             CategoryName = categoryName,
                                             Level = indentation,
-                                            ParentCategoryID = current.CategoryID
+                                            ParentCategoryID = indentation > 1 ? current.CategoryID : null,
+                                            PartnerHierarchyCode = "HPE"
                                         };
                                         current.Children.Add(node);
                                         branch.Push(node);
@@ -50,16 +52,5 @@ namespace HPeSimpleParser.HierarchyFile {
             }
             return branch.Pop();
         }
-    }
-
-    public class HierarchyNode {
-        public HierarchyNode() {
-            Children = new List<HierarchyNode>();
-        }
-        public string CategoryID { get; set; }
-        public string CategoryName { get; set; }
-        public string ParentCategoryID { get; set; }
-        public int Level { get; set; }
-        public List<HierarchyNode> Children { get; set; }
     }
 }

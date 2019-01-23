@@ -4,13 +4,13 @@ using System.Linq;
 namespace HPeSimpleParser.lib.HPE.Model {
     public class Specifications {
         public Specifications() {
-            Items = new List<Specification>();
+            LabeledItems = new List<Specification>();
         }
 
-        public List<Specification> Items { get; set;}
+        public List<Specification> LabeledItems { get; set;}
         public Dictionary<string, string> Specs
         {
-            get { return Items.ToDictionary(x => x.Name, x => x.Value); }
+            get { return LabeledItems.ToDictionary(x => x.Name, x => x.Value); }
         }
     }
 }

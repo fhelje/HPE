@@ -16,7 +16,7 @@ namespace HPeSimpleParser.Test.Writers
                 PartnerPartNumber = "0",
             };
             var writer = new CsvLinkGenerator();
-            var data = writer.GenerateLine(link);
+            writer.TryGenerateLine(link, out var data);
             data.Should().Be($"0{new string('\t', 3)}{Environment.NewLine}");
         }
         [Fact]
@@ -30,7 +30,7 @@ namespace HPeSimpleParser.Test.Writers
                 Images = (List<Image>)expected[(int)CasLinkColumnEnum.Images]
             };
             var writer = new CsvLinkGenerator();
-            var data = writer.GenerateLine(link);
+            writer.TryGenerateLine(link, out var data);
             data.Should().Be($"{string.Join("\t", expected.Select(x => x.ToDebugString()))}{Environment.NewLine}");
         }
         [Fact]
@@ -55,7 +55,7 @@ namespace HPeSimpleParser.Test.Writers
                         .ToList()
             };
             var writer = new CsvLinkGenerator();
-            var data = writer.GenerateLine(link);
+            writer.TryGenerateLine(link, out var data);
             data.Should().Be($"{string.Join("\t", expected.Select(x => x.ToDebugString()))}{Environment.NewLine}");
         }
         [Fact]
@@ -80,7 +80,7 @@ namespace HPeSimpleParser.Test.Writers
                         .ToList()
             };
             var writer = new CsvLinkGenerator();
-            var data = writer.GenerateLine(link);
+            writer.TryGenerateLine(link, out var data);
             data.Should().Be($"{string.Join("\t", expected.Select(x => x.ToDebugString()))}{Environment.NewLine}");
         }
 

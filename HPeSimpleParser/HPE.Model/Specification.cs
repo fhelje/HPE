@@ -9,5 +9,6 @@ namespace HPeSimpleParser.HPE.Model {
         public string Id { get; set; }
         public string GroupId { get; set; }
         public string GroupName { get; set; }
+        public string Label { get; set; }
     }
 }

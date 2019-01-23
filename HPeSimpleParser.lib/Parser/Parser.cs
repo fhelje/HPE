@@ -102,7 +102,7 @@ namespace HPeSimpleParser.lib.Parser {
                 },
                 Specifications = {
                     PartnerPartNumber = input.PartnerPartNumber,
-                    Items= specifications.Items.Select(x => new Model.Specification {
+                    Items= specifications.LabeledItems.Select(x => new Model.Specification {
                         GroupId = x.GroupId,
                         GroupName = x.GroupName,
                         Id = x.Id,
@@ -236,7 +236,7 @@ namespace HPeSimpleParser.lib.Parser {
                 return null;
             }
             foreach (var name in names) {
-                var spec = specifications.Items.Find(x => x.Name == name);
+                var spec = specifications.LabeledItems.Find(x => x.Name == name);
                 if (spec != null) {
                     var (weight, uom) = DetailValueParser.TryParseWeight(spec.Value);
                     if (uom != WeightUnitOfMeasure.None) {
@@ -262,7 +262,7 @@ namespace HPeSimpleParser.lib.Parser {
                 return false;
             }
             foreach (var name in names) {
-                var spec = specifications.Items.Find(x => x.Name == name);
+                var spec = specifications.LabeledItems.Find(x => x.Name == name);
                 if (spec != null) {
                     var dim = DetailValueParser.ParseDimensions(spec.Value);
                     if (dim.HasValues) {

@@ -78,10 +78,10 @@ namespace HPeSimpleParser.Test
                     Url = "Url"
                 },
                 Hierarchy = new List<Hierarchy> {
-                    new Hierarchy("name", "categoryId", "categoryName", "parentCategoryId")
+                    new Hierarchy("name", "categoryId", "categoryName", "parentCategoryId","HPE")
                 },
                 Specifications = {
-                    Items = new List<Specification> {
+                    LabeledItems = new List<Specification> {
                         new Specification {
                             Type = SpecificationType.Full,
                             Name = "Name",
@@ -353,14 +353,14 @@ namespace HPeSimpleParser.Test
             [Fact]
             public void Should_map_full_specifications()
             {
-                var expectation = _productRoot.Specifications.Items.First();
+                var expectation = _productRoot.Specifications.LabeledItems.First();
                 var actual = _actual.Specifications.Items.First();
             }
 
             [Fact]
             public void Should_map_simple_specifications()
             {
-                var expectation = _productRoot.Specifications.Items.Last();
+                var expectation = _productRoot.Specifications.LabeledItems.Last();
                 var actual = _actual.Specifications.Items.Last();
             }
         }

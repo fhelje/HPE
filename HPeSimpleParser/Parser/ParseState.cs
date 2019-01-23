@@ -17,7 +17,10 @@ namespace HPeSimpleParser.Parser
             File = file;
             _level = 0;
             _nodes = new Stack<string>();
+            Branch = new Branch();
         }
+
+        public Branch Branch { get; }
 
         public int Level => _level;
         public string CurrentName => _currentName;

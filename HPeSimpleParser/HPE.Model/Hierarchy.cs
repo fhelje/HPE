@@ -1,10 +1,11 @@
 ﻿namespace HPeSimpleParser.HPE.Model {
     public class Hierarchy {
-        public Hierarchy(string name, string categoryID, string categoryName, string parentCategoryID) {
+        public Hierarchy(string name, string categoryID, string categoryName, string parentCategoryID, string partnerHierarchyCode) {
             Name = name;
             CategoryID = categoryID;
             CategoryName = categoryName;
             ParentCategoryID = parentCategoryID;
+            PartnerHierarchyCode = partnerHierarchyCode;
         }
 
         public string Name { get; }
@@ -15,5 +16,6 @@
         // For HPE \item\hierarchy\big_series[pmoid]
         public string ParentCategoryID { get; }
         public int Level { get; } = 5;
+        public string PartnerHierarchyCode { get; set; }
     }
 }
