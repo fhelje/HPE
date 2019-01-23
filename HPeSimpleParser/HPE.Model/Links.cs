@@ -13,4 +13,10 @@ namespace HPeSimpleParser.HPE.Model {
         public List<Image> FilteredImages { get; set; }
         public Image[] SelectedImages { get; set; }
     }
+
+    public class Link {
+        public string Title { get; set; }
+        public string Url { get; set; }
+        public  string ContentType { get; set; }
+    }
 }

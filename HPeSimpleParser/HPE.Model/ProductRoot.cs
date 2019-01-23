@@ -3,7 +3,10 @@ using System.Collections.Generic;
 
 namespace HPeSimpleParser.HPE.Model {
     public class ProductRoot {
-        public ProductRoot() {
+        public string File { get; }
+
+        public ProductRoot(string file) {
+            File = file;
 
             Id = Guid.NewGuid();
             OpcCodes = new List<string> ();

@@ -9,32 +9,32 @@ namespace HPeSimpleParser.Test {
     public class ImageSelectionTests {
         [Fact]
         public void Should_not_fail_if_images_is_null() {
-            var product = new ProductRoot { Links = { ImageLinks = null } };
-            HpeParser.FilterImages(product).Should().NotBeNull();
+            var product = new ProductRoot("") { Links = { ImageLinks = null } };
+            ImageHelpers.FilterImages(product).Should().NotBeNull();
         }
 
         [Fact]
         public void Should_not_fail_if_images_is_empty() {
-            var product = new ProductRoot { Links = { ImageLinks = new List<Image>() } };
-            HpeParser.FilterImages(product).Should().NotBeNull();
+            var product = new ProductRoot("") { Links = { ImageLinks = new List<Image>() } };
+            ImageHelpers.FilterImages(product).Should().NotBeNull();
         }
 
         // Should return image if one exists
 
         [Fact]
         public void Should_return_image_if_only_one_exists() {
-            var product = new ProductRoot {
+            var product = new ProductRoot("") {
                 Links = {
                     ImageLinks = ImageListBuilder.With().AddImage(x => x.Default()).Build(),
                 }
             };
-            HpeParser.FilterImages(product).Should().HaveCount(1);
+            ImageHelpers.FilterImages(product).Should().HaveCount(1);
         }
         [Theory]
         [InlineData(400, 600, 301, 600, SizeCategoryEnum.Large)]
         [InlineData(400, 600, 400, 599, SizeCategoryEnum.Large)]
         public void Should_return_largest_image_in_size_category(int img1Height, int img1Width, int img2Height, int img2Width, SizeCategoryEnum category) {
-            var product = new ProductRoot {
+            var product = new ProductRoot("") {
                 Links = {
                     ImageLinks = ImageListBuilder.With()
                                                  .AddImage(x => x.Default().SetHeight(img1Height).SetWidth(img1Width))
@@ -42,7 +42,7 @@ namespace HPeSimpleParser.Test {
                                                  .Build()
                 }
             };
-            var images = HpeParser.FilterImages(product);
+            var images = ImageHelpers.FilterImages(product);
             images.Should().HaveCount(1);
             images[0].Width.Should().Be(img1Width);
             images[0].Height.Should().Be(img1Height);
@@ -70,18 +70,18 @@ namespace HPeSimpleParser.Test {
             if (img3Height.HasValue) {
                 imageLinks.AddImage(x => x.Default().SetHeight(img3Height.Value).SetWidth(img3Width.Value).SetUrl(same ? "Same" : Guid.NewGuid().ToString()));
             }
-            var product = new ProductRoot {
+            var product = new ProductRoot("") {
                 Links = {
                     ImageLinks = imageLinks.Build()
                 }
             };
-            var images = HpeParser.FilterImages(product);
+            var images = ImageHelpers.FilterImages(product);
             images.Should().HaveCount(count);
         }
 
         [Fact]
         public void Should_not_add_images_from_wrong_group() {
-            var product = new ProductRoot {
+            var product = new ProductRoot("") {
                 Links = {
                     ImageLinks = ImageListBuilder.With()
                         .AddImage(x => x.Default())
@@ -89,13 +89,13 @@ namespace HPeSimpleParser.Test {
                         .Build()
                 }
             };
-            var images = HpeParser.FilterImages(product);
+            var images = ImageHelpers.FilterImages(product);
             images.Should().HaveCount(1);
         }
 
         [Fact]
         public void Should_return_one_image_per_master_object_name_and_size_group() {
-            var product = new ProductRoot {
+            var product = new ProductRoot("") {
                 Links = {
                     ImageLinks = ImageListBuilder.With()
                         .AddImage(x => x.Default())
@@ -103,13 +103,13 @@ namespace HPeSimpleParser.Test {
                         .Build()
                 }
             };
-            var images = HpeParser.FilterImages(product);
+            var images = ImageHelpers.FilterImages(product);
             images.Should().HaveCount(2);
         }
         // Should_return_prefer_CmgAcronym_cmg674
         [Fact]
         public void Should_return_prefer_CmgAcronym_cmg674() {
-            var product = new ProductRoot {
+            var product = new ProductRoot("") {
                 Links = {
                     ImageLinks = ImageListBuilder.With()
                         .AddImage(x => x.Default().SetCmgAcronym("cmg675"))
@@ -117,14 +117,14 @@ namespace HPeSimpleParser.Test {
                         .Build()
                 }
             };
-            var images = HpeParser.FilterImages(product);
+            var images = ImageHelpers.FilterImages(product);
             images.Should().HaveCount(1);
             images[0].CmgAcronym.Should().Be("cmg674");
         }
 
         [Fact]
         public void Should_pick_one_of_each_orientation() {
-            var product = new ProductRoot {
+            var product = new ProductRoot("") {
                 Links = {
                     ImageLinks = ImageListBuilder.With()
                         .AddImage(x => x.Default().SetOrientation("Center facing"))
@@ -133,13 +133,13 @@ namespace HPeSimpleParser.Test {
                         .Build()
                 }
             };
-            var images = HpeParser.FilterImages(product);
+            var images = ImageHelpers.FilterImages(product);
             images.Should().HaveCount(3);
         }
 
         [Fact]
         public void Should_return_prefer_content_type_jpg_then_png_then_gif() {
-            var product = new ProductRoot {
+            var product = new ProductRoot("") {
                 Links = {
                     ImageLinks = ImageListBuilder.With()
                         .AddImage(x => x.Default().SetCmgAcronym("cmg675").SetContentType("gif"))
@@ -151,7 +151,7 @@ namespace HPeSimpleParser.Test {
                         .Build()
                 }
             };
-            var images = HpeParser.FilterImages(product);
+            var images = ImageHelpers.FilterImages(product);
             images.Should().HaveCount(1);
             images[0].CmgAcronym.Should().Be("cmg674");
             images[0].ContentType.Should().Be("jpg");
@@ -159,7 +159,7 @@ namespace HPeSimpleParser.Test {
 
         [Fact]
         public void Should_deprioritize_documentTypeDetail_of_certain_types() {
-            var product = new ProductRoot {
+            var product = new ProductRoot("") {
                 Links = {
                     ImageLinks = ImageListBuilder.With()
                         .AddImage(x => x.Default().SetDocumentTypeDetail("product image - not as shown"))
@@ -167,14 +167,14 @@ namespace HPeSimpleParser.Test {
                         .Build()
                 }
             };
-            var images = HpeParser.FilterImages(product);
+            var images = ImageHelpers.FilterImages(product);
             images.Should().HaveCount(1);
             images[0].DocumentTypeDetail.Should().Be("product image");
         }
 
         [Fact]
         public void Should_remove_all_duplicates() {
-            var product = new ProductRoot {
+            var product = new ProductRoot("") {
                 Links = {
                     ImageLinks = ImageListBuilder.With()
                         .AddImage(x => x.Default().SetUrl("http://1.jpg"))
@@ -182,7 +182,7 @@ namespace HPeSimpleParser.Test {
                         .Build()
                 }
             };
-            var images = HpeParser.FilterImages(product);
+            var images = ImageHelpers.FilterImages(product);
             images.Should().HaveCount(1);
         }
         
