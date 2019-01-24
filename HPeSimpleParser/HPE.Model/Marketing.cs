@@ -1,16 +1,19 @@
 ﻿namespace HPeSimpleParser.HPE.Model {
     public class Marketing {
 
-        public Marketing()
-        {
-            MarketingCode =string.Empty;
+        public Marketing(string marketingText, string marketingCode, string url, string changeCode) {
+            MarketingText = marketingText;
+            MarketingCode = marketingCode;
+            Url = url;
+            ChangeCode = changeCode;
         }
-        public string MarketingText { get; set; }
 
-        public string MarketingCode { get; set; }
+        public string MarketingText { get; }
 
-        public string Url { get; set; }
+        public string MarketingCode { get; }
 
-        public string ChangeCode { get; set; }
+        public string Url { get; }
+
+        public string ChangeCode { get; }
     }
 }

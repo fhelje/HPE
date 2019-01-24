@@ -4,7 +4,7 @@ using HPeSimpleParser.HPE.Model;
 
 namespace HPeSimpleParser.Parser {
     public static class InnerStateParsers {
-        public static async Task LinkInnerParser(ParseState state, XmlReader reader, ProductRoot item) {
+        public static async Task LinkInnerParser(ParseState state, XmlReader reader) {
             if (state.NodeType == XmlNodeType.Element && state.InnerState == InnerState.Option) {
                 switch (state.CurrentName) {
                     case Item.Links.Link.MarketingCategory:
@@ -31,7 +31,7 @@ namespace HPeSimpleParser.Parser {
             }
         }
 
-        public static async Task KeySellingPointsInnerParser(ParseState state, XmlReader reader, ProductRoot item) {
+        public static async Task KeySellingPointsInnerParser(ParseState state, XmlReader reader) {
             if (reader.NodeType != XmlNodeType.Text) {
                 return;
             }
@@ -51,7 +51,7 @@ namespace HPeSimpleParser.Parser {
             }
         }
 
-        public static async Task TechnicalSpecificationsInnerParser(ParseState state, XmlReader reader, ProductRoot item) {
+        public static async Task TechnicalSpecificationsInnerParser(ParseState state, XmlReader reader) {
             if (state.NodeType == XmlNodeType.Element) {
                 state.Label = reader.GetAttribute("label");
                 return;
@@ -61,7 +61,7 @@ namespace HPeSimpleParser.Parser {
             }
             var text = await reader.GetValueAsync();
 
-            item.Specifications.LabeledItems.Add(new Specification { Name = state.CurrentName, Value = text, Label = state.Label });
+            state.Specifications.Add(new SpecificationState { Name = state.CurrentName, Value = text, Label = state.Label });
         }
     }
 }

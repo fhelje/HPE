@@ -1,10 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using HPeSimpleParser.HPE.Model;
+using Image = HPeSimpleParser.Generic.Model.Image;
+using Option = HPeSimpleParser.Generic.Model.Option;
+using Specification = HPeSimpleParser.Generic.Model.Specification;
 
 namespace HPeSimpleParser.Parser {
     public static class ProductRootExtensions {
-        public static Model.Item ToItem(this ProductRoot input) {
+        public static Generic.Model.Item ToItem(this ProductRoot input) {
             var product = input.Product;
             var detail = input.Detail;
             var links = input.Links;
@@ -13,44 +16,44 @@ namespace HPeSimpleParser.Parser {
             var marketing = input.Marketing;
             var specifications = input.Specifications;
             var options = input.Options;
-            var hpe = hierarchies.FirstOrDefault(x => x.Name == "HPE") ?? hierarchies.First() ?? new Hierarchy("", "", "", "", "");
-            var productLine = hierarchies.FirstOrDefault(x => x.Name == "PL") ?? hierarchies.First() ?? new Hierarchy("", "", "", "", "");
             decimal? height = null;
             decimal? width = null;
             decimal? depth = null;
             
-            if (specifications.TryFindDimensionsInSpecifications(out var dim, "dimenmet", "dimenus")) {
-                var dimension = dim.Value;
-                height = dimension.GetHeightInMillimeter();
-                width = dimension.GetWidthInMillimeter();
-                depth = dimension.GetDepthInMillimeter();
+            if (specifications.LabeledItems.TryFindDimensionsInSpecifications(out var dim, "dimenmet", "dimenus")) {
+                if (dim != null) {
+                    var dimension = dim.Value;
+                    height = dimension.GetHeightInMillimeter();
+                    width = dimension.GetWidthInMillimeter();
+                    depth = dimension.GetDepthInMillimeter();
+                }
             }
-            return new Model.Item {
+            return new Generic.Model.Item {
                 PartnerPartNumber = input.PartnerPartNumber,
                 Product = {
-                    PartnerPartNumber = input.PartnerPartNumber,
-                    PartNumber = input.PartNumber,
-                    CategoryID = categoryID,
-                    CategoryName = hpe.CategoryName,
-                    PartnerHierarchyCode = "HPE",
-                    AlternateCategoryID = productLine.CategoryID,
-                    AlternateCategoryName = productLine.CategoryName,
-                    AlternatePartnerHierarchyCode = "PL",
+                    PartnerPartNumber = product.PartnerPartNumber,
+                    PartNumber = product.PartNumber,
+                    CategoryID = product.CategoryID,
+                    CategoryName = product.CategoryName,
+                    PartnerHierarchyCode = product.PartnerHierarchyCode,
+                    AlternateCategoryID = input.Product.AlternateCategoryID,
+                    AlternateCategoryName = product.AlternateCategoryName,
+                    AlternatePartnerHierarchyCode = product.AlternatePartnerHierarchyCode,
                     Description = product.Description,
                     DescriptionLong= product.DescriptionLong ?? product.Description,
                     ChangeDate = product.ChangeDate,
-                    IsEol= product.IsEOL,
+                    IsEol= product.IsEol,
                     ManufacturerCode = product.ManufacturerCode,
                     ManufacturerName = product.ManufacturerName,
                     ProductCode = product.ProductCode,
                 },
                 Detail = {
                     PartnerPartNumber = input.PartnerPartNumber,
-                    Unspsc = product.Unspsc,
+                    Unspsc = detail.Unspsc,
                     //ProductPartnerID = detail.ProductPartnerID,
                     EndOfSupport = detail.EndOfSupport,
-                    Weight = detail.Weight ?? specifications.TryFindWeigthInSpecifications("weightmet", "weightus"),
-                    WeightwithPackage = detail.WeightwithPackage,
+                    Weight = detail.Weight ?? specifications.LabeledItems.TryFindWeigthInSpecifications("weightmet", "weightus"),
+                    WeightwithPackage = detail.WeightWithPackage,
                     Volume = detail.Volume,
                     PalletSize = detail.PalletSize,
                     Width = detail.Width ?? width,
@@ -73,7 +76,7 @@ namespace HPeSimpleParser.Parser {
                     PartnerPartNumber = input.PartnerPartNumber,
                     PdfLinkDataSheet = links.PdfLinkDataSheet,
                     PdfLinkManual = links.PdfLinkManual,
-                    Images = links.SelectedImages.Select(x=> new Model.Image {
+                    Images = links.SelectedImages.Select(x=> new Image {
                             ContentType = x.ContentType,
                             Height = x.Height,
                             Width = x.Width,
@@ -86,7 +89,7 @@ namespace HPeSimpleParser.Parser {
                 Hierarchies = {
                     PartnerPartNumber = input.PartnerPartNumber,
                     Items= hierarchies.Select(x=>
-                        new Model.Hierarchy{
+                        new Generic.Model.Hierarchy{
                             CategoryID = x.CategoryID,
                             CategoryName = x.CategoryName,
                             Level = x.Level,
@@ -103,7 +106,7 @@ namespace HPeSimpleParser.Parser {
                 },
                 Specifications = {
                     PartnerPartNumber = input.PartnerPartNumber,
-                    Items= specifications.LabeledItems.Select(x => new Model.Specification {
+                    Items= specifications.LabeledItems.Select(x => new Specification {
                         GroupId = x.GroupId,
                         GroupName = x.GroupName,
                         Id = x.Id,
@@ -121,7 +124,7 @@ namespace HPeSimpleParser.Parser {
                 },
                 Options = {
                     PartnerPartNumber = input.PartnerPartNumber,
-                    Items = options.Items.Select(x => new Model.Option {
+                    Items = options.Items.Select(x => new Option {
                         GroupId = x.OptionGroupCode.RemoveLineEndings(),
                         GroupName = x.OptionGroupName.RemoveLineEndings(),
                         Name = x.ManufacturerCode.RemoveLineEndings(),
@@ -131,7 +134,7 @@ namespace HPeSimpleParser.Parser {
             };
         }
 
-        private static string GetConcatenatedHierarchyId(List<Hierarchy> branch) {
+        private static string GetConcatenatedHierarchyId(IEnumerable<Hierarchy> branch) {
             return string.Join("|", branch.Select(x => x.CategoryID));
         }
     }

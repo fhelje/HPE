@@ -1,10 +1,9 @@
-﻿using HPeSimpleParser.Model;
-using System;
-using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Text;
+using HPeSimpleParser.Generic.Model;
 
-namespace HPeSimpleParser
+namespace HPeSimpleParser.Generic.FileWriter
 {
     public class CsvSpecificationsGenerator : ICsvGenerator<Specifications>
     {
@@ -16,14 +15,13 @@ namespace HPeSimpleParser
         }
         public bool TryGenerateLine(Specifications item, out string line)
         {
-            if (item.Items.Count == 0) {
+            if (item.Items == null || item.Items.Count == 0) {
                 line = null;
                 return false;
             }
 
             _sb.Clear();
 
-            var arr = item.Items ?? new List<Specification>();
             _sb.Append(item.PartnerPartNumber);
             _sb.Append(FileSeparators.ColumnSeparator);
             var groupedSpecs = item.Items.GroupBy(x=>x.Label).ToArray();

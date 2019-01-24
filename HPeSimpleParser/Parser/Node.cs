@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Concurrent;
 
 namespace HPeSimpleParser.Parser {
     public class Node : IEquatable<Node> {
@@ -12,7 +11,7 @@ namespace HPeSimpleParser.Parser {
         public override bool Equals(object obj) {
             if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((Node)obj);
         }
 
@@ -28,20 +27,10 @@ namespace HPeSimpleParser.Parser {
             return !Equals(left, right);
         }
 
-        public Node(string name, Node parent) {
+        public Node(string name) {
             Name = name;
-            Parent = parent;
-            Children = new ConcurrentDictionary<string, Node>();
         }
 
-        public Node GetOrAddChild(string name, Node current) {
-            var item = new Node(name, current);
-            var node = Children.GetOrAdd(item.Name, item);
-            return node;
-        }
-        public string Name { get; }
-        public Node Parent { get; }
-
-        public ConcurrentDictionary<string, Node> Children { get; }
+        private string Name { get; }
     }
 }

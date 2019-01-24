@@ -1,11 +1,11 @@
-﻿using HPeSimpleParser.Model;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using HPeSimpleParser.Generic.Model;
 
-namespace HPeSimpleParser
+namespace HPeSimpleParser.Generic.FileWriter
 {
-    public class CsvLinkGenerator : ICsvGenerator<Model.Link>
+    public class CsvLinkGenerator : ICsvGenerator<Link>
     {
         private readonly StringBuilder _sb;
 
@@ -13,7 +13,7 @@ namespace HPeSimpleParser
         {
             _sb = new StringBuilder();
         }
-        public bool TryGenerateLine(Model.Link data, out string line)
+        public bool TryGenerateLine(Link data, out string line)
         {
             if (string.IsNullOrEmpty(data.PdfLinkDataSheet)
                 && string.IsNullOrEmpty(data.PdfLinkManual)

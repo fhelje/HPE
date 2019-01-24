@@ -1,7 +1,6 @@
 using System.Threading.Tasks;
 using System.Xml;
 using HPeSimpleParser.lib.HPE.Model;
-using HPeSimpleParser.lib.Model;
 using Specification = HPeSimpleParser.lib.HPE.Model.Specification;
 
 namespace HPeSimpleParser.lib.Parser {

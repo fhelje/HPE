@@ -1,8 +1,10 @@
 ﻿using FluentAssertions;
-using HPeSimpleParser.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HPeSimpleParser.Generic.FileWriter;
+using HPeSimpleParser.Generic.FileWriter.Enums;
+using HPeSimpleParser.Generic.Model;
 using Xunit;
 
 namespace HPeSimpleParser.Test.Writers
@@ -16,8 +18,8 @@ namespace HPeSimpleParser.Test.Writers
                 PartnerPartNumber = "0",
             };
             var writer = new CsvLinkGenerator();
-            writer.TryGenerateLine(link, out var data);
-            data.Should().Be($"0{new string('\t', 3)}{Environment.NewLine}");
+            writer.TryGenerateLine(link, out var data).Should().BeFalse();
+            data.Should().BeNull();
         }
         [Fact]
         public void Should_create_line_with_all_properties_without_images()

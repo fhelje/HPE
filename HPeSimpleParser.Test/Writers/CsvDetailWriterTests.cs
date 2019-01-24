@@ -1,8 +1,9 @@
 ﻿using FluentAssertions;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using HPeSimpleParser.Generic.FileWriter;
+using HPeSimpleParser.Generic.FileWriter.Enums;
+using HPeSimpleParser.Generic.Model;
 using Xunit;
 
 namespace HPeSimpleParser.Test.Writers
@@ -13,7 +14,7 @@ namespace HPeSimpleParser.Test.Writers
         [Fact]
         public void Should_create_line_with_all_properties_null()
         {
-            var detail = new Model.Detail {
+            var detail = new Detail {
                 PartnerPartNumber = "0",
             };
             var writer = new CsvDetailGenerator();
@@ -25,7 +26,7 @@ namespace HPeSimpleParser.Test.Writers
         {
             var expected = new object[] { "PartnerPartNumber", 1M, 2M, 3M, 4M, 5M, 6M, 7M, 8, 9M, true, "ManufacturingCountry", "CustomsStatisticsNumber", true, 10, new DateTime(2000, 1, 1), "ErpAltPartNumber", true, "ItemDefFulfillSource", true, 11M, 12 };
             
-            var detail = new Model.Detail {
+            var detail = new Detail {
                 PartnerPartNumber = (string)expected[(int)CasDetailColumnEnum.PartnerPartNumber],
                 Weight = (decimal)expected[(int)CasDetailColumnEnum.Weight],
                 WeightwithPackage = (decimal)expected[(int)CasDetailColumnEnum.WeightwithPackage],

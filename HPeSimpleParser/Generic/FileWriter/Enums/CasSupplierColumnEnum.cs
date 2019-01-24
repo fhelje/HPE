@@ -1,4 +1,4 @@
-﻿namespace HPeSimpleParser {
+﻿namespace HPeSimpleParser.Generic.FileWriter.Enums {
     public enum CasSupplierColumnEnum
     {
         PartnerPartNumber = 0,

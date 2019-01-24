@@ -1,4 +1,4 @@
-﻿namespace HPeSimpleParser
+﻿namespace HPeSimpleParser.Generic.FileWriter
 {
     public static class FileSeparators
     {

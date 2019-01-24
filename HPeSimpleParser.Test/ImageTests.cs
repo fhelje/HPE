@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using HPeSimpleParser.HPE.Model;
+using HPeSimpleParser.Parser.HPE;
 using Xunit;
 
 namespace HPeSimpleParser.Test {
@@ -25,7 +26,8 @@ namespace HPeSimpleParser.Test {
         [InlineData("600", "801", SizeCategoryEnum.XLarge)]
         [InlineData("6000", "8000", SizeCategoryEnum.XLarge)]
         public void Should_return_correct_image_category(string height, string width, SizeCategoryEnum category) {
-            new Image {PixelHeight = height, PixelWidth = width}.SizeCategory.Should().Be(category);
+            var ip = new HPEImageParser();
+            ip.GetSizeCategory(height, width).Should().Be(category);
         }
     }
 }

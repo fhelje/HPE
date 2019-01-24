@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Text;
-using HPeSimpleParser.HierarchyFile;
 
-namespace HPeSimpleParser
+namespace HPeSimpleParser.Generic.FileWriter
 {
     public class CsvSupplierGenerator : ICsvGenerator<SupplierNode>
     {

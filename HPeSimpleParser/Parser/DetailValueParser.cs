@@ -62,15 +62,14 @@ namespace HPeSimpleParser.Parser {
 
                 var measures = new string[3];
                 var uom = "";
-                var dims = new string[] { "", "", "" };
-                var dimsFound = new bool[] { false, false, false };
+                var dims = new[] { "", "", "" };
+                var dimsFound = new[] { false, false, false };
                 var foundDim = false;
                 var index = 0;
-                var measureFound = false;
 
                 var count = matches.Count;
                 for (int i = 0; i < count; i++) {
-                    measureFound = false;
+                    var measureFound = false;
                     var measure = matches[i].Groups["measure"]?.Value;
                     if (!string.IsNullOrEmpty(measure) && !measure.StartsWith("-")) {
                         measures[index] = measure.Replace(",", "");
@@ -133,7 +132,7 @@ namespace HPeSimpleParser.Parser {
 
         }
 
-        public static bool FoundAll(string[] measures, bool[] dimsFound, string uom) {
+        private static bool FoundAll(string[] measures, bool[] dimsFound, string uom) {
             if (string.IsNullOrEmpty(measures[0]) && !dimsFound[0]) {
                 return false;
             }
@@ -149,7 +148,7 @@ namespace HPeSimpleParser.Parser {
             return true;
         }
 
-        public static DimensionUnitOfMeasure GetDistansUnitOfMeasure(string uom) {
+        private static DimensionUnitOfMeasure GetDistansUnitOfMeasure(string uom) {
             switch (uom.ToLower()) {
                 case "mm":
                     return DimensionUnitOfMeasure.Millimeter;
@@ -166,7 +165,7 @@ namespace HPeSimpleParser.Parser {
             return DimensionUnitOfMeasure.None;
         }
 
-        public static decimal? GetHeight(string[] dims, string[] measures) {
+        private static decimal? GetHeight(string[] dims, string[] measures) {
             var pos = 0;
             for (int i = 0; i < dims.Length; i++) {
                 var d = dims[i].ToLower();
@@ -181,12 +180,13 @@ namespace HPeSimpleParser.Parser {
                         break;
                 }
             }
-            if (decimal.TryParse(measures[pos], NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var retval)) {
-                return retval;
+            if (decimal.TryParse(measures[pos], NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var retVal)) {
+                return retVal;
             }
             return null;
         }
-        public static decimal? GetWidth(string[] dims, string[] measures) {
+
+        private static decimal? GetWidth(string[] dims, string[] measures) {
             var pos = 1;
             for (int i = 0; i < dims.Length; i++) {
                 var d = dims[i].ToLower();
@@ -201,12 +201,13 @@ namespace HPeSimpleParser.Parser {
                         break;
                 }
             }
-            if (decimal.TryParse(measures[pos], NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var retval)) {
-                return retval;
+            if (decimal.TryParse(measures[pos], NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var retVal)) {
+                return retVal;
             }
             return null;
         }
-        public static decimal? GetDepth(string[] dims, string[] measures) {
+
+        private static decimal? GetDepth(string[] dims, string[] measures) {
             var pos = 2;
             for (int i = 0; i < dims.Length; i++) {
                 var d = dims[i].ToLower();
@@ -222,8 +223,8 @@ namespace HPeSimpleParser.Parser {
                         break;
                 }
             }
-            if (decimal.TryParse(measures[pos], NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var retval)) {
-                return retval;
+            if (decimal.TryParse(measures[pos], NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var retVal)) {
+                return retVal;
             }
             return null;
         }
@@ -248,7 +249,7 @@ namespace HPeSimpleParser.Parser {
             Dot
         }
 
-        public static WeightUnitOfMeasure GetWeightUnitOfMeasure(string uom) {
+        private static WeightUnitOfMeasure GetWeightUnitOfMeasure(string uom) {
             switch (uom.ToLower()) {
                 case "kg":
                     return WeightUnitOfMeasure.Kilogram;

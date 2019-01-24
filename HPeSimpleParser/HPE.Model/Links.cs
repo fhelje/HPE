@@ -2,16 +2,15 @@
 
 namespace HPeSimpleParser.HPE.Model {
     public class Links {
-        public Links() {
-            ImageLinks = new List<Image>();
-            SelectedImages = new Image[0];
+        public Links(string pdfLinkDataSheet, string pdfLinkManual, IReadOnlyList<Image> selectedImages) {
+            PdfLinkDataSheet = pdfLinkDataSheet;
+            PdfLinkManual = pdfLinkManual;
+            SelectedImages = selectedImages;
         }
 
         public string PdfLinkDataSheet { get; set; }
         public string PdfLinkManual { get; set; }
-        public List<Image> ImageLinks { get; set; }
-        public List<Image> FilteredImages { get; set; }
-        public Image[] SelectedImages { get; set; }
+        public IReadOnlyList<Image> SelectedImages { get; set; }
     }
 
     public class Link {

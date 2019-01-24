@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using HPeSimpleParser.HPE.Model;
 
 namespace HPeSimpleParser.Parser {
@@ -14,12 +15,12 @@ namespace HPeSimpleParser.Parser {
             }
         }
 
-        public static decimal? TryFindWeigthInSpecifications(this Specifications specifications, params string[] names) {
+        public static decimal? TryFindWeigthInSpecifications(this IReadOnlyList<Specification> specifications, params string[] names) {
             if (specifications == null) {
                 return null;
             }
             foreach (var name in names) {
-                var spec = specifications.LabeledItems.Find(x => x.Name == name);
+                var spec = specifications.FirstOrDefault(x => x.Name == name);
                 if (spec != null) {
                     var (weight, uom) = DetailValueParser.TryParseWeight(spec.Value);
                     if (uom != WeightUnitOfMeasure.None) {
@@ -39,13 +40,13 @@ namespace HPeSimpleParser.Parser {
             return null;
         }
 
-        public static bool TryFindDimensionsInSpecifications(this Specifications specifications, out Dimension? dimension, params string[] names) {
+        public static bool TryFindDimensionsInSpecifications(this IReadOnlyList<Specification> specifications, out Dimension? dimension, params string[] names) {
             dimension = null;
             if (specifications == null) {
                 return false;
             }
             foreach (var name in names) {
-                var spec = specifications.LabeledItems.Find(x => x.Name == name);
+                var spec = specifications.FirstOrDefault(x => x.Name == name);
                 if (spec != null) {
                     var dim = DetailValueParser.ParseDimensions(spec.Value);
                     if (dim.HasValues) {

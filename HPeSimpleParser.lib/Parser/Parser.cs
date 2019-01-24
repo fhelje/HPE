@@ -23,10 +23,12 @@ namespace HPeSimpleParser.lib.Parser {
             decimal? depth = null;
             
             if (specifications.TryFindDimensionsInSpecifications(out var dim, "dimenmet", "dimenus")) {
-                var dimension = dim.Value;
-                height = dimension.GetHeightInMillimeter();
-                width = dimension.GetWidthInMillimeter();
-                depth = dimension.GetDepthInMillimeter();
+                if (dim != null) {
+                    var dimension = dim.Value;
+                    height = dimension.GetHeightInMillimeter();
+                    width = dimension.GetWidthInMillimeter();
+                    depth = dimension.GetDepthInMillimeter();
+                }
             }
             return new Model.Item {
                 PartnerPartNumber = input.PartnerPartNumber,

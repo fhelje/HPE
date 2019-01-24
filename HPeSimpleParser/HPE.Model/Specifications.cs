@@ -1,16 +1,11 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 
 namespace HPeSimpleParser.HPE.Model {
     public class Specifications {
-        public Specifications() {
-            LabeledItems = new List<Specification>();
+        public Specifications(IReadOnlyList<Specification> specifications) {
+            LabeledItems = specifications;
         }
 
-        public List<Specification> LabeledItems { get; set;}
-        public Dictionary<string, string> Specs
-        {
-            get { return LabeledItems.ToDictionary(x => x.Name, x => x.Value); }
-        }
+        public IReadOnlyList<Specification> LabeledItems { get; }
     }
 }

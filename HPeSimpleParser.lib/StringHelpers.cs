@@ -26,7 +26,7 @@ namespace HPeSimpleParser.lib
                         return string.Empty;
                     }
                     switch (arr[0]) {
-                        case object[] innerArr:
+                        case object[] _:
                             return string.Join(FileSeparators.MultiColumnColumnRowSeparator, arr.Select(x => x.ToDebugString()));
                         default:
                             return string.Join(FileSeparators.MultiColumnColumnSeparator, arr.Select(x => x.ToDebugString()));

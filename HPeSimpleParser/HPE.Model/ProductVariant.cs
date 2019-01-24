@@ -1,7 +1,13 @@
 namespace HPeSimpleParser.HPE.Model {
     public class ProductVariant {
-        public string UpcCode { get; set; }
-        public string Description { get; set; }
-        public string Opt { get; set; }
+        public ProductVariant(string description, string opt, string upcCode) {
+            Description = description;
+            Opt = opt;
+            UpcCode = upcCode;
+        }
+
+        public string UpcCode { get; }
+        public string Description { get; }
+        public string Opt { get; }
     }
 }

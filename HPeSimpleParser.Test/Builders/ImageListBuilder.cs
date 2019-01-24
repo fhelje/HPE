@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using HPeSimpleParser.HPE.Model;
 
-namespace HPeSimpleParser.Test {
+namespace HPeSimpleParser.Test.Builders {
     public class ImageListBuilder {
-        private readonly List<Image> _data;
+        private List<Image> _data;
         private ImageListBuilder() {
             _data = new List<Image>();
         }
@@ -22,6 +22,11 @@ namespace HPeSimpleParser.Test {
 
         public List<Image> Build() {
             return _data;
+        }
+
+        public ImageListBuilder SetNull() {
+            _data = null;
+            return this;
         }
     }
 }

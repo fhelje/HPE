@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HPeSimpleParser.Model
+namespace HPeSimpleParser.Generic.Model
 {
     public class Hierarchies
     {

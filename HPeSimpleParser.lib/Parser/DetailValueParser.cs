@@ -62,15 +62,14 @@ namespace HPeSimpleParser.lib.Parser {
 
                 var measures = new string[3];
                 var uom = "";
-                var dims = new string[] { "", "", "" };
-                var dimsFound = new bool[] { false, false, false };
+                var dims = new[] { "", "", "" };
+                var dimsFound = new[] { false, false, false };
                 var foundDim = false;
                 var index = 0;
-                var measureFound = false;
 
                 var count = matches.Count;
                 for (int i = 0; i < count; i++) {
-                    measureFound = false;
+                    var measureFound = false;
                     var measure = matches[i].Groups["measure"]?.Value;
                     if (!string.IsNullOrEmpty(measure) && !measure.StartsWith("-")) {
                         measures[index] = measure.Replace(",", "");
@@ -296,32 +295,27 @@ namespace HPeSimpleParser.lib.Parser {
         public decimal? Depth { get; }
         public DimensionUnitOfMeasure UnitOfMeasure { get; }
 
-        public bool HasValues {
-            get {
-                return Height.HasValue && Width.HasValue && Depth.HasValue;
-            }
-        }
-
+        public bool HasValues => Height.HasValue && Width.HasValue && Depth.HasValue;
         public decimal? GetHeightInMillimeter() => GetInMillimeter(Height, UnitOfMeasure);
         public decimal? GetWidthInMillimeter() => GetInMillimeter(Width, UnitOfMeasure);
         public decimal? GetDepthInMillimeter() => GetInMillimeter(Depth, UnitOfMeasure);
 
-        private decimal? GetInMillimeter(decimal? value, DimensionUnitOfMeasure uom) {
-            if (uom != DimensionUnitOfMeasure.None) {
-                switch (uom) {
-                    case DimensionUnitOfMeasure.Millimeter:
-                        return value.Value;
-                    case DimensionUnitOfMeasure.CentiMeter:
-                        return value.Value * 10;
-                    case DimensionUnitOfMeasure.Meter:
-                        return value.Value * 1000;
-                    case DimensionUnitOfMeasure.Inches:
-                        return value.Value * 2.54M * 10;
-                    case DimensionUnitOfMeasure.Feet:
-                        return value.Value * 12 * 2.54M * 10;
-                }
+        private static decimal? GetInMillimeter(decimal? value, DimensionUnitOfMeasure uom) {
+            if (uom == DimensionUnitOfMeasure.None) return null;
+            switch (uom) {
+                case DimensionUnitOfMeasure.Millimeter:
+                    return value;
+                case DimensionUnitOfMeasure.CentiMeter:
+                    return value * 10;
+                case DimensionUnitOfMeasure.Meter:
+                    return value * 1000;
+                case DimensionUnitOfMeasure.Inches:
+                    return value * 2.54M * 10;
+                case DimensionUnitOfMeasure.Feet:
+                    return value * 12 * 2.54M * 10;
+                default:
+                    return null;
             }
-            return null;
 
         }
     }

@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using FluentAssertions;
+using HPeSimpleParser.Generic.Model;
 using HPeSimpleParser.HPE.Model;
-using HPeSimpleParser.Model;
 using HPeSimpleParser.Parser;
+using HPeSimpleParser.Test.Builders;
 using Xunit;
-using Hierarchy = HPeSimpleParser.HPE.Model.Hierarchy;
-using Image = HPeSimpleParser.HPE.Model.Image;
-using Specification = HPeSimpleParser.HPE.Model.Specification;
 
 namespace HPeSimpleParser.Test
 {
@@ -18,102 +14,21 @@ namespace HPeSimpleParser.Test
         protected readonly ProductRoot _productRoot;
         protected readonly Item _actual;
 
-        public ToItemTests()
-        {
-            _productRoot = new ProductRoot {
-                PartnerPartNumber = "PartnerPartNumber",
-                PartNumber = "PartNumber",
-                LanguageId = "sv-SE",
-                Product = {
-                    CategoryID = "CategoryID",
-                    CategoryName = "CategoryName",
-                    ChangeDate = new DateTime(2000,1,1),
-                    Description = "Description",
-                    DescriptionLong = "DescriptionLong",
-                    IsEOL = true,
-                    ManufacturerCode = "ManufacturerCode",
-                    ManufacturerName = "ManufacturerName",
-                    ProductCode = "ProductCode",
-                },
-                Detail = {
-                    Weight = 1,
-                    WeightwithPackage = 2,
-                    Volume = 3,
-                    PalletSize = 4,
-                    Width = 5,
-                    Height = 6,
-                    Depth = 7,
-                    PackQty = 8,
-                    MinimumOrderQty = 9,
-                    IsRequireSerialNumber = true,
-                    ManufacturingCountry = "ManufacturingCountry",
-                    CustomsStatisticsNumber = "CustomsStatisticsNumber",
-                    ExtendedWarranty = true,
-                    Unspsc = 0,
-                    EndOfSupport = new DateTime(2000,1,1),
-                    ErpAltPartNumber = "ErpAltPartNumber",
-                    TeleSalesFlag = true,
-                    ItemDefFulfillSource = "ItemDefFulfillSource",
-                    MeterEnabled = true,
-                    SwedishChemicalTaxReduction = 11,
-                    WarrantyTime = 12,
-
-                },
-                Links = {
-                    PdfLinkDataSheet = "PdfLinkDataSheet",
-                    PdfLinkManual = "PdfLinkManual",
-                    SelectedImages = new Image[] {
-                        new Image {
-                            ContentType = "jpg",
-                            PixelHeight = "100",
-                            PixelWidth = "200",
-                            ImageUrlHttp = "http://images.com/1234",
-                        },
-                    }
-                },
-                Marketing = {
-                    ChangeCode = "ChangeCode",
-                    MarketingCode = "MarketingCode",
-                    MarketingText = "MarketingText",
-                    Url = "Url"
-                },
-                Hierarchy = new List<Hierarchy> {
-                    new Hierarchy("name", "categoryId", "categoryName", "parentCategoryId","HPE")
-                },
-                Specifications = {
-                    LabeledItems = new List<Specification> {
-                        new Specification {
-                            Type = SpecificationType.Full,
-                            Name = "Name",
-                            Value = "Value",
-                            UnitOfMeasure = "UnitOfMeasure",
-                            Id = "Id",
-                            GroupId = "GroupId",
-                            GroupName = "GroupName",
-                        },
-                        new Specification {
-                            Type = SpecificationType.Simple,
-                            Name = "Name",
-                            Value = "Value",
-                            UnitOfMeasure = null,
-                            Id = null,
-                            GroupId = null,
-                            GroupName = null,
-                        }
-
-                    }
-                },
-                Options = {
-                    Items = new List<HPE.Model.Option> {
-                        new HPE.Model.Option {
-                            ManufacturerCode = "ManufacturerCode",
-                            OptionPartnerPartNumber = "OptionPartnerPartNumber",
-                            OptionGroupCode = "OptionGroupCode",
-                            OptionGroupName = "OptionGroupName",
-                        }
-                    }
-                }
-            };
+        public ToItemTests() {
+            _productRoot = ProductRootBuilder.With()
+                .WithDetail(x => x.Default())
+                .WithImages(y => 
+                    y.AddImage(i => 
+                        i.AddImage(x =>
+                            x.Default().SetContentType("jpg").SetHeight("100").SetWidth("200").SetUrl("http://images.com/1234")
+                        )
+                    )
+                )
+                .WithMarketing(x=>x.Default())
+                .WithHierachy(x=>x.AddDefaultNode())
+                .WithSpecifications(x =>  x.AddFull().AddSimple())
+                .WithOptions(x => x.AddDefault())
+                .Build();
             _actual = _productRoot.ToItem();
         }
 
@@ -164,7 +79,7 @@ namespace HPeSimpleParser.Test
             [Fact]
             public void Should_copy_values_from_product_IsEol()
             {
-                _actual.Product.IsEol.Should().Be(_productRoot.Product.IsEOL);
+                _actual.Product.IsEol.Should().Be(_productRoot.Product.IsEol);
             }
             [Fact]
             public void Should_copy_values_from_product_ManufacturerCode()
@@ -193,7 +108,7 @@ namespace HPeSimpleParser.Test
             [Fact]
             public void Should_copy_values_from_detail_WeightwithPackage()
             {
-                _actual.Detail.WeightwithPackage.Should().Be(_productRoot.Detail.WeightwithPackage);
+                _actual.Detail.WeightwithPackage.Should().Be(_productRoot.Detail.WeightWithPackage);
             }
             [Fact]
             public void Should_copy_values_from_detail_Volume()
@@ -355,6 +270,8 @@ namespace HPeSimpleParser.Test
             {
                 var expectation = _productRoot.Specifications.LabeledItems.First();
                 var actual = _actual.Specifications.Items.First();
+                expectation.Should().NotBeNull();
+                actual.Should().NotBeNull();
             }
 
             [Fact]
@@ -362,6 +279,8 @@ namespace HPeSimpleParser.Test
             {
                 var expectation = _productRoot.Specifications.LabeledItems.Last();
                 var actual = _actual.Specifications.Items.Last();
+                expectation.Should().NotBeNull();
+                actual.Should().NotBeNull();
             }
         }
 

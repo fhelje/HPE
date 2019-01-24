@@ -1,8 +1,10 @@
 ﻿using FluentAssertions;
-using HPeSimpleParser.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using HPeSimpleParser.Generic.FileWriter;
+using HPeSimpleParser.Generic.FileWriter.Enums;
+using HPeSimpleParser.Generic.Model;
 using Xunit;
 
 namespace HPeSimpleParser.Test.Writers
@@ -16,11 +18,11 @@ namespace HPeSimpleParser.Test.Writers
                 PartnerPartNumber = "0",
             };
             var writer = new CsvOptionsGenerator();
-            writer.TryGenerateLine(options, out var data);
-            data.Should().Be($"0{new string('\t', 1)}{Environment.NewLine}");
+            writer.TryGenerateLine(options, out var data).Should().BeFalse();
+            data.Should().BeNull();
         }
         [Fact]
-        public void Should_create_line_with_all_properties_without_options()
+        public void Should_skip_line_with_all_properties_without_options()
         {
             var expected = new object[] { "PartnerPartNumber", null };
             var options = new Options {
@@ -28,11 +30,11 @@ namespace HPeSimpleParser.Test.Writers
                 Items = (List<Option>)expected[(int)CasOptionsColumnEnum.Items]
             };
             var writer = new CsvOptionsGenerator();
-            writer.TryGenerateLine(options, out var data);
-            data.Should().Be($"{string.Join("\t", expected.Select(x => x.ToDebugString()))}{Environment.NewLine}");
+            writer.TryGenerateLine(options, out var data).Should().BeFalse();
+            data.Should().BeNull();
         }
         [Fact]
-        public void Should_create_line_with_all_properties_witho_one_option()
+        public void Should_create_line_with_all_properties_without_one_option()
         {
             var expected = new object[] { "PartnerPartNumber", new object[] { new object[] { "PartNumber", "Name", "GroupId", "GroupName" } } };
             var options = new Options {
@@ -54,7 +56,7 @@ namespace HPeSimpleParser.Test.Writers
             data.Should().Be($"{string.Join("\t", expected.Select(x => x.ToDebugString()))}{Environment.NewLine}");
         }
         [Fact]
-        public void Should_create_line_with_all_properties_witho_two_option()
+        public void Should_create_line_with_all_properties_without_two_option()
         {
             var expected = new object[] { "PartnerPartNumber", new object[] { new object[] { "PartNumber", "Name", "GroupId", "GroupName" }, new object[] { "PartNumber1", "Name1", "GroupId1", "GroupName1" } } };
             var options = new Options {

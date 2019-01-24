@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HPeSimpleParser.Model
+namespace HPeSimpleParser.Generic.Model
 {
     public class Product
     {

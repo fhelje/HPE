@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HPeSimpleParser
+namespace HPeSimpleParser.Generic.FileWriter
 {
     [Flags]
     public enum FileTypes

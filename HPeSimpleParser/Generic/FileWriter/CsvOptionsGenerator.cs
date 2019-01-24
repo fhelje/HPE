@@ -1,10 +1,8 @@
-﻿using HPeSimpleParser.Model;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
+﻿using System;
 using System.Text;
+using HPeSimpleParser.Generic.Model;
 
-namespace HPeSimpleParser
+namespace HPeSimpleParser.Generic.FileWriter
 {
     public class CsvOptionsGenerator : ICsvGenerator<Options>
     {
@@ -16,7 +14,7 @@ namespace HPeSimpleParser
         }
         public bool TryGenerateLine(Options item, out string line )
         {
-            if (item.Items.Count == 0) {
+            if (item.Items == null || item.Items.Count == 0) {
                 line = null;
                 return false;
             }

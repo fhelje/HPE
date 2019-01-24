@@ -1,6 +1,7 @@
 ﻿namespace HPeSimpleParser {
     internal static class Item {
         public const string NodeName = "item";
+        // ReSharper disable MemberHidesStaticFromOuterClass
         internal static class Content {
             public const string NodeName = "content";
 
@@ -778,5 +779,6 @@
                 public const string Name = "name";
             }
         }
+        // ReSharper restore MemberHidesStaticFromOuterClass
     }
 }

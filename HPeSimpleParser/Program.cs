@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Security;
 using System.Threading.Tasks;
 using System.Xml;
 using HPeSimpleParser.Generic.FileWriter;
@@ -49,16 +47,16 @@ namespace HPeSimpleParser {
             }
         }
 
-        static async Task Main(string[] args) {
+        static async Task Main() {
             _hierarchyRoot = new HPEHierarchyNode();
             //const string rootPath = @"\\prod01\e$\FS\Tillverkare\HPe\CAP\Change fil 2018-11-25\HPE_cap_gb_en_xml_2617_20181125114722";
             //const string deliverFilePath = rootPath + @"\delivery_2617.xml";
             const string rootPath = @"C:\temp\hpesimpleinput\Full fil 2018-11-29";
             const string deliverFilePath = rootPath + @"\delivery_2699.xml";
-            const string hierarchyFilePath = rootPath + @"\product_hierarchy.xml";
+            //const string hierarchyFilePath = rootPath + @"\product_hierarchy.xml";
             var fileTypes = FileTypes.Detail | FileTypes.Link | FileTypes.Marketing | FileTypes.Option | FileTypes.Option | FileTypes.Product | FileTypes.Specification | FileTypes.Supplier;
             int count;
-            List<string> files = null;
+            List<string> files;
             var config = new WriterConfiguration { OutputPath = @"c:\temp\hpesimpleoutput" };
 
 
@@ -75,7 +73,7 @@ namespace HPeSimpleParser {
             var transformedBatches = new ConcurrentBag<List<ProductRoot>>();
             await files.Batch(1000).ParallelForEachAsync(async batch => {
                 var list = new List<ProductRoot>();
-                var parser = new HpeParser();
+                var parser = new XmlParser(new HPEParserDefinition());
                 foreach (var file in batch) {
                     var productRoot = await parser.ParseDocument(file);
                     var productLineHierarchy = productRoot.Hierarchy.First(x => x.Name == "PL");
@@ -146,14 +144,8 @@ namespace HPeSimpleParser {
             Console.ReadLine();
         }
 
-        private static void UpdateCategoryTree(List<Hierarchy> branch) {
-            var productTypeId = string.Empty;
-            var marketingCategoryId = string.Empty;
-            var marketingSubCategoryId = string.Empty;
-            var bigSeriesId = string.Empty;
-            var smallSeriesId = string.Empty;
-
-            productTypeId = branch[0].CategoryID;
+        private static void UpdateCategoryTree(IReadOnlyList<Hierarchy> branch) {
+            var productTypeId = branch[0].CategoryID;
             var productType = _hierarchyRoot.Children.GetOrAdd(
                 productTypeId,
                 key => new HPEHierarchyNode {
@@ -164,7 +156,7 @@ namespace HPeSimpleParser {
                 }
             );
 
-            marketingCategoryId = productTypeId + "|" + branch[1].CategoryID;
+            var marketingCategoryId = productTypeId + "|" + branch[1].CategoryID;
             var marketingCategory = productType.Children.GetOrAdd(
                 marketingCategoryId ,
                 key => new HPEHierarchyNode {
@@ -175,7 +167,7 @@ namespace HPeSimpleParser {
                 }
                 );
 
-            marketingSubCategoryId = marketingCategoryId + "|" + branch[2].CategoryID;
+            var marketingSubCategoryId = marketingCategoryId + "|" + branch[2].CategoryID;
             var marketingSubCategory = marketingCategory.Children.GetOrAdd(
                 marketingSubCategoryId,
                 key => new HPEHierarchyNode {
@@ -186,7 +178,7 @@ namespace HPeSimpleParser {
                 }
                 );
 
-            bigSeriesId = marketingSubCategoryId + "|" + branch[3].CategoryID;
+            var bigSeriesId = marketingSubCategoryId + "|" + branch[3].CategoryID;
             var bigSeries = marketingSubCategory.Children.GetOrAdd(
                 bigSeriesId, 
                 key => new HPEHierarchyNode {
@@ -197,7 +189,7 @@ namespace HPeSimpleParser {
                 }
                 );
 
-            smallSeriesId = bigSeriesId + "|" + branch[4].CategoryID;
+            var smallSeriesId = bigSeriesId + "|" + branch[4].CategoryID;
             bigSeries.Children.GetOrAdd(
                 smallSeriesId,
                 key => new HPEHierarchyNode {

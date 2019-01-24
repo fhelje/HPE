@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Text;
-using HPeSimpleParser.Model;
 
-namespace HPeSimpleParser
+namespace HPeSimpleParser.Generic.FileWriter
 {
     public class CsvMarketingGenerator : ICsvGenerator<Model.Marketing>
     {

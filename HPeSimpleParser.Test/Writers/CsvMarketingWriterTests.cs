@@ -1,7 +1,9 @@
 ﻿using FluentAssertions;
 using System;
 using System.Linq;
-using HPeSimpleParser.Model;
+using HPeSimpleParser.Generic.FileWriter;
+using HPeSimpleParser.Generic.FileWriter.Enums;
+using HPeSimpleParser.Generic.Model;
 using Xunit;
 
 namespace HPeSimpleParser.Test.Writers
@@ -11,11 +13,12 @@ namespace HPeSimpleParser.Test.Writers
         [Fact]
         public void Should_create_line_with_all_properties_null()
         {
-            var marketing = new Model.Marketing {
+            var marketing = new Marketing {
                 PartnerPartNumber = "0",
             };
             var writer = new CsvMarketingGenerator();
             writer.TryGenerateLine(marketing, out var data).Should().BeFalse();
+            data.Should().BeNullOrEmpty();
         }
 
         [Fact]
@@ -23,7 +26,7 @@ namespace HPeSimpleParser.Test.Writers
         {
             var expected = new object[] { "PartnerPartNumber", "MarketingCode", MarketingType.UniqueSellingPoint, "MarketingText", "MarketingTitle", "LanguageId" };
 
-            var marketing = new Model.Marketing {
+            var marketing = new Marketing {
                 PartnerPartNumber = (string)expected[(int)CasMarketingColumnEnum.PartnerPartNumber],
                 MarketingCode = (string)expected[(int)CasMarketingColumnEnum.MarketingCode],
                 MarketingText = (string)expected[(int)CasMarketingColumnEnum.MarketingText],

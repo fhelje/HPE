@@ -1,4 +1,4 @@
-﻿namespace HPeSimpleParser.Model {
+﻿namespace HPeSimpleParser.Generic.Model {
     public enum MarketingType
     {
         UniqueSellingPoint = 1,

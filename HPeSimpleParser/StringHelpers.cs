@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
-using HPeSimpleParser.Model;
+using HPeSimpleParser.Generic.FileWriter;
+using HPeSimpleParser.Generic.Model;
 
 namespace HPeSimpleParser
 {
@@ -32,7 +32,7 @@ namespace HPeSimpleParser
                         return string.Empty;
                     }
                     switch (arr[0]) {
-                        case object[] innerArr:
+                        case object[] _:
                             return string.Join(FileSeparators.MultiColumnColumnRowSeparator, arr.Select(x => x.ToDebugString()));
                         default:
                             return string.Join(FileSeparators.MultiColumnColumnSeparator, arr.Select(x => x.ToDebugString()));

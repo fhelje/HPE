@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using HPeSimpleParser.Generic.FileWriter;
 
 namespace HPeSimpleParser.HierarchyFile {
     public class CsvHierarchyGenerator2 : ICsvGenerator<HPEHierarchyNode>{

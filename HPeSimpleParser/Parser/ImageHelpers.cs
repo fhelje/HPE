@@ -4,14 +4,14 @@ using HPeSimpleParser.HPE.Model;
 
 namespace HPeSimpleParser.Parser {
     public static class ImageHelpers {
-        public static Image[] FilterImages(ProductRoot item) {
+        public static List<Image> FilterImages(IReadOnlyList<Image> linksImageLinks) {
             var selectedImages = new List<Image>();
-            if (item?.Links?.ImageLinks == null || item.Links.ImageLinks.Count < 1) {
-                return new Image[0];
+            if (linksImageLinks == null || linksImageLinks.Count < 1) {
+                return new List<Image>();
             }
 
             // Group by master object name
-            var monGroups = item.Links.ImageLinks.GroupBy(x => x.MasterObjectName);
+            var monGroups = linksImageLinks.GroupBy(x => x.GroupingKey2);
             foreach (var monGroup in monGroups) {
 
                 // Group by SizeCategory
@@ -24,7 +24,7 @@ namespace HPeSimpleParser.Parser {
 
                     var orientationGroups = sizeGroup.GroupBy(g => g.Orientation);
                     foreach (var orientationGroup in orientationGroups) {
-                        selectedImages.Add(orientationGroup.OrderBy(x => x.CmgAcronym)
+                        selectedImages.Add(orientationGroup.OrderBy(x => x.GroupingKey1)
                             .ThenBy(x => x.ContentTypePriority)
                             .ThenBy(x => x.DocumentTypeDetailPriority)
                             .ThenByDescending(x => x.Height)
@@ -39,13 +39,13 @@ namespace HPeSimpleParser.Parser {
                 selectedImages = selectedImages.Where(RemoveSpecificDocDetailTypes).ToList();
             }
 
-            return selectedImages.DistinctBy(x => x.ImageUrlHttp).ToArray();
+            return selectedImages.DistinctBy(x => x.ImageUrlHttp).ToList();
             // Order secondly by contentType png, jpg, gif
             // Pick images by size range
         }
 
         private static bool RemoveSpecificDocDetailTypes(Image arg) {
-            switch (arg.DocumentTypeDetail) {
+            switch (arg.TypeDetail) {
                 case "product image hero":
                 case "product image - not as shown":
                 case "Concept Graphic":

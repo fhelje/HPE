@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
+using HPeSimpleParser.Generic.FileWriter;
 
 namespace HPeSimpleParser.HierarchyFile {
     public class CsvHierarchyOutputWriter2 : IDisposable {
