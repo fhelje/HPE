@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
-using HPeSimpleParser.HPE.Model;
-using HPeSimpleParser.Parser.HPE;
+using HPeSimpleParser.lib.HPE.Model;
+using HPeSimpleParser.lib.Parser.HPE;
 using Xunit;
 
 namespace HPeSimpleParser.Test {

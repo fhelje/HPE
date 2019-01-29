@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using FluentAssertions;
-using HPeSimpleParser.Generic.Model;
-using HPeSimpleParser.HPE.Model;
-using HPeSimpleParser.Parser;
+using HPeSimpleParser.lib.Generic.Model;
+using HPeSimpleParser.lib.HPE.Model;
+using HPeSimpleParser.lib.Parser;
 using HPeSimpleParser.Test.Builders;
 using Xunit;
 

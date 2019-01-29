@@ -1,9 +1,12 @@
 ﻿using FluentAssertions;
 using System;
 using System.Linq;
-using HPeSimpleParser.Generic.FileWriter;
-using HPeSimpleParser.Generic.FileWriter.Enums;
-using HPeSimpleParser.Generic.Model;
+using System.Text;
+using HPeSimpleParser.lib;
+using HPeSimpleParser.lib.Generic.FileWriter;
+using HPeSimpleParser.lib.Generic.FileWriter.Enums;
+using HPeSimpleParser.lib.Generic.Model;
+using Microsoft.Extensions.ObjectPool;
 using Xunit;
 
 namespace HPeSimpleParser.Test.Writers
@@ -16,7 +19,7 @@ namespace HPeSimpleParser.Test.Writers
             var marketing = new Marketing {
                 PartnerPartNumber = "0",
             };
-            var writer = new CsvMarketingGenerator();
+            var writer = new CsvMarketingGenerator(new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy()));
             writer.TryGenerateLine(marketing, out var data).Should().BeFalse();
             data.Should().BeNullOrEmpty();
         }
@@ -35,7 +38,7 @@ namespace HPeSimpleParser.Test.Writers
                 LanguageId = (string)expected[(int)CasMarketingColumnEnum.LanguageId],
             };
 
-            var writer = new CsvMarketingGenerator();
+            var writer = new CsvMarketingGenerator(new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy()));
             writer.TryGenerateLine(marketing, out var data).Should().BeTrue();
             data.Should().Be($"{string.Join("\t", expected.Select(x => x.ToDebugString()))}{Environment.NewLine}");
         }

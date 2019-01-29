@@ -2,9 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using HPeSimpleParser.Generic.FileWriter;
-using HPeSimpleParser.Generic.FileWriter.Enums;
-using HPeSimpleParser.Generic.Model;
+using System.Text;
+using HPeSimpleParser.lib;
+using HPeSimpleParser.lib.Generic.FileWriter;
+using HPeSimpleParser.lib.Generic.FileWriter.Enums;
+using HPeSimpleParser.lib.Generic.Model;
+using Microsoft.Extensions.ObjectPool;
 using Xunit;
 
 namespace HPeSimpleParser.Test.Writers
@@ -17,7 +20,7 @@ namespace HPeSimpleParser.Test.Writers
             var link = new Link {
                 PartnerPartNumber = "0",
             };
-            var writer = new CsvLinkGenerator();
+            var writer = new CsvLinkGenerator(new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy()));
             writer.TryGenerateLine(link, out var data).Should().BeFalse();
             data.Should().BeNull();
         }
@@ -31,7 +34,7 @@ namespace HPeSimpleParser.Test.Writers
                 PdfLinkManual = (string)expected[(int)CasLinkColumnEnum.PdfLinkManual],
                 Images = (List<Image>)expected[(int)CasLinkColumnEnum.Images]
             };
-            var writer = new CsvLinkGenerator();
+            var writer = new CsvLinkGenerator(new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy()));
             writer.TryGenerateLine(link, out var data);
             data.Should().Be($"{string.Join("\t", expected.Select(x => x.ToDebugString()))}{Environment.NewLine}");
         }
@@ -56,7 +59,7 @@ namespace HPeSimpleParser.Test.Writers
                         })
                         .ToList()
             };
-            var writer = new CsvLinkGenerator();
+            var writer = new CsvLinkGenerator(new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy()));
             writer.TryGenerateLine(link, out var data);
             data.Should().Be($"{string.Join("\t", expected.Select(x => x.ToDebugString()))}{Environment.NewLine}");
         }
@@ -81,7 +84,7 @@ namespace HPeSimpleParser.Test.Writers
                         })
                         .ToList()
             };
-            var writer = new CsvLinkGenerator();
+            var writer = new CsvLinkGenerator(new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy()));
             writer.TryGenerateLine(link, out var data);
             data.Should().Be($"{string.Join("\t", expected.Select(x => x.ToDebugString()))}{Environment.NewLine}");
         }

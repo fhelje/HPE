@@ -1,9 +1,12 @@
 ﻿using FluentAssertions;
 using System;
 using System.Linq;
-using HPeSimpleParser.Generic.FileWriter;
-using HPeSimpleParser.Generic.FileWriter.Enums;
-using HPeSimpleParser.Generic.Model;
+using System.Text;
+using HPeSimpleParser.lib;
+using HPeSimpleParser.lib.Generic.FileWriter;
+using HPeSimpleParser.lib.Generic.FileWriter.Enums;
+using HPeSimpleParser.lib.Generic.Model;
+using Microsoft.Extensions.ObjectPool;
 using Xunit;
 
 namespace HPeSimpleParser.Test.Writers
@@ -17,7 +20,7 @@ namespace HPeSimpleParser.Test.Writers
             var detail = new Detail {
                 PartnerPartNumber = "0",
             };
-            var writer = new CsvDetailGenerator();
+            var writer = new CsvDetailGenerator(new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy()));
             writer.TryGenerateLine(detail, out var data);
             data.Should().Be($"0{new string('\t', 21)}{Environment.NewLine}");
         }
@@ -51,7 +54,7 @@ namespace HPeSimpleParser.Test.Writers
                 WarrantyTime = (int)expected[(int)CasDetailColumnEnum.WarrantyTime],
             };
             
-            var writer = new CsvDetailGenerator();
+            var writer = new CsvDetailGenerator(new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy()));
             writer.TryGenerateLine(detail, out var data);
             data.Should().Be($"{string.Join("\t", expected.Select(x => x.ToDebugString()))}{Environment.NewLine}");
         }

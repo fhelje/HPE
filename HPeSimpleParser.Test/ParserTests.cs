@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
-using HPeSimpleParser.Parser;
+using HPeSimpleParser.lib.Parser;
 using Xunit;
 
 namespace HPeSimpleParser.Test {

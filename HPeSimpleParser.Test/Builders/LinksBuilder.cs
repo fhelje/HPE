@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using HPeSimpleParser.HPE.Model;
+using HPeSimpleParser.lib.HPE.Model;
 
 namespace HPeSimpleParser.Test.Builders {
     public class LinksBuilder {

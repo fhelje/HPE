@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentAssertions;
-using HPeSimpleParser.HPE.Model;
-using HPeSimpleParser.Parser;
+using HPeSimpleParser.lib.HPE.Model;
+using HPeSimpleParser.lib.Parser;
 using HPeSimpleParser.Test.Builders;
 using Xunit;
 
@@ -10,13 +10,13 @@ namespace HPeSimpleParser.Test {
         [Fact]
         public void Should_not_fail_if_images_is_null() {
             var product = ProductRootBuilder.With().WithImages(x => x.SetImagesToNull()).Build();
-            ImageHelpers.FilterImages(product.Links.SelectedImages).Should().NotBeNull();
+            ImageSelector.FilterImages(product.Links.SelectedImages).Should().NotBeNull();
         }
 
         [Fact]
         public void Should_not_fail_if_images_is_empty() {
             var product = ProductRootBuilder.With().Build();
-            ImageHelpers.FilterImages(product.Links.SelectedImages).Should().NotBeNull();
+            ImageSelector.FilterImages(product.Links.SelectedImages).Should().NotBeNull();
         }
 
         // Should return image if one exists
@@ -27,7 +27,7 @@ namespace HPeSimpleParser.Test {
                 .WithImages(x =>
                     x.AddImage(i => i.AddImage(y =>y.Default()))                    
                 ).Build();
-            ImageHelpers.FilterImages(product.Links.SelectedImages).Should().HaveCount(1);
+            ImageSelector.FilterImages(product.Links.SelectedImages).Should().HaveCount(1);
         }
         [Theory]
         [InlineData(400, 600, 301, 600, SizeCategoryEnum.Large)]
@@ -38,7 +38,7 @@ namespace HPeSimpleParser.Test {
                     x.AddImage(i => i.AddImage(y =>y.Default().SetHeight(img1Height.ToString()).SetWidth(img1Width.ToString())))
                      .AddImage(i => i.AddImage(y =>y.Default().SetHeight(img2Height.ToString()).SetWidth(img2Width.ToString())))
                 ).Build();
-            var images = ImageHelpers.FilterImages(product.Links.SelectedImages);
+            var images = ImageSelector.FilterImages(product.Links.SelectedImages);
             images.Should().HaveCount(1);
             images[0].Width.Should().Be(img1Width);
             images[0].Height.Should().Be(img1Height);
@@ -68,7 +68,7 @@ namespace HPeSimpleParser.Test {
                 imageLinks.AddImage(x => x.Default().SetHeight(img3Height.Value.ToString()).SetWidth(img3Width.Value.ToString()).SetUrl(same ? "Same" : Guid.NewGuid().ToString()));
             }
             // ReSharper restore PossibleInvalidOperationException
-            var images = ImageHelpers.FilterImages(imageLinks.Build());
+            var images = ImageSelector.FilterImages(imageLinks.Build());
             images.Should().HaveCount(count);
         }
 
@@ -78,7 +78,7 @@ namespace HPeSimpleParser.Test {
                 .AddImage(x => x.Default())
                 .AddImage(x => x.Default().SetSizeCategory(SizeCategoryEnum.Wrong))
                 .Build();
-            var images = ImageHelpers.FilterImages(imageList);
+            var images = ImageSelector.FilterImages(imageList);
             images.Should().HaveCount(1);
         }
 
@@ -88,7 +88,7 @@ namespace HPeSimpleParser.Test {
                 .AddImage(x => x.Default())
                 .AddImage(x => x.Default().SetMasterObjectName("2"))
                 .Build();
-            var images = ImageHelpers.FilterImages(imageList);
+            var images = ImageSelector.FilterImages(imageList);
             images.Should().HaveCount(2);
         }
         // Should_return_prefer_CmgAcronym_cmg674
@@ -98,7 +98,7 @@ namespace HPeSimpleParser.Test {
                 .AddImage(x => x.Default().SetCmgAcronym("cmg675"))
                 .AddImage(x => x.Default())
                 .Build();
-            var images = ImageHelpers.FilterImages(imageList);
+            var images = ImageSelector.FilterImages(imageList);
             images.Should().HaveCount(1);
             images[0].GroupingKey1.Should().Be("cmg674");
         }
@@ -110,7 +110,7 @@ namespace HPeSimpleParser.Test {
                 .AddImage(x => x.Default().SetOrientation("Left facing"))
                 .AddImage(x => x.Default().SetOrientation("Rear facing"))
                 .Build();
-            var images = ImageHelpers.FilterImages(imageList);
+            var images = ImageSelector.FilterImages(imageList);
             images.Should().HaveCount(3);
         }
 
@@ -124,7 +124,7 @@ namespace HPeSimpleParser.Test {
                         .AddImage(x => x.Default().SetContentType("jpg"))
                         .AddImage(x => x.Default().SetContentType("png"))
                         .Build();
-            var images = ImageHelpers.FilterImages(imageList);
+            var images = ImageSelector.FilterImages(imageList);
             images.Should().HaveCount(1);
             images[0].GroupingKey1.Should().Be("cmg674");
             images[0].ContentType.Should().Be("jpg");
@@ -136,7 +136,7 @@ namespace HPeSimpleParser.Test {
                         .AddImage(x => x.Default().SetDocumentTypeDetail("product image - not as shown"))
                         .AddImage(x => x.Default().SetDocumentTypeDetail("product image"))
                         .Build();
-            var images = ImageHelpers.FilterImages(imageList);
+            var images = ImageSelector.FilterImages(imageList);
             images.Should().HaveCount(1);
             images[0].TypeDetail.Should().Be("product image");
         }
@@ -147,7 +147,7 @@ namespace HPeSimpleParser.Test {
                         .AddImage(x => x.Default().SetUrl("http://1.jpg"))
                         .AddImage(x => x.Default().SetUrl("http://1.jpg").SetMasterObjectName("2"))
                         .Build();
-            var images = ImageHelpers.FilterImages(imageList);
+            var images = ImageSelector.FilterImages(imageList);
             images.Should().HaveCount(1);
         }
 

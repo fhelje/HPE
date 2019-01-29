@@ -2,9 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using HPeSimpleParser.Generic.FileWriter;
-using HPeSimpleParser.Generic.FileWriter.Enums;
-using HPeSimpleParser.Generic.Model;
+using System.Text;
+using HPeSimpleParser.lib;
+using HPeSimpleParser.lib.Generic.FileWriter;
+using HPeSimpleParser.lib.Generic.FileWriter.Enums;
+using HPeSimpleParser.lib.Generic.Model;
+using Microsoft.Extensions.ObjectPool;
 using Xunit;
 
 namespace HPeSimpleParser.Test.Writers
@@ -17,7 +20,7 @@ namespace HPeSimpleParser.Test.Writers
             var specifications = new Specifications {
                 PartnerPartNumber = "0",
             };
-            var writer = new CsvSpecificationsGenerator();
+            var writer = new CsvSpecificationsGenerator(new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy()));
             writer.TryGenerateLine(specifications, out var data).Should().BeFalse();
             data.Should().BeNull();
         }
@@ -29,7 +32,7 @@ namespace HPeSimpleParser.Test.Writers
                 PartnerPartNumber = (string)expected[(int)CasSpecificationsColumnEnum.PartnerPartNumber],
                 Items = (List<Specification>)expected[(int)CasSpecificationsColumnEnum.Items]
             };
-            var writer = new CsvSpecificationsGenerator();
+            var writer = new CsvSpecificationsGenerator(new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy()));
             writer.TryGenerateLine(specifications, out var data).Should().BeFalse();
             data.Should().BeNull();
         }
@@ -54,7 +57,7 @@ namespace HPeSimpleParser.Test.Writers
                         })
                         .ToList()
             };
-            var writer = new CsvSpecificationsGenerator();
+            var writer = new CsvSpecificationsGenerator(new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy()));
             writer.TryGenerateLine(specifications, out var data);
             data.Should().Be($"{string.Join("\t", expected.Select(x => x.ToDebugString()))}{Environment.NewLine}");
         }
@@ -79,7 +82,7 @@ namespace HPeSimpleParser.Test.Writers
                         })
                         .ToList()
             };
-            var writer = new CsvSpecificationsGenerator();
+            var writer = new CsvSpecificationsGenerator(new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy()));
             writer.TryGenerateLine(specifications, out var data);
             data.Should().Be($"{string.Join("\t", expected.Select(x => x.ToDebugString()))}{Environment.NewLine}");
         }
@@ -101,7 +104,7 @@ namespace HPeSimpleParser.Test.Writers
                         })
                         .ToList()
             };
-            var writer = new CsvSpecificationsGenerator();
+            var writer = new CsvSpecificationsGenerator(new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy()));
            writer.TryGenerateLine(specifications, out var data);
             data.Should().Be($"{string.Join("\t", expected.Select(x => x.ToDebugString()))}{Environment.NewLine}");
         }
@@ -123,7 +126,7 @@ namespace HPeSimpleParser.Test.Writers
                         })
                         .ToList()
             };
-            var writer = new CsvSpecificationsGenerator();
+            var writer = new CsvSpecificationsGenerator(new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy()));
             writer.TryGenerateLine(specifications, out var data);
             data.Should().Be($"{string.Join("\t", expected.Select(x => x.ToDebugString()))}{Environment.NewLine}");
         }
@@ -159,7 +162,7 @@ namespace HPeSimpleParser.Test.Writers
                         })
                         .ToList()
             };
-            var writer = new CsvSpecificationsGenerator();
+            var writer = new CsvSpecificationsGenerator(new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy()));
             writer.TryGenerateLine(specifications, out var data);
             data.Should().Be($"{string.Join("\t", expected.Select(x => x.ToDebugString()))}{Environment.NewLine}");
         }

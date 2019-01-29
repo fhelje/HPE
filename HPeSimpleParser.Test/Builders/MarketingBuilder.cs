@@ -1,4 +1,4 @@
-﻿using HPeSimpleParser.HPE.Model;
+﻿using HPeSimpleParser.lib.HPE.Model;
 
 namespace HPeSimpleParser.Test.Builders {
     public class MarketingBuilder {

@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "HPeSimpleParser": {
+      "commandName": "Project",
+      "commandLineArgs": "-v HPE"
+    }
+  }
+}

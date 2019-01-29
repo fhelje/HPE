@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using HPeSimpleParser.Generic.Model;
-using Specification = HPeSimpleParser.HPE.Model.Specification;
+using HPeSimpleParser.lib.Generic.Model;
+using Specification = HPeSimpleParser.lib.HPE.Model.Specification;
 
 namespace HPeSimpleParser.Test.Builders {
     public class SpecificationItemsBuilder {

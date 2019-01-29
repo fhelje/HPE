@@ -1,6 +1,6 @@
 ﻿using System;
-using HPeSimpleParser.HPE.Model;
-using HPeSimpleParser.Parser.HPE;
+using HPeSimpleParser.lib.HPE.Model;
+using HPeSimpleParser.lib.Parser.HPE;
 
 namespace HPeSimpleParser.Test.Builders {
     public class ImageBuilder {

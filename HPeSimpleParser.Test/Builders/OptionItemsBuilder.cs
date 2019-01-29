@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using HPeSimpleParser.HPE.Model;
+using HPeSimpleParser.lib.HPE.Model;
 
 namespace HPeSimpleParser.Test.Builders {
     public class OptionItemsBuilder {
@@ -15,7 +15,7 @@ namespace HPeSimpleParser.Test.Builders {
         }
 
         public OptionItemsBuilder AddDefault() {
-            _options.Add(new HPE.Model.Option ("ManufacturerCode","OptionPartnerPartNumber","OptionGroupCode","OptionGroupName"));
+            _options.Add(new Option ("ManufacturerCode","OptionPartnerPartNumber","OptionGroupCode","OptionGroupName"));
             return this;
         }
     }
