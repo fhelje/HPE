@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using HPeSimpleParser.lib.HPE.Model;
-using Image = HPeSimpleParser.lib.Generic.Model.Image;
-using Option = HPeSimpleParser.lib.Generic.Model.Option;
-using Specification = HPeSimpleParser.lib.Generic.Model.Specification;
+using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
+using Image = FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model.Image;
+using Option = FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model.Option;
+using Specification = FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model.Specification;
 
-namespace HPeSimpleParser.lib.Parser {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
     public static class ProductRootConverter {
         public static Generic.Model.Item ToItem(this ProductRoot input) {
             var product = input.Product;

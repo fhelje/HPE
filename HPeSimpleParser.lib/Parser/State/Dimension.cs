@@ -1,4 +1,4 @@
-﻿namespace HPeSimpleParser.lib.Parser.State {
+﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser.State {
     public struct Dimension {
         public Dimension(decimal? height, decimal? width, decimal? depth, DimensionUnitOfMeasure unitOfMeasure) {
             Height = height;

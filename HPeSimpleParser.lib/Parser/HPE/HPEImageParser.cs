@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using HPeSimpleParser.lib.HPE.Model;
+using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
 
-namespace HPeSimpleParser.lib.Parser.HPE {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser.HPE {
     public class HPEImageParser {
         private static Dictionary<string, int> _contentTypePriority = new Dictionary<string, int> {
             { "jpg",0},

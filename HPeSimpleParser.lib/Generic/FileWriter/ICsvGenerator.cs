@@ -1,4 +1,4 @@
-﻿namespace HPeSimpleParser.lib.Generic.FileWriter
+﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter
 {
     public interface ICsvGenerator<in T> 
     {

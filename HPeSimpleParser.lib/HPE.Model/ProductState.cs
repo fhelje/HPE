@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HPeSimpleParser.lib.HPE.Model {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model {
     public class ProductState {
         public bool CarePackRegistration { get; set; }
         public string DescriptionLong { get; set; }

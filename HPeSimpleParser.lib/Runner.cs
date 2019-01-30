@@ -3,11 +3,11 @@ using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
-using HPeSimpleParser.lib.Enums;
-using HPeSimpleParser.lib.Generic.FileWriter;
-using HPeSimpleParser.lib.Parser;
+using FSSystem.ContentAdapter.HPEAndHPInc.Enums;
+using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter;
+using FSSystem.ContentAdapter.HPEAndHPInc.Parser;
 
-namespace HPeSimpleParser.lib {
+namespace FSSystem.ContentAdapter.HPEAndHPInc {
     public abstract class Runner : IRunner {
         public abstract Task Execute();
         protected async Task Import(WriterConfiguration config, IParserDefinition parserDefinition, VariantType variant) {

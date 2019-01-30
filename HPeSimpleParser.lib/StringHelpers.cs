@@ -2,10 +2,10 @@
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using HPeSimpleParser.lib.Generic.FileWriter;
-using HPeSimpleParser.lib.Generic.Model;
+using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter;
+using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
 
-namespace HPeSimpleParser.lib
+namespace FSSystem.ContentAdapter.HPEAndHPInc
 {
     public static class StringHelpers
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using FluentAssertions;
-using HPeSimpleParser.lib.HPE.Model;
-using HPeSimpleParser.lib.Parser;
+using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
+using FSSystem.ContentAdapter.HPEAndHPInc.Parser;
 using HPeSimpleParser.Test.Builders;
 using Xunit;
 

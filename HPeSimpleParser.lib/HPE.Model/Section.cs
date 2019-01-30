@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace HPeSimpleParser.lib.HPE.Model
+namespace FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model
 {
     public class Section
     {

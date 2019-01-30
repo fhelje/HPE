@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HPeSimpleParser.lib.HPE.Model {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model {
     public class Product {
         public Product(string partnerPartNumber, string partNumber, string manufacturerName, string manufacturerCode, string categoryID, string categoryName, string partnerHierarchyCode, string description, string descriptionLong, string productCode, bool isEol, DateTime changeDate, string alternateCategoryID, string alternateCategoryName, string alternatePartnerHierarchyCode) {
             PartnerPartNumber = partnerPartNumber;

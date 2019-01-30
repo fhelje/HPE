@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using HPeSimpleParser.lib.HPE.Model;
+using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
 using Nest;
 
-namespace HPeSimpleParser.lib {
+namespace FSSystem.ContentAdapter.HPEAndHPInc {
     public class ElasticIndexer {
         private ElasticClient _client;
 

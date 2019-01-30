@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Linq;
-using System.Net;
+﻿using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
-using HPeSimpleParser.lib;
-using HPeSimpleParser.lib.Enums;
-using HPeSimpleParser.lib.Generic.FileWriter;
+using FSSystem.ContentAdapter.HPEAndHPInc;
+using FSSystem.ContentAdapter.HPEAndHPInc.Enums;
+using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter;
 using McMaster.Extensions.CommandLineUtils;
 
 namespace HPeSimpleParser {

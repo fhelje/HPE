@@ -1,6 +1,6 @@
 ﻿using FluentAssertions;
-using HPeSimpleParser.lib.Parser;
-using HPeSimpleParser.lib.Parser.State;
+using FSSystem.ContentAdapter.HPEAndHPInc.Parser;
+using FSSystem.ContentAdapter.HPEAndHPInc.Parser.State;
 using Xunit;
 namespace HPeSimpleParser.Test {
     public class DetailParserTests {

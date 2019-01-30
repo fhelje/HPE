@@ -1,11 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using HPeSimpleParser.lib.Enums;
-using HPeSimpleParser.lib.HPE.Model;
-using HPeSimpleParser.lib.Parser.State;
+using FSSystem.ContentAdapter.HPEAndHPInc.Enums;
+using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
+using FSSystem.ContentAdapter.HPEAndHPInc.Parser.State;
 
-namespace HPeSimpleParser.lib.Parser {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
     public class HPEStateConverter {
         public ProductRoot CreateProductRoot(string file, ParseState state, VariantType variantType) {
             var specificationsLabeledItems = CreateSpecificationsLabeledItems(state);

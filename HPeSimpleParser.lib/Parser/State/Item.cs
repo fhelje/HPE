@@ -1,4 +1,4 @@
-﻿namespace HPeSimpleParser.lib.Parser.State {
+﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser.State {
     internal static class Item {
         public const string NodeName = "item";
         // ReSharper disable MemberHidesStaticFromOuterClass

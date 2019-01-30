@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text;
-using HPeSimpleParser.lib.Generic.FileWriter;
+using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter;
 
-namespace HPeSimpleParser.lib.HierarchyFile {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.HierarchyFile {
     public class CsvHierarchyGenerator : ICsvGenerator<HierarchyNode>{
         private readonly StringBuilder _sb;
 

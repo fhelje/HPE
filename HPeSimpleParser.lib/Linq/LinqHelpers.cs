@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace HPeSimpleParser.lib.Linq {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Linq {
     public static class LinqHelpers {
         public static string GetContentType(this string url) {
             var x = url.AsSpan();

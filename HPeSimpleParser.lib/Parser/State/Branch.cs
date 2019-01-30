@@ -1,4 +1,4 @@
-﻿namespace HPeSimpleParser.lib.Parser.State {
+﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser.State {
     public class Branch {
         public (string Name, string Id) ProductType {get;set;}
         public (string Name, string Id) MarketingCategory {get;set;}

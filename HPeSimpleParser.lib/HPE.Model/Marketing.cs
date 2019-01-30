@@ -1,4 +1,4 @@
-﻿namespace HPeSimpleParser.lib.HPE.Model {
+﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model {
     public class Marketing {
 
         public Marketing(string marketingText, string marketingCode, string url, string changeCode) {

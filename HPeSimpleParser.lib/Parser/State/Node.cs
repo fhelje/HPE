@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HPeSimpleParser.lib.Parser.State {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser.State {
     public class Node : IEquatable<Node> {
         public bool Equals(Node other) {
             if (other is null) return false;

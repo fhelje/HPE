@@ -1,4 +1,4 @@
-﻿namespace HPeSimpleParser.lib.Enums {
+﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.Enums {
     public enum LinkColumnV1 {
         PartnerPartNumber,  // \item[num] inclusive # XXXType
         PdfLinkDataSheet,   // \item\content\tech_specs\quickspeclinks\info_quickspec_doc_ww 

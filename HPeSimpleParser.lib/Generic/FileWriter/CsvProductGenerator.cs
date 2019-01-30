@@ -2,7 +2,7 @@
 using System.Text;
 using Microsoft.Extensions.ObjectPool;
 
-namespace HPeSimpleParser.lib.Generic.FileWriter
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter
 {
     public class CsvProductGenerator : ICsvGenerator<Model.Product>
     {

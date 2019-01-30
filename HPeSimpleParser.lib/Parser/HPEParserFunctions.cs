@@ -3,12 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Xml;
-using HPeSimpleParser.lib.HPE.Model;
-using HPeSimpleParser.lib.Linq;
-using HPeSimpleParser.lib.Parser.HPE;
-using HPeSimpleParser.lib.Parser.State;
+using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
+using FSSystem.ContentAdapter.HPEAndHPInc.Linq;
+using FSSystem.ContentAdapter.HPEAndHPInc.Parser.HPE;
+using FSSystem.ContentAdapter.HPEAndHPInc.Parser.State;
 
-namespace HPeSimpleParser.lib.Parser {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
     public static class HPEParserFunctions {
         public static async Task CarePackRegistrationParser(ParseState state, XmlReader reader) {
             if (state.NodeType == XmlNodeType.Text) {

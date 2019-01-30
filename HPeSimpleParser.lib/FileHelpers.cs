@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using HPeSimpleParser.lib.Generic.FileWriter;
+using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter;
 
-namespace HPeSimpleParser.lib {
+namespace FSSystem.ContentAdapter.HPEAndHPInc {
     public static class FileHelpers {
         public static void DeleteExistingFiles(FileTypes fileTypes, WriterConfiguration config) {
             DeleteFile(FileTypes.Detail, fileTypes, Path.Combine(config.OutputPath, config.CsvDirectory, config.DetailFileName));

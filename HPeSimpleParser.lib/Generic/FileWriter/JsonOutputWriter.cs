@@ -2,7 +2,7 @@
 using System.IO;
 using Newtonsoft.Json;
 
-namespace HPeSimpleParser.lib.Generic.FileWriter {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter {
     public class JsonOutputWriter : IDisposable {
         private readonly WriterConfiguration _configuration;
         private JsonWriter _jsonWriter;

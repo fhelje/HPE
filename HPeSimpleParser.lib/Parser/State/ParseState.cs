@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Xml;
-using HPeSimpleParser.lib.Enums;
-using HPeSimpleParser.lib.HPE.Model;
-using Hierarchy = HPeSimpleParser.lib.HPE.Model.Hierarchy;
+using FSSystem.ContentAdapter.HPEAndHPInc.Enums;
+using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
+using Hierarchy = FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model.Hierarchy;
 
-namespace HPeSimpleParser.lib.Parser.State
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser.State
 {
     public class ParseState
     {

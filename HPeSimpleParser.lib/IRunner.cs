@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace HPeSimpleParser.lib {
+namespace FSSystem.ContentAdapter.HPEAndHPInc {
     public interface IRunner {
         Task Execute();
     }

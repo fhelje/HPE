@@ -1,4 +1,4 @@
-﻿namespace HPeSimpleParser.lib.Enums {
+﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.Enums {
     public enum ProductColumnV1 {
         PartnerPartNumber,  // \item[num] inclusive # XXX
         PartNumber,         // \item[num] inclusive # XXX

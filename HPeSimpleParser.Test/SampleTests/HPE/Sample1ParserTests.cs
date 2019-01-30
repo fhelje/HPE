@@ -3,10 +3,10 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
-using HPeSimpleParser.lib.Enums;
-using HPeSimpleParser.lib.Generic.Model;
-using HPeSimpleParser.lib.HPE.Model;
-using HPeSimpleParser.lib.Parser;
+using FSSystem.ContentAdapter.HPEAndHPInc.Enums;
+using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
+using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
+using FSSystem.ContentAdapter.HPEAndHPInc.Parser;
 using Xunit;
 
 namespace HPeSimpleParser.Test.SampleTests {

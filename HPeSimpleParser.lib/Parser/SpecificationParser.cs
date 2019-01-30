@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using HPeSimpleParser.lib.HPE.Model;
-using HPeSimpleParser.lib.Parser.State;
+using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
+using FSSystem.ContentAdapter.HPEAndHPInc.Parser.State;
 
-namespace HPeSimpleParser.lib.Parser {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
     public static class SpecificationParser {
         public static decimal? TryFindWeightInSpecifications(this IReadOnlyList<Specification> specifications, params string[] names) {
             if (specifications == null) {

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using HPeSimpleParser.lib.Generic.Model;
-using Specification = HPeSimpleParser.lib.HPE.Model.Specification;
+using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
+using Specification = FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model.Specification;
 
 namespace HPeSimpleParser.Test.Builders {
     public class SpecificationItemsBuilder {

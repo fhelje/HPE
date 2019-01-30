@@ -4,7 +4,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.ObjectPool;
 
-namespace HPeSimpleParser.lib.Generic.FileWriter {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter {
     public class CsvOutputWriter : IDisposable {
 
         private readonly CsvDetailGenerator _detailGenerator;

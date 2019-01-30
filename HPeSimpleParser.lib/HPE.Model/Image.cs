@@ -1,4 +1,4 @@
-﻿namespace HPeSimpleParser.lib.HPE.Model {
+﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model {
     public class Image {
 
         public Image(string groupingKey1, string groupingKey2, string contentType, string pixelHeight, string orientation, string pixelWidth, string imageUrlHttp, string typeDetail, string fullTitle, int contentTypePriority, SizeCategoryEnum sizeCategory, int documentTypeDetailPriority, int height, int width) {

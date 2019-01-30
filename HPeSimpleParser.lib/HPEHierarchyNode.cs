@@ -1,6 +1,6 @@
 ﻿using System.Collections.Concurrent;
 
-namespace HPeSimpleParser.lib {
+namespace FSSystem.ContentAdapter.HPEAndHPInc {
     public class HPEHierarchyNode {
         public HPEHierarchyNode() {
             Children = new ConcurrentDictionary<string, HPEHierarchyNode>();

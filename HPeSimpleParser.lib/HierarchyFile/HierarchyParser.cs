@@ -3,7 +3,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Xml;
 
-namespace HPeSimpleParser.lib.HierarchyFile {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.HierarchyFile {
     public class HierarchyParser {
         public async Task<HierarchyNode> Parse(string file) {
             var branch = new Stack<HierarchyNode>();

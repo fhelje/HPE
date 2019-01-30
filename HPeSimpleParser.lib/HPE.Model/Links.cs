@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HPeSimpleParser.lib.HPE.Model {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model {
     public class Links {
         public Links(string pdfLinkDataSheet, string pdfLinkManual, IReadOnlyList<Image> selectedImages) {
             PdfLinkDataSheet = pdfLinkDataSheet;

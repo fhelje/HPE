@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
-using HPeSimpleParser.lib.Enums;
-using HPeSimpleParser.lib.Generic.FileWriter;
-using HPeSimpleParser.lib.Parser;
+using FSSystem.ContentAdapter.HPEAndHPInc.Enums;
+using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter;
+using FSSystem.ContentAdapter.HPEAndHPInc.Parser;
 
-namespace HPeSimpleParser.lib {
+namespace FSSystem.ContentAdapter.HPEAndHPInc {
     public class HpEnterpriseImportParser : Runner {
         private readonly WriterConfiguration _configuration;
 

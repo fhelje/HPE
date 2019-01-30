@@ -1,4 +1,4 @@
-﻿namespace HPeSimpleParser.lib.HPE.Model {
+﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model {
     public enum SizeCategoryEnum {
         Wrong,
         Small,

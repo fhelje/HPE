@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HPeSimpleParser.lib\HPeSimpleParser.lib.csproj" />
+    <ProjectReference Include="..\HPeSimpleParser.lib\FSSystem.ContentAdapter.HPEAndHPInc.csproj" />
   </ItemGroup>
 
 </Project>

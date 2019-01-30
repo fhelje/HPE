@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using HPeSimpleParser.lib.HPE.Model;
+using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
 
-namespace HPeSimpleParser.lib.Parser.State {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser.State {
     public class LinksState {
         public LinksState() {
             ImageLinks = new List<Image>();

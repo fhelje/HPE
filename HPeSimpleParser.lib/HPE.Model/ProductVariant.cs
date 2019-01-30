@@ -1,4 +1,4 @@
-namespace HPeSimpleParser.lib.HPE.Model {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model {
     public class ProductVariant {
         public ProductVariant(string description, string opt, string upcCode) {
             Description = description;

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace HPeSimpleParser.lib.Generic.FileWriter
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter
 {
     public class CsvSupplierGenerator : ICsvGenerator<SupplierNode>
     {

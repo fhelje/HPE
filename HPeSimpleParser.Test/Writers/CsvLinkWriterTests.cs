@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using HPeSimpleParser.lib;
-using HPeSimpleParser.lib.Generic.FileWriter;
-using HPeSimpleParser.lib.Generic.FileWriter.Enums;
-using HPeSimpleParser.lib.Generic.Model;
+using FSSystem.ContentAdapter.HPEAndHPInc;
+using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter;
+using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter.Enums;
+using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
 using Microsoft.Extensions.ObjectPool;
 using Xunit;
 

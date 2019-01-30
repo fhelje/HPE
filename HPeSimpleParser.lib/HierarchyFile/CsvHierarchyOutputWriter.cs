@@ -1,9 +1,9 @@
 ﻿using System;
 using System.IO;
 using System.Threading.Tasks;
-using HPeSimpleParser.lib.Generic.FileWriter;
+using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter;
 
-namespace HPeSimpleParser.lib.HierarchyFile {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.HierarchyFile {
     public class CsvHierarchyOutputWriter : IDisposable {
         private readonly CsvHierarchyGenerator _hierarchyGenerator;
         private readonly TextWriter _hierarchyWriter;

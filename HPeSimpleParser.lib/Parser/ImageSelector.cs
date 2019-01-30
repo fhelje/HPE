@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
-using HPeSimpleParser.lib.HPE.Model;
-using HPeSimpleParser.lib.Linq;
+using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
+using FSSystem.ContentAdapter.HPEAndHPInc.Linq;
 
-namespace HPeSimpleParser.lib.Parser {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
     public static class ImageSelector {
         public static List<Image> FilterImages(IReadOnlyList<Image> linksImageLinks) {
             var selectedImages = new List<Image>();

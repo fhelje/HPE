@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HPeSimpleParser.lib.HPE.Model {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model {
     public class Options {
         public Options(IReadOnlyList<Option> options) {
             Items = options;

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
 
-namespace HPeSimpleParser.lib {
+namespace FSSystem.ContentAdapter.HPEAndHPInc {
     public static class DataflowBlockExtensions {
         public static void CompleteWhenAll(this IDataflowBlock targetBlock, params IDataflowBlock[] sourceBlocks) {
             if (sourceBlocks.Length == 0) {

@@ -3,9 +3,9 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
-using HPeSimpleParser.lib.Parser.State;
+using FSSystem.ContentAdapter.HPEAndHPInc.Parser.State;
 
-namespace HPeSimpleParser.lib.Parser {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
     public class DetailValueParser {
         private static readonly Lazy<Regex> dimensionRegex = new Lazy<Regex>(new Regex(@"([(]*(?<dim1>l|h|d|w)\s*x\s*(?<dim2>l|h|d|w)\s*x\s*(?<dim3>l|h|d|w)[)]*)*\s*
 ([(]+(?<dim>\w*)[)]+|(?<dim>([WDH]|Width:\s*|Height:\s*|Depth:\s*)))*

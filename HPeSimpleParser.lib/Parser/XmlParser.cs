@@ -1,11 +1,11 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Xml;
-using HPeSimpleParser.lib.Enums;
-using HPeSimpleParser.lib.HPE.Model;
-using HPeSimpleParser.lib.Parser.State;
+using FSSystem.ContentAdapter.HPEAndHPInc.Enums;
+using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
+using FSSystem.ContentAdapter.HPEAndHPInc.Parser.State;
 
-namespace HPeSimpleParser.lib.Parser {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
     public class XmlParser {
         private readonly NodeParser _nodeParser;
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace HPeSimpleParser.lib.HPE.Model
+namespace FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model
 {
     public class Detail
     {

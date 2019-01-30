@@ -1,4 +1,4 @@
-namespace HPeSimpleParser.lib.Parser.State {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser.State {
     public class ImageState  {
         public string GroupingKey1 { get; set; }
         public string GroupingKey2 { get; set; }

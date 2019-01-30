@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using System.Xml;
-using HPeSimpleParser.lib.Parser.State;
+using FSSystem.ContentAdapter.HPEAndHPInc.Parser.State;
 
-namespace HPeSimpleParser.lib.Parser {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
     internal class NodeParser {
         private readonly IParserDefinition _parserDefinition;
 

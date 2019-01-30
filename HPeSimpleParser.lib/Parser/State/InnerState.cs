@@ -1,4 +1,4 @@
-namespace HPeSimpleParser.lib.Parser.State {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser.State {
     public enum InnerState {
         None,
         TechnicalSpecifications,

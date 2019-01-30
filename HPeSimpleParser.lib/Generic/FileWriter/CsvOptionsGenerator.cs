@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text;
-using HPeSimpleParser.lib.Generic.Model;
+using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
 using Microsoft.Extensions.ObjectPool;
 
-namespace HPeSimpleParser.lib.Generic.FileWriter
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter
 {
     public class CsvOptionsGenerator : ICsvGenerator<Options>
     {

@@ -1,4 +1,4 @@
-﻿namespace HPeSimpleParser.lib.Generic.FileWriter.Enums
+﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter.Enums
 {
     public enum CasProductColumnEnum
     {

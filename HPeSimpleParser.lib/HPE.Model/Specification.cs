@@ -1,6 +1,6 @@
-﻿using HPeSimpleParser.lib.Generic.Model;
+﻿using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
 
-namespace HPeSimpleParser.lib.HPE.Model {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model {
     public class Specification {
         public Specification(string name, string value, SpecificationType type, string unitOfMeasure, string id, string groupId, string groupName, string label) {
             Name = name;

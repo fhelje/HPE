@@ -1,5 +1,5 @@
 ﻿using System;
-using HPeSimpleParser.lib.HPE.Model;
+using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
 
 namespace HPeSimpleParser.Test.Builders {
     public class ProductRootBuilder {

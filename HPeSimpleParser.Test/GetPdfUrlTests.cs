@@ -1,5 +1,5 @@
 ﻿using FluentAssertions;
-using HPeSimpleParser.lib.Parser;
+using FSSystem.ContentAdapter.HPEAndHPInc.Parser;
 using Xunit;
 
 namespace HPeSimpleParser.Test {

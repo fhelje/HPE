@@ -2,9 +2,9 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Xml;
-using HPeSimpleParser.lib.Generic.FileWriter;
+using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter;
 
-namespace HPeSimpleParser.lib {
+namespace FSSystem.ContentAdapter.HPEAndHPInc {
     public class DeliveryFileParser {
         public async Task<(int count, List<string> files)> DeliveryFileReader(WriterConfiguration conf) {
             var settings = new XmlReaderSettings {

@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using HPeSimpleParser.lib.HPE.Model;
+using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
 
 namespace HPeSimpleParser.Test.Builders {
     internal class BranchBuilder {

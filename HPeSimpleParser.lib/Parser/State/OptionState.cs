@@ -1,4 +1,4 @@
-﻿namespace HPeSimpleParser.lib.Parser.State {
+﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser.State {
     public class OptionState {
         public string OptionGroupCode { get; set; }
         public string OptionGroupName { get; set; }

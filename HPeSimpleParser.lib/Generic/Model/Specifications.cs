@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HPeSimpleParser.lib.Generic.Model
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model
 {
     public class Specifications
     {

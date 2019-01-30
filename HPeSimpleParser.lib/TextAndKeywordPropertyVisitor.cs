@@ -2,7 +2,7 @@
 using System.Reflection;
 using Nest;
 
-namespace HPeSimpleParser.lib {
+namespace FSSystem.ContentAdapter.HPEAndHPInc {
     public class TextAndKeywordPropertyVisitor : NoopPropertyVisitor {
         public override IProperty Visit(PropertyInfo propertyInfo, ElasticsearchPropertyAttributeBase attribute) {
             if (propertyInfo.Name == "Items") {

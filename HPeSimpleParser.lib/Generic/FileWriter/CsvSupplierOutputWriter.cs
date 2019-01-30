@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 
-namespace HPeSimpleParser.lib.Generic.FileWriter {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter {
     public class CsvSupplierOutputWriter : IDisposable {
         private readonly CsvSupplierGenerator _supplierGenerator;
         private readonly TextWriter _supplierWriter;

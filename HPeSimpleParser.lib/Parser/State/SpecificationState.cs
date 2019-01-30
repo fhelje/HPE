@@ -1,6 +1,6 @@
-﻿using HPeSimpleParser.lib.Generic.Model;
+﻿using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
 
-namespace HPeSimpleParser.lib.Parser.State {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser.State {
     public class SpecificationState {
         public string Name { get; set; }
         public string Value { get; set; }

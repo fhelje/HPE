@@ -2,9 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Xml;
-using HPeSimpleParser.lib.Parser.State;
+using FSSystem.ContentAdapter.HPEAndHPInc.Parser.State;
 
-namespace HPeSimpleParser.lib.Parser {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
     public class HPEParserDefinition : IParserDefinition {
         private static Dictionary<InnerState, Func<ParseState, XmlReader, Task>> _stateParser =
             new Dictionary<InnerState, Func<ParseState, XmlReader, Task>> {

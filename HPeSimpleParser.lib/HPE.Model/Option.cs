@@ -1,4 +1,4 @@
-﻿namespace HPeSimpleParser.lib.HPE.Model {
+﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model {
     public class Option {
         public Option(string manufacturerCode, string optionPartnerPartNumber, string optionGroupCode, string optionGroupName) {
             ManufacturerCode = manufacturerCode;

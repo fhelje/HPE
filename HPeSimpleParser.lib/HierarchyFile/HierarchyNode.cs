@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace HPeSimpleParser.lib.HierarchyFile {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.HierarchyFile {
     public class HierarchyNode {
         public HierarchyNode() {
             Children = new List<HierarchyNode>();

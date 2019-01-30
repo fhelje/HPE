@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
 using System.Xml;
-using HPeSimpleParser.lib.HPE.Model;
-using HPeSimpleParser.lib.Parser.State;
+using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
+using FSSystem.ContentAdapter.HPEAndHPInc.Parser.State;
 
-namespace HPeSimpleParser.lib.Parser {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
     public static class InnerStateParsers {
         public static async Task LinkInnerParser(ParseState state, XmlReader reader) {
             if (state.NodeType == XmlNodeType.Element && state.InnerState == InnerState.Option) {

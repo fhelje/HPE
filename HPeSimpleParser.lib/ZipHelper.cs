@@ -1,6 +1,6 @@
 using System.IO.Compression;
 
-namespace HPeSimpleParser.lib {
+namespace FSSystem.ContentAdapter.HPEAndHPInc {
     internal static class ZipHelper {
         public static void Zip(string directory, string zipFile) {
             FileHelpers.DeleteIfExists(zipFile);
