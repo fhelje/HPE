@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
+using HPeSimpleParser.lib.Enums;
 using HPeSimpleParser.lib.Generic.Model;
 using HPeSimpleParser.lib.HPE.Model;
 using HPeSimpleParser.lib.Parser;
@@ -23,11 +24,11 @@ namespace HPeSimpleParser.Test.SampleTests.HPInc {
         public async Task InitializeAsync() {
             var filePath = Path.Combine("Data", "HPInc", "pad_en_gb_global_product_L_1EQ04EA_18405003.xml");
             var parser = new XmlParser(new HPIncParserDefinition());
-            _data = await parser.ParseDocument(filePath);
+            _data = await parser.ParseDocument(filePath, VariantType.HPInc);
             _weightSpecification = _data.Specifications.LabeledItems.First(x=>x.Name == "weightmet");
             _dimSpecification = _data.Specifications.LabeledItems.First(x=>x.Name == "dimenmet");
-            _plNode = _data.Hierarchy.First(x => x.PartnerHierarchyCode == "PL");
-            _hpeNode = _data.Hierarchy.First(x => x.PartnerHierarchyCode == "HPE");
+            _plNode = _data.Hierarchy.First(x => x.PartnerHierarchyCode == "HPIncPL");
+            _hpeNode = _data.Hierarchy.First(x => x.PartnerHierarchyCode == "HPInc");
         }
 
         public Task DisposeAsync() {
@@ -64,7 +65,7 @@ namespace HPeSimpleParser.Test.SampleTests.HPInc {
 
         [Fact]
         public void Should_have_correct_product_CategoryID() {
-            _data.Product.CategoryID.Should().Be("11623738");
+            _data.Product.CategoryID.Should().Be("321957|64295|3955549|5405383|11623738");
         }
 
         [Fact]
@@ -74,7 +75,7 @@ namespace HPeSimpleParser.Test.SampleTests.HPInc {
 
         [Fact]
         public void Should_have_correct_product_PartnerHierarchyCode() {
-            _data.Product.PartnerHierarchyCode.Should().Be("HPE");
+            _data.Product.PartnerHierarchyCode.Should().Be("HPInc");
         }
 
         [Fact]
@@ -89,7 +90,7 @@ namespace HPeSimpleParser.Test.SampleTests.HPInc {
 
         [Fact]
         public void Should_have_correct_product_AlternatePartnerHierarchyCode() {
-            _data.Product.AlternatePartnerHierarchyCode.Should().Be("PL");
+            _data.Product.AlternatePartnerHierarchyCode.Should().Be("HPIncPL");
         }
 
         [Fact]
@@ -114,12 +115,12 @@ namespace HPeSimpleParser.Test.SampleTests.HPInc {
 
         [Fact]
         public void Should_have_correct_product_ManufacturerCode() {
-            _data.Product.ManufacturerCode.Should().Be("HPE");
+            _data.Product.ManufacturerCode.Should().Be("HPInc");
         }
 
         [Fact]
         public void Should_have_correct_product_ManufacturerName() {
-            _data.Product.ManufacturerName.Should().Be("HPE");
+            _data.Product.ManufacturerName.Should().Be("HPInc");
         }
 
         [Fact]
@@ -266,7 +267,7 @@ namespace HPeSimpleParser.Test.SampleTests.HPInc {
         [Fact]
         public void Should_have_hpe_Hierarchy_with_correct_prop_Name() {
             var node = _hpeNode;
-            node.Name.Should().Be("HPE");
+            node.Name.Should().Be("HPInc");
         }
         [Fact]
         public void Should_have_hpe_Hierarchy_with_correct_prop_ParentCategoryID() {
@@ -292,7 +293,7 @@ namespace HPeSimpleParser.Test.SampleTests.HPInc {
         [Fact]
         public void Should_have_PL_Hierarchy_with_correct_prop_Name() {
             var node = _plNode;
-            node.Name.Should().Be("PL");
+            node.Name.Should().Be("HPIncPL");
         }
         [Fact]
         public void Should_have_PL_Hierarchy_with_correct_prop_ParentCategoryID() {
@@ -320,11 +321,11 @@ namespace HPeSimpleParser.Test.SampleTests.HPInc {
         }
         [Fact]
         public void Should_have_branch_level_1_with_correct_property_Name() {
-            _data.Branch[0].Name.Should().Be("HPE");
+            _data.Branch[0].Name.Should().Be("HPInc");
         }
         [Fact]
         public void Should_have_branch_level_1_with_correct_property_PartnerHierarchyCode() {
-            _data.Branch[0].PartnerHierarchyCode.Should().Be("HPE");
+            _data.Branch[0].PartnerHierarchyCode.Should().Be("HPInc");
         }
         [Fact]
         public void Should_have_branch_level_1_with_correct_property_ParentCategoryID() {
@@ -344,11 +345,11 @@ namespace HPeSimpleParser.Test.SampleTests.HPInc {
         }
         [Fact]
         public void Should_have_branch_level_2_with_correct_property_Name() {
-            _data.Branch[1].Name.Should().Be("HPE");
+            _data.Branch[1].Name.Should().Be("HPInc");
         }
         [Fact]
         public void Should_have_branch_level_2_with_correct_property_PartnerHierarchyCode() {
-            _data.Branch[1].PartnerHierarchyCode.Should().Be("HPE");
+            _data.Branch[1].PartnerHierarchyCode.Should().Be("HPInc");
         }
         [Fact]
         public void Should_have_branch_level_2_with_correct_property_ParentCategoryID() {
@@ -368,11 +369,11 @@ namespace HPeSimpleParser.Test.SampleTests.HPInc {
         }
         [Fact]
         public void Should_have_branch_level_3_with_correct_property_Name() {
-            _data.Branch[2].Name.Should().Be("HPE");
+            _data.Branch[2].Name.Should().Be("HPInc");
         }
         [Fact]
         public void Should_have_branch_level_3_with_correct_property_PartnerHierarchyCode() {
-            _data.Branch[2].PartnerHierarchyCode.Should().Be("HPE");
+            _data.Branch[2].PartnerHierarchyCode.Should().Be("HPInc");
         }
         [Fact]
         public void Should_have_branch_level_3_with_correct_property_ParentCategoryID() {
@@ -392,11 +393,11 @@ namespace HPeSimpleParser.Test.SampleTests.HPInc {
         }
         [Fact]
         public void Should_have_branch_level_4_with_correct_property_Name() {
-            _data.Branch[3].Name.Should().Be("HPE");
+            _data.Branch[3].Name.Should().Be("HPInc");
         }
         [Fact]
         public void Should_have_branch_level_4_with_correct_property_PartnerHierarchyCode() {
-            _data.Branch[3].PartnerHierarchyCode.Should().Be("HPE");
+            _data.Branch[3].PartnerHierarchyCode.Should().Be("HPInc");
         }
         [Fact]
         public void Should_have_branch_level_4_with_correct_property_ParentCategoryID() {
@@ -416,11 +417,11 @@ namespace HPeSimpleParser.Test.SampleTests.HPInc {
         }
         [Fact]
         public void Should_have_branch_level_5_with_correct_property_Name() {
-            _data.Branch[4].Name.Should().Be("HPE");
+            _data.Branch[4].Name.Should().Be("HPInc");
         }
         [Fact]
         public void Should_have_branch_level_5_with_correct_property_PartnerHierarchyCode() {
-            _data.Branch[4].PartnerHierarchyCode.Should().Be("HPE");
+            _data.Branch[4].PartnerHierarchyCode.Should().Be("HPInc");
         }
         [Fact]
         public void Should_have_branch_level_5_with_correct_property_ParentCategoryID() {

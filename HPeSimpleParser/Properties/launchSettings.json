@@ -2,7 +2,7 @@
   "profiles": {
     "HPeSimpleParser": {
       "commandName": "Project",
-      "commandLineArgs": "-v HPE"
+      "commandLineArgs": "-v HPInc -i D:\\Temp\\cap_gb_en_xml_1716_20190121132536 -o c:\\temp\\hpincsimpleoutput"
     }
   }
 }

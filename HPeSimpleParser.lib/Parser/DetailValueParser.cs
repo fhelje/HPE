@@ -3,18 +3,19 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
+using HPeSimpleParser.lib.Parser.State;
 
 namespace HPeSimpleParser.lib.Parser {
     public class DetailValueParser {
-        private static readonly Lazy<Regex> dimensionRegex = new Lazy<Regex>(()=>new Regex(@"([(]*(?<dim1>l|h|d|w)\s*x\s*(?<dim2>l|h|d|w)\s*x\s*(?<dim3>l|h|d|w)[)]*)*\s*
+        private static readonly Lazy<Regex> dimensionRegex = new Lazy<Regex>(new Regex(@"([(]*(?<dim1>l|h|d|w)\s*x\s*(?<dim2>l|h|d|w)\s*x\s*(?<dim3>l|h|d|w)[)]*)*\s*
 ([(]+(?<dim>\w*)[)]+|(?<dim>([WDH]|Width:\s*|Height:\s*|Depth:\s*)))*
 (?<measure>[-]*\d*[\.,\,]?\d+)\s*
 [)]*\s*(?<uom>cm|mm|m|in|inch|inches|"")*
 ([(]+(?<dim>\w*|\w*\/\d*\w*)[)]+)*
 \s*([(]*(?<dim1>l|h|d|w)\s*x\s*(?<dim2>l|h|d|w)\s*x\s*(?<dim3>l|h|d|w)[)]*)*
 \s*(?<uom>cm|mm|m|in|inch|inches|"")*", RegexOptions.Compiled | RegexOptions.IgnoreCase | RegexOptions.IgnorePatternWhitespace | RegexOptions.ExplicitCapture | RegexOptions.CultureInvariant));
-        private static readonly Lazy<Regex> weightRegex = new Lazy<Regex>(()=>new Regex(@"(?<weight>\d*\.?\d+)\s*(?<unitOfMeasure>lbs?|oz?|kg?|g?)", RegexOptions.Compiled | RegexOptions.IgnoreCase));
-        
+        private static readonly Lazy<Regex> weightRegex = new Lazy<Regex>(new Regex(@"(?<weight>\d*\.?\d+)\s*(?<unitOfMeasure>lbs?|oz?|kg?|g?)", RegexOptions.Compiled | RegexOptions.IgnoreCase));
+
         public static (decimal? weight, WeightUnitOfMeasure uom) TryParseWeight(string input) {
             try {
                 if (input is null) {
@@ -132,7 +133,7 @@ namespace HPeSimpleParser.lib.Parser {
 
         }
 
-        public static bool FoundAll(string[] measures, bool[] dimsFound, string uom) {
+        private static bool FoundAll(string[] measures, bool[] dimsFound, string uom) {
             if (string.IsNullOrEmpty(measures[0]) && !dimsFound[0]) {
                 return false;
             }
@@ -148,7 +149,7 @@ namespace HPeSimpleParser.lib.Parser {
             return true;
         }
 
-        public static DimensionUnitOfMeasure GetDistansUnitOfMeasure(string uom) {
+        private static DimensionUnitOfMeasure GetDistansUnitOfMeasure(string uom) {
             switch (uom.ToLower()) {
                 case "mm":
                     return DimensionUnitOfMeasure.Millimeter;
@@ -165,7 +166,7 @@ namespace HPeSimpleParser.lib.Parser {
             return DimensionUnitOfMeasure.None;
         }
 
-        public static decimal? GetHeight(string[] dims, string[] measures) {
+        private static decimal? GetHeight(string[] dims, string[] measures) {
             var pos = 0;
             for (int i = 0; i < dims.Length; i++) {
                 var d = dims[i].ToLower();
@@ -180,12 +181,13 @@ namespace HPeSimpleParser.lib.Parser {
                         break;
                 }
             }
-            if (decimal.TryParse(measures[pos], NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var retval)) {
-                return retval;
+            if (decimal.TryParse(measures[pos], NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var retVal)) {
+                return retVal;
             }
             return null;
         }
-        public static decimal? GetWidth(string[] dims, string[] measures) {
+
+        private static decimal? GetWidth(string[] dims, string[] measures) {
             var pos = 1;
             for (int i = 0; i < dims.Length; i++) {
                 var d = dims[i].ToLower();
@@ -200,12 +202,13 @@ namespace HPeSimpleParser.lib.Parser {
                         break;
                 }
             }
-            if (decimal.TryParse(measures[pos], NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var retval)) {
-                return retval;
+            if (decimal.TryParse(measures[pos], NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var retVal)) {
+                return retVal;
             }
             return null;
         }
-        public static decimal? GetDepth(string[] dims, string[] measures) {
+
+        private static decimal? GetDepth(string[] dims, string[] measures) {
             var pos = 2;
             for (int i = 0; i < dims.Length; i++) {
                 var d = dims[i].ToLower();
@@ -221,8 +224,8 @@ namespace HPeSimpleParser.lib.Parser {
                         break;
                 }
             }
-            if (decimal.TryParse(measures[pos], NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var retval)) {
-                return retval;
+            if (decimal.TryParse(measures[pos], NumberStyles.AllowDecimalPoint | NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out var retVal)) {
+                return retVal;
             }
             return null;
         }
@@ -247,7 +250,7 @@ namespace HPeSimpleParser.lib.Parser {
             Dot
         }
 
-        public static WeightUnitOfMeasure GetWeightUnitOfMeasure(string uom) {
+        private static WeightUnitOfMeasure GetWeightUnitOfMeasure(string uom) {
             switch (uom.ToLower()) {
                 case "kg":
                     return WeightUnitOfMeasure.Kilogram;
@@ -264,59 +267,5 @@ namespace HPeSimpleParser.lib.Parser {
             }
         }
 
-    }
-    public enum WeightUnitOfMeasure {
-        Kilogram,
-        Gram,
-        Pounds,
-        Ounces,
-        None
-    }
-
-    public enum DimensionUnitOfMeasure {
-        None,
-        Millimeter,
-        CentiMeter,
-        Meter,
-        Inches,
-        Feet,
-    }
-
-    public struct Dimension {
-        public Dimension(decimal? height, decimal? width, decimal? depth, DimensionUnitOfMeasure unitOfMeasure) {
-            Height = height;
-            Width = width;
-            Depth = depth;
-            UnitOfMeasure = unitOfMeasure;
-        }
-
-        public decimal? Height { get; }
-        public decimal? Width { get; }
-        public decimal? Depth { get; }
-        public DimensionUnitOfMeasure UnitOfMeasure { get; }
-
-        public bool HasValues => Height.HasValue && Width.HasValue && Depth.HasValue;
-        public decimal? GetHeightInMillimeter() => GetInMillimeter(Height, UnitOfMeasure);
-        public decimal? GetWidthInMillimeter() => GetInMillimeter(Width, UnitOfMeasure);
-        public decimal? GetDepthInMillimeter() => GetInMillimeter(Depth, UnitOfMeasure);
-
-        private static decimal? GetInMillimeter(decimal? value, DimensionUnitOfMeasure uom) {
-            if (uom == DimensionUnitOfMeasure.None) return null;
-            switch (uom) {
-                case DimensionUnitOfMeasure.Millimeter:
-                    return value;
-                case DimensionUnitOfMeasure.CentiMeter:
-                    return value * 10;
-                case DimensionUnitOfMeasure.Meter:
-                    return value * 1000;
-                case DimensionUnitOfMeasure.Inches:
-                    return value * 2.54M * 10;
-                case DimensionUnitOfMeasure.Feet:
-                    return value * 12 * 2.54M * 10;
-                default:
-                    return null;
-            }
-
-        }
     }
 }

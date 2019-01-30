@@ -2,6 +2,8 @@
 using System.Globalization;
 using System.Linq;
 using System.Text;
+using HPeSimpleParser.lib.Generic.FileWriter;
+using HPeSimpleParser.lib.Generic.Model;
 
 namespace HPeSimpleParser.lib
 {
@@ -13,12 +15,16 @@ namespace HPeSimpleParser.lib
         public static string ToIso8601SecondsOnly(this DateTime? date) => date.HasValue ? date.Value.ToString("yyyy-MM-ddTHH:mm:ss") : string.Empty;
         public static string ToStringWithEmptyIfNull<T>(this T? value) where T : struct => value.HasValue ? value.ToString() : string.Empty;
         public static string ToStringWithEmptyIfNull(this DateTime? date) => date.HasValue ? date.Value.ToString("yyyy-MM-ddTHH:mm:ss") : string.Empty;
+        public static string ToStringWithEmptyIfNull(this decimal? date) => date.HasValue ? date.Value.ToString(CultureInfo.InvariantCulture) : string.Empty;
+        public static string ToStringWithEmptyIfNull(this int? date) => date.HasValue ? date.Value.ToString(CultureInfo.InvariantCulture) : string.Empty;
 
         public static string ToDebugString(this object value)
         {
             switch (value) {
                 case null:
                     return string.Empty;
+                case MarketingType mt:
+                    return ((int)mt).ToString();
                 case DateTime d:
                     return d.ToIso8601SecondsOnly();
                 case object[] arr:

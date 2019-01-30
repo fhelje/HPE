@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
+using HPeSimpleParser.lib.Enums;
 using HPeSimpleParser.lib.Generic.Model;
 using HPeSimpleParser.lib.HPE.Model;
 using HPeSimpleParser.lib.Parser;
@@ -16,7 +17,7 @@ namespace HPeSimpleParser.Test.SampleTests {
         public async Task InitializeAsync() {
             var filePath = Path.Combine("Data", "Sample_1.xml");
             var parser = new XmlParser(new HPEParserDefinition());
-            _data = await parser.ParseDocument(filePath);
+            _data = await parser.ParseDocument(filePath, VariantType.HPE);
         }
 
         public Task DisposeAsync() {
@@ -50,7 +51,7 @@ namespace HPeSimpleParser.Test.SampleTests {
 
         [Fact]
         public void Should_have_correct_product_CategoryID() {
-            _data.Product.CategoryID.Should().Be("1009689650");
+            _data.Product.CategoryID.Should().Be("12883|4172267|4172281|4177614|1009689650");
         }
 
         [Fact]

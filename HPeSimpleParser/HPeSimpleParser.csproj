@@ -16,8 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="lib\Helpers\" />
-    <Folder Include="lib\Parser\HPInc\" />
+    <ProjectReference Include="..\HPeSimpleParser.lib\HPeSimpleParser.lib.csproj" />
   </ItemGroup>
 
 </Project>

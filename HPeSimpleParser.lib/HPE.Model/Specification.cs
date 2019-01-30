@@ -1,13 +1,37 @@
-﻿using HPeSimpleParser.lib.Model;
+﻿using HPeSimpleParser.lib.Generic.Model;
 
 namespace HPeSimpleParser.lib.HPE.Model {
     public class Specification {
-        public string Name { get; set; }
-        public string Value { get; set; }
-        public SpecificationType Type { get; set; }
-        public string UnitOfMeasure { get; set; }
-        public string Id { get; set; }
-        public string GroupId { get; set; }
-        public string GroupName { get; set; }
+        public Specification(string name, string value, SpecificationType type, string unitOfMeasure, string id, string groupId, string groupName, string label) {
+            Name = name;
+            Value = value;
+            Type = type;
+            UnitOfMeasure = unitOfMeasure;
+            Id = id;
+            GroupId = groupId;
+            GroupName = groupName;
+            Label = label;
+        }
+
+        public string Name { get; }
+        public string Value { get; private set; }
+        public SpecificationType Type { get; }
+        public string UnitOfMeasure { get; private set; }
+        public string Id { get; }
+        public string GroupId { get; }
+        public string GroupName { get; }
+        public string Label { get; private set; }
+
+        public void UpdateUnitOfMeasure(string value) {
+            UnitOfMeasure = value;
+        }
+
+        public void UpdateLabel(string label) {
+            Label = label;
+        }
+
+        public void UpdateValue(string value) {
+            Value = value;
+        }
     }
 }

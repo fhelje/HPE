@@ -4,27 +4,52 @@ namespace HPeSimpleParser.lib.HPE.Model
 {
     public class Detail
     {
-        public int ProductPartnerID { get; set; }
-        public decimal? Weight { get; set; }
-        public decimal? WeightwithPackage { get; set; }
-        public decimal? Volume { get; set; }
-        public decimal? PalletSize { get; set; }
-        public decimal? Width { get; set; }
-        public decimal? Height { get; set; }
-        public decimal? Depth { get; set; }
-        public int? PackQty { get; set; }
-        public decimal? MinimumOrderQty { get; set; }
-        public bool? IsRequireSerialNumber { get; set; }
-        public string ManufacturingCountry { get; set; }
-        public string CustomsStatisticsNumber { get; set; }
-        public bool? ExtendedWarranty { get; set; }
-        public int? Unspsc { get; set; }
-        public DateTime? EndOfSupport { get; set; }
-        public string ErpAltPartNumber { get; set; }
-        public bool? TeleSalesFlag { get; set; }
-        public string ItemDefFulfillSource { get; set; }
-        public bool? MeterEnabled { get; set; }
-        public decimal? SwedishChemicalTaxReduction { get; set; }
-        public int? WarrantyTime { get; set; }
+        public Detail(string productPartnerID, decimal? weight = default, decimal? weightWithPackage = default, decimal? volume = default, decimal? palletSize = default, decimal? width = default, decimal? height = default, decimal? depth = default, int? packQty = default, decimal? minimumOrderQty = default, bool? isRequireSerialNumber = default, string manufacturingCountry = null, string customsStatisticsNumber = null, bool? extendedWarranty = default, int? unspsc = default, DateTime? endOfSupport = default, string erpAltPartNumber = null, bool? teleSalesFlag = default, string itemDefFulfillSource = null, bool? meterEnabled = default, decimal? swedishChemicalTaxReduction = default, int? warrantyTime = default) {
+            ProductPartnerID = productPartnerID;
+            Weight = weight;
+            WeightWithPackage = weightWithPackage;
+            Volume = volume;
+            PalletSize = palletSize;
+            Width = width;
+            Height = height;
+            Depth = depth;
+            PackQty = packQty;
+            MinimumOrderQty = minimumOrderQty;
+            IsRequireSerialNumber = isRequireSerialNumber;
+            ManufacturingCountry = manufacturingCountry;
+            CustomsStatisticsNumber = customsStatisticsNumber;
+            ExtendedWarranty = extendedWarranty;
+            Unspsc = unspsc;
+            EndOfSupport = endOfSupport;
+            ErpAltPartNumber = erpAltPartNumber;
+            TeleSalesFlag = teleSalesFlag;
+            ItemDefFulfillSource = itemDefFulfillSource;
+            MeterEnabled = meterEnabled;
+            SwedishChemicalTaxReduction = swedishChemicalTaxReduction;
+            WarrantyTime = warrantyTime;
+        }
+
+        public string ProductPartnerID { get; }
+        public decimal? Weight { get; }
+        public decimal? WeightWithPackage { get; }
+        public decimal? Volume { get; }
+        public decimal? PalletSize { get; }
+        public decimal? Width { get; }
+        public decimal? Height { get; }
+        public decimal? Depth { get; }
+        public int? PackQty { get; }
+        public decimal? MinimumOrderQty { get; }
+        public bool? IsRequireSerialNumber { get; }
+        public string ManufacturingCountry { get; }
+        public string CustomsStatisticsNumber { get; }
+        public bool? ExtendedWarranty { get; }
+        public int? Unspsc { get; }
+        public DateTime? EndOfSupport { get; }
+        public string ErpAltPartNumber { get; }
+        public bool? TeleSalesFlag { get; }
+        public string ItemDefFulfillSource { get; }
+        public bool? MeterEnabled { get; }
+        public decimal? SwedishChemicalTaxReduction { get; }
+        public int? WarrantyTime { get; }
     }
 }

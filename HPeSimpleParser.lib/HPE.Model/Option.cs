@@ -1,12 +1,15 @@
 ﻿namespace HPeSimpleParser.lib.HPE.Model {
     public class Option {
-        // HPE
-        public string ManufacturerCode { get; set; }
-        // \item\links\link\num
-        public string OptionPartnerPartNumber { get; set; }
-        // \item\links\link\marketing_category[5322802]
-        public string OptionGroupCode { get; set; }
-        // \item\links\link\marketing_category
-        public string OptionGroupName { get; set; }
+        public Option(string manufacturerCode, string optionPartnerPartNumber, string optionGroupCode, string optionGroupName) {
+            ManufacturerCode = manufacturerCode;
+            OptionPartnerPartNumber = optionPartnerPartNumber;
+            OptionGroupCode = optionGroupCode;
+            OptionGroupName = optionGroupName;
+        }
+
+        public string ManufacturerCode { get; }
+        public string OptionPartnerPartNumber { get; }
+        public string OptionGroupCode { get; }
+        public string OptionGroupName { get; }
     }
 }
