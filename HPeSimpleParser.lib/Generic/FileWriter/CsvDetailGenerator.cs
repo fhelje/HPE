@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
 using Microsoft.Extensions.ObjectPool;
 
 namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter
@@ -10,10 +11,39 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter
         public CsvDetailGenerator(DefaultObjectPool<StringBuilder> pool) {
             _pool = pool;
         }
-        public bool TryGenerateLine(Model.Detail detail, out string line) {
+        public bool TryGenerateLine(Detail detail, out string line) {
             var sb = _pool.Get();
 
             sb.Append(detail.PartnerPartNumber);
+            AddInnerLineData(detail, sb);
+            line = sb.ToString();
+            sb.Clear();
+            _pool.Return(sb);
+            return true;
+
+        }
+
+        public bool TryGenerateLine(Detail detail, string[] variants, Func<int, char[]> func) {
+            var sb = _pool.Get();
+
+            AddInnerLineData(detail, sb);
+            var tempLine = sb.ToString();
+            sb.Clear();
+            foreach (var variant in variants) {
+                sb.Append(detail.PartnerPartNumber);
+                if (!string.IsNullOrEmpty(variant)) {
+                    sb.Append("#");
+                    sb.Append(variant);
+                }
+                sb.Append(tempLine);
+            }
+
+            sb.CopyTo(0, func(sb.Length), sb.Length);
+            _pool.Return(sb);
+            return true;
+        }
+
+        private static void AddInnerLineData(Detail detail, StringBuilder sb) {
             sb.Append(FileSeparators.ColumnSeparator);
             sb.Append(detail.Weight.ToStringWithEmptyIfNull());
             sb.Append(FileSeparators.ColumnSeparator);
@@ -57,13 +87,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter
             sb.Append(FileSeparators.ColumnSeparator);
             sb.Append(detail.WarrantyTime.ToStringWithEmptyIfNull());
 
-
             sb.Append(Environment.NewLine);
-            line = sb.ToString();
-            sb.Clear();
-            _pool.Return(sb);
-            return true;
-
         }
     }
 }

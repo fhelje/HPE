@@ -28,6 +28,12 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
                     depth = dimension.GetDepthInMillimeter();
                 }
             }
+
+            var arr = new string[input.ProductVariants.Count + 1];
+            arr[0] = "";
+            for (var i = 0; i < input.ProductVariants.Count; i++) {
+                arr[i + 1] = input.ProductVariants[i].Opt;
+            }
             return new Generic.Model.Item {
                 PartnerPartNumber = input.PartnerPartNumber,
                 Product = {
@@ -130,7 +136,8 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
                         Name = x.ManufacturerCode.RemoveLineEndings(),
                         PartNumber =x.OptionPartnerPartNumber.RemoveLineEndings(),
                     }).ToList()
-                }
+                },
+                ProductVariants = arr
             };
         }
 

@@ -20,7 +20,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
         public static Task LinkParser(ParseState state, XmlReader reader) {
             if (state.NodeType == XmlNodeType.Element && reader.GetAttribute("type") == "child" && !reader.IsEmptyElement) {
                 state.InnerState = InnerState.Option;
-                state.Option = new OptionState { ManufacturerCode = "HPE" };
+                state.Option = new OptionState { ManufacturerCode = state.ManufacturerCode };
             }
 
             if (state.NodeType == XmlNodeType.EndElement && state.InnerState == InnerState.Option) {

@@ -30,5 +30,9 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.HierarchyFile {
             line = _sb.ToString();
             return true;
         }
+
+        public bool TryGenerateLine(HierarchyNode item, string[] variants, ref Span<char> line) {
+            throw new NotImplementedException();
+        }
     }
 }

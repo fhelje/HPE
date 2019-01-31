@@ -1,4 +1,6 @@
-﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model
+﻿using System.Collections.Generic;
+
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model
 {
     public class Item
     {
@@ -14,6 +16,7 @@
             Supplier = new Supplier();
             Options = new Options();
             Hierarchies = new Hierarchies();
+
         }
 
         public Product Product { get; }
@@ -24,5 +27,6 @@
         public Detail Detail { get; }
         public Options Options { get; }
         public Hierarchies Hierarchies { get; }
+        public string[] ProductVariants { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
 using Microsoft.Extensions.ObjectPool;
 
 namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter
@@ -16,6 +17,38 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter
             var sb = _pool.Get();
 
             sb.Append(product.PartnerPartNumber);
+            AddInnerLineData(product, sb);
+
+            sb.Append(Environment.NewLine);
+            line = sb.ToString();
+            sb.Clear();
+            _pool.Return(sb);
+            return true;
+
+        }
+
+        public bool TryGenerateLine(Product data, string[] variants, Func<int, char[]> func) {
+            var sb = _pool.Get();
+
+            AddInnerLineData(data, sb);
+            var tempLine = sb.ToString();
+            sb.Clear();
+            foreach (var variant in variants) {
+                sb.Append(data.PartnerPartNumber);
+                if (!string.IsNullOrEmpty(variant)) {
+                    sb.Append("#");
+                    sb.Append(variant);
+                }
+                sb.Append(tempLine);
+            }
+
+            sb.CopyTo(0, func(sb.Length), sb.Length);
+            _pool.Return(sb);
+            return true;
+            
+        }
+
+        private static void AddInnerLineData(Product product, StringBuilder sb) {
             sb.Append(FileSeparators.ColumnSeparator);
             sb.Append(product.PartNumber);
             sb.Append(FileSeparators.ColumnSeparator);
@@ -44,13 +77,6 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter
             sb.Append(product.AlternateCategoryName);
             sb.Append(FileSeparators.ColumnSeparator);
             sb.Append(product.AlternatePartnerHierarchyCode);
-
-            sb.Append(Environment.NewLine);
-            line = sb.ToString();
-            sb.Clear();
-            _pool.Return(sb);
-            return true;
-
         }
     }
 }
