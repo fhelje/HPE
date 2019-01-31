@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model {
+namespace FSSystem.ContentAdapter.Model {
     public class Specifications {
         public Specifications() {
             Items = new List<Specification>();

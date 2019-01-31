@@ -2,7 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using System.Xml;
-using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter;
+using FSSystem.ContentAdapter.GenericOutput.FileWriter;
 
 namespace FSSystem.ContentAdapter.HPEAndHPInc {
     public class DeliveryFileParser {

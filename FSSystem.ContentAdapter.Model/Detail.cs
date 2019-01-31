@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model {
+namespace FSSystem.ContentAdapter.Model {
     public class Detail {
         public string PartnerPartNumber { get; set; }
         public decimal? Weight { get; set; }

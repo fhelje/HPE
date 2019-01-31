@@ -1,4 +1,4 @@
-﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model {
+﻿namespace FSSystem.ContentAdapter.Model {
     public class Item {
         public Item() {
             Product = new Product();

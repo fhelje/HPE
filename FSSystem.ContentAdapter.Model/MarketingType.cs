@@ -1,4 +1,4 @@
-﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model {
+﻿namespace FSSystem.ContentAdapter.Model {
     public enum MarketingType {
         UniqueSellingPoint = 1,
         UniqueSellingPointLong = 2,

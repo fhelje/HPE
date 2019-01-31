@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Text;
 using FluentAssertions;
-using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter;
-using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
+using FSSystem.ContentAdapter.GenericOutput.FileWriter;
+using FSSystem.ContentAdapter.Model;
 using Microsoft.Extensions.ObjectPool;
 using Xunit;
 

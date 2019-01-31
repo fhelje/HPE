@@ -1,4 +1,4 @@
-﻿using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
+﻿using FSSystem.ContentAdapter.Model;
 
 namespace FSSystem.ContentAdapter.HPEAndHPInc {
     public static class OptionExtensions {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter {
+namespace FSSystem.ContentAdapter.GenericOutput.FileWriter {
     public class CsvSupplierGenerator : ICsvGenerator<SupplierNode> {
         private readonly StringBuilder _sb;
 

@@ -1,4 +1,4 @@
-﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter.Enums {
+﻿namespace FSSystem.ContentAdapter.GenericOutput.FileWriter.Enums {
     public enum CasLinkColumnEnum {
         PartnerPartNumber = 0,
         PdfLinkDataSheet = 1,

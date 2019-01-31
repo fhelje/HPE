@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
+using FSSystem.ContentAdapter.Model;
 using Specification = FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model.Specification;
 
 namespace HPeSimpleParser.Test.Builders {

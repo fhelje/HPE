@@ -1,4 +1,4 @@
-﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model {
+﻿namespace FSSystem.ContentAdapter.Model {
     public class Marketing {
         public Marketing() {
             MarketingType = MarketingType.UniqueSellingPoint;

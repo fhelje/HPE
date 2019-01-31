@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter {
+namespace FSSystem.ContentAdapter.GenericOutput.FileWriter {
     [Flags]
     public enum FileTypes {
         Product = 0,

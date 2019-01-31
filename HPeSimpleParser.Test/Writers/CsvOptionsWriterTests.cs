@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using FluentAssertions;
-using FSSystem.ContentAdapter.HPEAndHPInc;
-using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter;
-using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter.Enums;
-using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
+using FSSystem.ContentAdapter.GenericOutput;
+using FSSystem.ContentAdapter.GenericOutput.FileWriter;
+using FSSystem.ContentAdapter.GenericOutput.FileWriter.Enums;
+using FSSystem.ContentAdapter.Model;
 using Microsoft.Extensions.ObjectPool;
 using Xunit;
 

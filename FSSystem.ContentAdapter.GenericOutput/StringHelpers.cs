@@ -2,10 +2,10 @@
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter;
-using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
+using FSSystem.ContentAdapter.GenericOutput.FileWriter;
+using FSSystem.ContentAdapter.Model;
 
-namespace FSSystem.ContentAdapter.HPEAndHPInc {
+namespace FSSystem.ContentAdapter.GenericOutput {
     public static class StringHelpers {
         public static string ToTitleCase(this string s) {
             return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(s.ToLower());

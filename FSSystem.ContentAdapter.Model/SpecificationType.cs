@@ -1,4 +1,4 @@
-﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model {
+﻿namespace FSSystem.ContentAdapter.Model {
     public enum SpecificationType {
         Simple,
         Full

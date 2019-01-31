@@ -1,11 +1,10 @@
-using System.Collections.Generic;
 using System.Linq;
-using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
+using FSSystem.ContentAdapter.GenericOutput;
 using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
-using Hierarchy = FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model.Hierarchy;
-using Image = FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model.Image;
-using Option = FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model.Option;
-using Specification = FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model.Specification;
+using FSSystem.ContentAdapter.Model;
+using Image = FSSystem.ContentAdapter.Model.Image;
+using Option = FSSystem.ContentAdapter.Model.Option;
+using Specification = FSSystem.ContentAdapter.Model.Specification;
 
 namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
     public static class ProductRootConverter {
@@ -14,7 +13,6 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
             var detail = input.Detail;
             var links = input.Links;
             var hierarchies = input.Hierarchy;
-            var categoryID = GetConcatenatedHierarchyId(input.Branch);
             var marketing = input.Marketing;
             var specifications = input.Specifications;
             var options = input.Options;
@@ -95,7 +93,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
                 Hierarchies = {
                     PartnerPartNumber = input.PartnerPartNumber,
                     Items = hierarchies.Select(x =>
-                        new Generic.Model.Hierarchy {
+                        new Model.Hierarchy {
                             CategoryID = x.CategoryID,
                             CategoryName = x.CategoryName,
                             Level = x.Level,
@@ -139,10 +137,6 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
                 },
                 ProductVariants = arr
             };
-        }
-
-        private static string GetConcatenatedHierarchyId(IEnumerable<Hierarchy> branch) {
-            return string.Join("|", branch.Select(x => x.CategoryID));
         }
     }
 }

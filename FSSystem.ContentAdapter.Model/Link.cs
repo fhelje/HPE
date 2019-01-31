@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model {
+namespace FSSystem.ContentAdapter.Model {
     public class Link {
         public Link() {
             Images = new List<Image>();

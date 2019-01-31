@@ -6,14 +6,13 @@ using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
 namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser.State {
     public class ParseState {
         private readonly Stack<string> _nodes;
-        private readonly VariantType _variant;
 
         public ParseState(string file, VariantType variant) {
-            _variant = variant;
-            PLHierarchyName = _variant == VariantType.HPE ? "PL" : "HPIncPL";
-            HierarchyName = _variant.ToString();
-            ManufacturerCode = _variant.ToString();
-            ManufacturerName = _variant.ToString();
+            var variant1 = variant;
+            PLHierarchyName = variant1 == VariantType.HPE ? "PL" : "HPIncPL";
+            HierarchyName = variant1.ToString();
+            ManufacturerCode = variant1.ToString();
+            ManufacturerName = variant1.ToString();
             File = file;
             _nodes = new Stack<string>();
             Branch = new Branch();

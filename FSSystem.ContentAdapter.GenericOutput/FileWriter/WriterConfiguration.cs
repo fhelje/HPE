@@ -1,4 +1,4 @@
-﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter {
+﻿namespace FSSystem.ContentAdapter.GenericOutput.FileWriter {
     public class WriterConfiguration {
         public WriterConfiguration() {
             CsvDirectory = "csv";

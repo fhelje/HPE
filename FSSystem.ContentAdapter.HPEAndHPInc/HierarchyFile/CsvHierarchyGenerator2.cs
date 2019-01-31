@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Text;
-using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter;
+using FSSystem.ContentAdapter.GenericOutput.FileWriter;
 
 namespace FSSystem.ContentAdapter.HPEAndHPInc.HierarchyFile {
     public class CsvHierarchyGenerator2 : ICsvGenerator<HPEHierarchyNode> {

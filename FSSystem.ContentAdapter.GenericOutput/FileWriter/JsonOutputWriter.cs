@@ -1,20 +1,18 @@
 ﻿using System;
 using System.IO;
-using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
+using FSSystem.ContentAdapter.Model;
 using Newtonsoft.Json;
 
-namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter {
+namespace FSSystem.ContentAdapter.GenericOutput.FileWriter {
     public class JsonOutputWriter : IDisposable {
-        private readonly WriterConfiguration _configuration;
         private readonly JsonWriter _jsonWriter;
         private readonly JsonSerializer _serializer = new JsonSerializer();
-        private readonly StreamWriter _textWriter;
 
         public JsonOutputWriter(WriterConfiguration configuration) {
-            _configuration = configuration;
-            _textWriter = new StreamWriter(File.OpenWrite(Path.Combine(_configuration.OutputPath,
-                _configuration.JsonDirectory, _configuration.JsonFileName)));
-            _jsonWriter = new JsonTextWriter(_textWriter) {
+            var configuration1 = configuration;
+            var textWriter = new StreamWriter(File.OpenWrite(Path.Combine(configuration1.OutputPath,
+                configuration1.JsonDirectory, configuration1.JsonFileName)));
+            _jsonWriter = new JsonTextWriter(textWriter) {
                 AutoCompleteOnClose = true,
                 CloseOutput = true,
                 Formatting = Formatting.Indented

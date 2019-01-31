@@ -1,7 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
-using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter;
+using FSSystem.ContentAdapter.GenericOutput.FileWriter;
 
 namespace FSSystem.ContentAdapter.HPEAndHPInc {
     public static class FileHelpers {

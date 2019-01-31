@@ -1,4 +1,4 @@
-﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model {
+﻿namespace FSSystem.ContentAdapter.Model {
     public class Image {
         public string Url { get; set; }
         public int? Height { get; set; }

@@ -4,12 +4,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using FSSystem.ContentAdapter.HPEAndHPInc.Enums;
-using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
 using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
 using FSSystem.ContentAdapter.HPEAndHPInc.Parser;
+using FSSystem.ContentAdapter.Model;
 using Xunit;
 
-namespace HPeSimpleParser.Test.SampleTests {
+namespace HPeSimpleParser.Test.SampleTests.HPE {
     public class Sample1ParserTests : IAsyncLifetime {
         private ProductRoot _data;
 

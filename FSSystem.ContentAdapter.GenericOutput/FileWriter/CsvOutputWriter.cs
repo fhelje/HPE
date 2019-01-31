@@ -1,10 +1,10 @@
 ﻿using System;
 using System.IO;
 using System.Text;
-using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
+using FSSystem.ContentAdapter.Model;
 using Microsoft.Extensions.ObjectPool;
 
-namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter {
+namespace FSSystem.ContentAdapter.GenericOutput.FileWriter {
     public class CsvOutputWriter : IDisposable {
         private readonly CsvDetailGenerator _detailGenerator;
         //private readonly CsvSupplierGenerator _supplierGenerator;
@@ -23,13 +23,13 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter {
         // private readonly TextWriter _supplierWriter;
 
         public CsvOutputWriter(WriterConfiguration configuration) {
-            _pool = new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy());
-            _detailGenerator = new CsvDetailGenerator(_pool);
-            _linkGenerator = new CsvLinkGenerator(_pool);
-            _marketingGenerator = new CsvMarketingGenerator(_pool);
-            _optionsGenerator = new CsvOptionsGenerator(_pool);
-            _productGenerator = new CsvProductGenerator(_pool);
-            _specificationsGenerator = new CsvSpecificationsGenerator(_pool);
+            var pool = new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy());
+            _detailGenerator = new CsvDetailGenerator(pool);
+            _linkGenerator = new CsvLinkGenerator(pool);
+            _marketingGenerator = new CsvMarketingGenerator(pool);
+            _optionsGenerator = new CsvOptionsGenerator(pool);
+            _productGenerator = new CsvProductGenerator(pool);
+            _specificationsGenerator = new CsvSpecificationsGenerator(pool);
             //_supplierGenerator = new CsvSupplierGenerator();
 
             _detailWriter = new StreamWriter(File.OpenWrite(Path.Combine(configuration.OutputPath,
@@ -86,7 +86,6 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter {
         #region IDisposable Support
 
         private bool _disposedValue; // To detect redundant calls
-        private readonly DefaultObjectPool<StringBuilder> _pool;
 
         protected virtual void Dispose(bool disposing) {
             if (!_disposedValue) {

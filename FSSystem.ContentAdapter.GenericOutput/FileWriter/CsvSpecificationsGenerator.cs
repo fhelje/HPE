@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Text;
-using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
+using FSSystem.ContentAdapter.Model;
 using Microsoft.Extensions.ObjectPool;
 
-namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter {
+namespace FSSystem.ContentAdapter.GenericOutput.FileWriter {
     public class CsvSpecificationsGenerator : ICsvGenerator<Specifications> {
         private readonly DefaultObjectPool<StringBuilder> _pool;
 

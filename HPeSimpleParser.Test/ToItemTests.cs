@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using FluentAssertions;
-using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
 using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
 using FSSystem.ContentAdapter.HPEAndHPInc.Parser;
+using FSSystem.ContentAdapter.Model;
 using HPeSimpleParser.Test.Builders;
 using Xunit;
 

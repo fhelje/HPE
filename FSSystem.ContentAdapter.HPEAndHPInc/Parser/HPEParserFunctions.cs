@@ -264,7 +264,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
                              ?.Split('&')
                              ?.FirstOrDefault(x => x.StartsWith("docname"))
                          ?? string.Empty;
-            if (idPart?.Length == 0) {
+            if (idPart.Length == 0) {
                 return url;
             }
 

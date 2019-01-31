@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
+using FSSystem.ContentAdapter.GenericOutput.FileWriter;
 using FSSystem.ContentAdapter.HPEAndHPInc.Enums;
-using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter;
 using FSSystem.ContentAdapter.HPEAndHPInc.Parser;
 
 namespace FSSystem.ContentAdapter.HPEAndHPInc {

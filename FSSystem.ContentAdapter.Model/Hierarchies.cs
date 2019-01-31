@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model {
+namespace FSSystem.ContentAdapter.Model {
     public class Hierarchies {
         public Hierarchies() {
             Items = new List<Hierarchy>();

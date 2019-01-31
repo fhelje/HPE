@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Text;
-using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
+using FSSystem.ContentAdapter.Model;
 using Microsoft.Extensions.ObjectPool;
 
-namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter {
+namespace FSSystem.ContentAdapter.GenericOutput.FileWriter {
     public class CsvDetailGenerator : ICsvGenerator<Detail> {
         private readonly DefaultObjectPool<StringBuilder> _pool;
 
@@ -18,27 +18,6 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter {
             AddInnerLineData(item, sb);
             line = sb.ToString();
             sb.Clear();
-            _pool.Return(sb);
-            return true;
-        }
-
-        public bool TryGenerateLine(Detail detail, string[] variants, Func<int, char[]> func) {
-            var sb = _pool.Get();
-
-            AddInnerLineData(detail, sb);
-            var tempLine = sb.ToString();
-            sb.Clear();
-            foreach (var variant in variants) {
-                sb.Append(detail.PartnerPartNumber);
-                if (!string.IsNullOrEmpty(variant)) {
-                    sb.Append("#");
-                    sb.Append(variant);
-                }
-
-                sb.Append(tempLine);
-            }
-
-            sb.CopyTo(0, func(sb.Length), sb.Length);
             _pool.Return(sb);
             return true;
         }

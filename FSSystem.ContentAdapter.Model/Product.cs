@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model {
+namespace FSSystem.ContentAdapter.Model {
     public class Product {
         public string PartnerPartNumber { get; set; }
         public string PartNumber { get; set; }

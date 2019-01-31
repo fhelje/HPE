@@ -4,22 +4,22 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Threading.Tasks.Dataflow;
+using FSSystem.ContentAdapter.GenericOutput.FileWriter;
 using FSSystem.ContentAdapter.HPEAndHPInc.Enums;
-using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter;
 using FSSystem.ContentAdapter.HPEAndHPInc.HierarchyFile;
 using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
 using FSSystem.ContentAdapter.HPEAndHPInc.Parser;
 
 namespace FSSystem.ContentAdapter.HPEAndHPInc {
     public class PipelineCreator {
-        private const FileTypes FileTypes = Generic.FileWriter.FileTypes.Detail
-                                            | Generic.FileWriter.FileTypes.Link
-                                            | Generic.FileWriter.FileTypes.Marketing
-                                            | Generic.FileWriter.FileTypes.Option
-                                            | Generic.FileWriter.FileTypes.Option
-                                            | Generic.FileWriter.FileTypes.Product
-                                            | Generic.FileWriter.FileTypes.Specification
-                                            | Generic.FileWriter.FileTypes.Supplier;
+        private const FileTypes FileTypes = GenericOutput.FileWriter.FileTypes.Detail
+                                            | GenericOutput.FileWriter.FileTypes.Link
+                                            | GenericOutput.FileWriter.FileTypes.Marketing
+                                            | GenericOutput.FileWriter.FileTypes.Option
+                                            | GenericOutput.FileWriter.FileTypes.Option
+                                            | GenericOutput.FileWriter.FileTypes.Product
+                                            | GenericOutput.FileWriter.FileTypes.Specification
+                                            | GenericOutput.FileWriter.FileTypes.Supplier;
         // Process import file list
         // Input:  file path for list of product files
         // Output: path to product file

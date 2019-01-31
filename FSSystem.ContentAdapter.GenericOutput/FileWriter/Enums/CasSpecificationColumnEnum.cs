@@ -1,4 +1,4 @@
-﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter.Enums {
+﻿namespace FSSystem.ContentAdapter.GenericOutput.FileWriter.Enums {
     public enum CasSpecificationColumnEnum {
         Type = 0,
         Label = 1,
