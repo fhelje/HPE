@@ -5,8 +5,9 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc {
         public HPEHierarchyNode() {
             Children = new ConcurrentDictionary<string, HPEHierarchyNode>();
         }
+
         public string Id { get; set; }
-        public ConcurrentDictionary<string, HPEHierarchyNode> Children { get; private set; }
+        public ConcurrentDictionary<string, HPEHierarchyNode> Children { get; }
         public string Name { get; set; }
         public string ParentCategoryId { get; set; }
 

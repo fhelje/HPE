@@ -18,4 +18,8 @@
     <Folder Include="Parser\HPInc\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\FSSystem.ContentAdapter.GenericOutput\FSSystem.ContentAdapter.GenericOutput.csproj" />
+  </ItemGroup>
+
 </Project>

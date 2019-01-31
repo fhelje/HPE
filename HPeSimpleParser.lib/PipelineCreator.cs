@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,10 +9,17 @@ using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter;
 using FSSystem.ContentAdapter.HPEAndHPInc.HierarchyFile;
 using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
 using FSSystem.ContentAdapter.HPEAndHPInc.Parser;
-using Hierarchy = FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model.Hierarchy;
 
 namespace FSSystem.ContentAdapter.HPEAndHPInc {
     public class PipelineCreator {
+        private const FileTypes FileTypes = Generic.FileWriter.FileTypes.Detail
+                                            | Generic.FileWriter.FileTypes.Link
+                                            | Generic.FileWriter.FileTypes.Marketing
+                                            | Generic.FileWriter.FileTypes.Option
+                                            | Generic.FileWriter.FileTypes.Option
+                                            | Generic.FileWriter.FileTypes.Product
+                                            | Generic.FileWriter.FileTypes.Specification
+                                            | Generic.FileWriter.FileTypes.Supplier;
         // Process import file list
         // Input:  file path for list of product files
         // Output: path to product file
@@ -24,54 +30,54 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc {
         // ==>
         private static bool _writeLine;
         private static bool _writeLine2;
-        private readonly CsvOutputWriter _csvOutputWriter;
-        private readonly JsonOutputWriter _jsonOutputWriter;
-        private readonly IParserDefinition _definition;
         private readonly WriterConfiguration _configuration;
-        private readonly VariantType _variant;
-        private readonly ExecutionDataflowBlockOptions _singleWriterExecution;
+        private readonly CsvOutputWriter _csvOutputWriter;
+        private readonly IParserDefinition _definition;
+        private readonly HPEHierarchyNode _hierarchyRoot;
+        private readonly JsonOutputWriter _jsonOutputWriter;
+        private readonly DataflowLinkOptions _linkOptions;
         private readonly ExecutionDataflowBlockOptions _options;
         private readonly Dictionary<string, HierarchyNode> _plDictionary;
-        private readonly HPEHierarchyNode _hierarchyRoot;
-        private readonly DataflowLinkOptions _linkOptions;
-        private const FileTypes FileTypes = Generic.FileWriter.FileTypes.Detail | Generic.FileWriter.FileTypes.Link | Generic.FileWriter.FileTypes.Marketing | Generic.FileWriter.FileTypes.Option | Generic.FileWriter.FileTypes.Option | Generic.FileWriter.FileTypes.Product | Generic.FileWriter.FileTypes.Specification | Generic.FileWriter.FileTypes.Supplier;
+        private readonly ExecutionDataflowBlockOptions _singleWriterExecution;
+        private readonly VariantType _variant;
 
         public PipelineCreator(
             IParserDefinition definition,
             WriterConfiguration config,
             VariantType variant
-            ) {
+        ) {
             _definition = definition;
             _configuration = config;
             _variant = variant;
             _singleWriterExecution = new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = 1 };
-            _options = new ExecutionDataflowBlockOptions { MaxDegreeOfParallelism = Environment.ProcessorCount, BoundedCapacity = 1000000, MaxMessagesPerTask = 10000 };
+            _options = new ExecutionDataflowBlockOptions {
+                MaxDegreeOfParallelism = Environment.ProcessorCount,
+                BoundedCapacity = 1000000,
+                MaxMessagesPerTask = 10000
+            };
             _linkOptions = new DataflowLinkOptions { PropagateCompletion = true };
             _plDictionary = new Dictionary<string, HierarchyNode>();
             _hierarchyRoot = new HPEHierarchyNode();
             _csvOutputWriter = new CsvOutputWriter(config);
             _jsonOutputWriter = new JsonOutputWriter(config);
         }
-        public (ActionBlock<WriterConfiguration> source, Task targetTask) CreatePipeline(
-            
-        ) {
+
+        public (ActionBlock<WriterConfiguration> source, Task targetTask) CreatePipeline() {
             var broadcastBlock = new BroadcastBlock<ProductRoot[]>(x => x);
-            var batchBlock = new BatchBlock<ProductRoot>(1000, new GroupingDataflowBlockOptions { BoundedCapacity = 1000000, MaxMessagesPerTask = 10000 });
+            var batchBlock = new BatchBlock<ProductRoot>(1000,
+                new GroupingDataflowBlockOptions { BoundedCapacity = 1000000, MaxMessagesPerTask = 10000 });
 
             var parseBlock = new TransformBlock<string, ProductRoot>(async path => {
                 var parser = new XmlParser(_definition);
-                return await parser.ParseDocument(path, _variant);
+                return await parser.ParseDocument(path, _variant).ConfigureAwait(false);
             }, _options);
 
             var readerBlock = new ActionBlock<WriterConfiguration>(async conf => {
                 var parser = new DeliveryFileParser();
-                var (count, files) = await parser.DeliveryFileReader(conf);
+                var (count, files) = await parser.DeliveryFileReader(conf).ConfigureAwait(false);
                 Console.WriteLine($"Start processing files. Total product to import {count} ({files.Count}).");
 
-                foreach (var file in files) {
-                    await parseBlock.SendAsync(file);
-                }
-
+                foreach (var file in files) await parseBlock.SendAsync(file).ConfigureAwait(false);
             }, _options);
 
             var csvWriteBlock = new ActionBlock<ProductRoot[]>(batch => {
@@ -79,28 +85,29 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc {
                     var item = productRoot.ToItem();
                     for (var index = 0; index < item.ProductVariants.Length; index++) {
                         _csvOutputWriter.Write(
-                            FileTypes, 
-                            productRoot.ToItem()
-                                       .SetPartnerPartNumber(
-                                           productRoot.PartnerPartNumber, 
-                                           item.ProductVariants[index]
-                                        )
-                            );
+                           FileTypes,
+                           productRoot.ToItem()
+                               .SetPartnerPartNumber(
+                                   productRoot.PartnerPartNumber,
+                                   item.ProductVariants[index]
+                               )
+                       );
                     }
                 }
 
                 Console.WriteLine("Batch done");
             }, _singleWriterExecution);
 
-            var plHierarchyBlock = new ActionBlock<ProductRoot[]>(batch => { AddProductLineHierarchies(batch); }, _singleWriterExecution);
+            var plHierarchyBlock = new ActionBlock<ProductRoot[]>(AddProductLineHierarchies, _singleWriterExecution);
 
             var hpIncHierarchyBlock = new ActionBlock<ProductRoot[]>(batch => {
                 foreach (var productRoot in batch) {
-                    UpdateCategoryTree(_hierarchyRoot, productRoot.Branch, _variant == VariantType.HPE  ? "HPE" : "HPInc");
+                    UpdateCategoryTree(_hierarchyRoot, productRoot.Branch,
+                       _variant == VariantType.HPE ? "HPE" : "HPInc");
                 }
             }, _singleWriterExecution);
 
-            var jsonWriteBlock = new ActionBlock<ProductRoot[]>(batch => { WriteJson(batch); }, _singleWriterExecution);
+            var jsonWriteBlock = new ActionBlock<ProductRoot[]>(WriteJson, _singleWriterExecution);
 
             parseBlock.CompleteWhenAll(readerBlock);
             parseBlock.LinkTo(batchBlock, _linkOptions);
@@ -110,11 +117,10 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc {
             broadcastBlock.LinkTo(plHierarchyBlock, _linkOptions);
             broadcastBlock.LinkTo(hpIncHierarchyBlock, _linkOptions);
 
-            var task = Task.WhenAll(plHierarchyBlock.Completion, hpIncHierarchyBlock.Completion, jsonWriteBlock.Completion, csvWriteBlock.Completion)
+            var task = Task.WhenAll(plHierarchyBlock.Completion, hpIncHierarchyBlock.Completion,
+                    jsonWriteBlock.Completion, csvWriteBlock.Completion)
                 .ContinueWith(DisposeWriters)
-                .ContinueWith(x => {
-                    OutputHierarchies(_configuration, _plDictionary, _hierarchyRoot);
-                })
+                .ContinueWith(_ => OutputHierarchies(_configuration, _plDictionary, _hierarchyRoot))
                 .ContinueWith(WriteSupplierFile)
                 .ContinueWith(ZipCsv)
                 .ContinueWith(ZipJson);
@@ -124,17 +130,18 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc {
         private async Task WriteSupplierFile(Task obj) {
             Console.WriteLine("Write supplier");
             using (var fw = new CsvSupplierOutputWriter(_configuration)) {
-                await fw.WriteAsync(new SupplierNode {Code = _variant.ToString(), Name = _variant.ToString()});
+                await fw.WriteAsync(new SupplierNode { Code = _variant.ToString(), Name = _variant.ToString() }).ConfigureAwait(false);
             }
-            
         }
 
         private void AddProductLineHierarchies(ProductRoot[] batch) {
             foreach (var productRoot in batch) {
-                var productLineHierarchy = productRoot.Hierarchy.FirstOrDefault(x => x.Name == "PL" || x.Name == "HPIncPL");
+                var productLineHierarchy =
+                    productRoot.Hierarchy.FirstOrDefault(x => x.Name == "PL" || x.Name == "HPIncPL");
                 if (productLineHierarchy == null) {
                     return;
                 }
+
                 _plDictionary.TryAdd(productLineHierarchy.CategoryID,
                     new HierarchyNode {
                         CategoryID = productLineHierarchy.CategoryID,
@@ -146,9 +153,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc {
         }
 
         private void WriteJson(ProductRoot[] batch) {
-            foreach (var productRoot in batch) {
-                _jsonOutputWriter.Write(productRoot.ToItem());
-            }
+            foreach (var productRoot in batch) _jsonOutputWriter.Write(productRoot.ToItem());
 
             Console.WriteLine("Json Batch done");
         }
@@ -160,17 +165,18 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc {
 
         private void ZipCsv(Task _) {
             ZipHelper.Zip(
-                Path.Combine(_configuration.OutputPath, _configuration.CsvDirectory), 
+                Path.Combine(_configuration.OutputPath, _configuration.CsvDirectory),
                 Path.Combine(_configuration.OutputPath, _configuration.CsvZipFileName));
         }
 
         private void ZipJson(Task _) {
             ZipHelper.Zip(
-                Path.Combine(_configuration.OutputPath, _configuration.JsonDirectory), 
+                Path.Combine(_configuration.OutputPath, _configuration.JsonDirectory),
                 Path.Combine(_configuration.OutputPath, _configuration.JsonZipFileName));
         }
 
-        private static void OutputHierarchies(WriterConfiguration config, Dictionary<string, HierarchyNode> plDictionary,
+        private static void OutputHierarchies(WriterConfiguration config,
+            Dictionary<string, HierarchyNode> plDictionary,
             HPEHierarchyNode hierarchyRoot) {
             var pureHierarchyPath = Path.Combine(config.OutputPath, config.CsvDirectory, config.PureHierarchyFileName);
             Console.WriteLine($"Write hierarchies: {pureHierarchyPath}");
@@ -189,12 +195,13 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc {
             }
         }
 
-        private static void UpdateCategoryTree(HPEHierarchyNode hierarchyRoot, IReadOnlyList<Hierarchy> branch, string partnerHierarchyCode) {
-
+        private static void UpdateCategoryTree(HPEHierarchyNode hierarchyRoot, IReadOnlyList<Hierarchy> branch,
+            string partnerHierarchyCode) {
             if (branch[0].CategoryID == null) {
                 return;
             }
-            var productTypeId = branch[0].CategoryID ;
+
+            var productTypeId = branch[0].CategoryID;
             var productType = hierarchyRoot.Children.GetOrAdd(
                 productTypeId,
                 key => new HPEHierarchyNode {
@@ -216,7 +223,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc {
                     Level = 2,
                     PartnerHierarchyCode = partnerHierarchyCode
                 }
-                );
+            );
 
             var marketingSubCategoryId = marketingCategoryId + "|" + branch[2].CategoryID;
             var marketingSubCategory = marketingCategory.Children.GetOrAdd(
@@ -228,7 +235,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc {
                     Level = 3,
                     PartnerHierarchyCode = partnerHierarchyCode
                 }
-                );
+            );
 
             var bigSeriesId = marketingSubCategoryId + "|" + branch[3].CategoryID;
             var bigSeries = marketingSubCategory.Children.GetOrAdd(
@@ -240,7 +247,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc {
                     Level = 4,
                     PartnerHierarchyCode = partnerHierarchyCode
                 }
-                );
+            );
 
             var smallSeriesId = bigSeriesId + "|" + branch[4].CategoryID;
             bigSeries.Children.GetOrAdd(
@@ -262,10 +269,10 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc {
             else {
                 _writeLine = true;
             }
-            foreach (var child in root.Children) {
-                WriteHierarchy(child, fileWriter);
-            }
+
+            foreach (var child in root.Children) WriteHierarchy(child, fileWriter);
         }
+
         private static void WriteHierarchy2(HPEHierarchyNode root, CsvHierarchyOutputWriter2 fileWriter) {
             if (_writeLine2) {
                 fileWriter.Write(root);
@@ -273,11 +280,8 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc {
             else {
                 _writeLine2 = true;
             }
-            foreach (var child in root.Children) {
-                WriteHierarchy2(child.Value, fileWriter);
-            }
+
+            foreach (var child in root.Children) WriteHierarchy2(child.Value, fileWriter);
         }
-
-
     }
 }

@@ -15,7 +15,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc {
             var count = 0;
             using (var stream = File.OpenRead(Path.Combine(conf.ImportPath, conf.DeliveryFile))) {
                 using (var reader = XmlReader.Create(stream, settings)) {
-                    while (await reader.ReadAsync()) {
+                    while (await reader.ReadAsync().ConfigureAwait(false)) {
                         switch (reader.NodeType) {
                             case XmlNodeType.Element:
                                 switch (reader.Name) {
@@ -30,8 +30,8 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc {
                                 break;
                         }
                     }
-
                 }
+
                 return (count, files);
             }
         }

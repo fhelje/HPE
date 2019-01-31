@@ -4,6 +4,6 @@
         Small,
         Medium,
         Large,
-        XLarge,
+        XLarge
     }
 }

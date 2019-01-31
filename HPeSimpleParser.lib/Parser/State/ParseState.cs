@@ -2,28 +2,19 @@
 using System.Xml;
 using FSSystem.ContentAdapter.HPEAndHPInc.Enums;
 using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
-using Hierarchy = FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model.Hierarchy;
 
-namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser.State
-{
-    public class ParseState
-    {
-        private readonly VariantType _variant;
-        public string File { get; }
-        private int _level;
-        private string _currentName;
+namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser.State {
+    public class ParseState {
         private readonly Stack<string> _nodes;
-        private XmlNodeType _nodeType;
+        private readonly VariantType _variant;
 
-        public ParseState(string file, VariantType variant)
-        {
+        public ParseState(string file, VariantType variant) {
             _variant = variant;
             PLHierarchyName = _variant == VariantType.HPE ? "PL" : "HPIncPL";
             HierarchyName = _variant.ToString();
             ManufacturerCode = _variant.ToString();
             ManufacturerName = _variant.ToString();
             File = file;
-            _level = 0;
             _nodes = new Stack<string>();
             Branch = new Branch();
             Hierarchy = new List<Hierarchy>();
@@ -34,13 +25,15 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser.State
             Specifications = new List<SpecificationState>();
         }
 
+        public string File { get; }
+
         public string PLHierarchyName { get; }
         public string HierarchyName { get; }
 
         public Branch Branch { get; }
 
-        public string CurrentName => _currentName;
-        public XmlNodeType NodeType => _nodeType;
+        public string CurrentName { get; private set; }
+        public XmlNodeType NodeType { get; private set; }
         public InnerState InnerState { get; set; }
         public string Label { get; set; }
         public Dictionary<string, Section> MarketingText { get; set; }
@@ -61,31 +54,24 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser.State
         public string ManufacturerName { get; }
         public string ManufacturerCode { get; }
 
-        public void Inc(string name, XmlNodeType nodeType, bool isEmpty)
-        {
-            _level++;
-            _currentName = name;
+        public void Inc(string name, XmlNodeType nodeType) {
+            CurrentName = name;
             _nodes.Push(name);
-            _nodeType = nodeType;
-
+            NodeType = nodeType;
         }
-        public void Dec()
-        {
-            _level--;
+
+        public void Dec() {
             _nodes.Pop();
-            _currentName = _nodes.Peek();
-            _nodeType = XmlNodeType.EndElement;
+            CurrentName = _nodes.Peek();
+            NodeType = XmlNodeType.EndElement;
         }
 
-        public void SetNodeType(XmlNodeType type)
-        {
-            _nodeType = type;
+        public void SetNodeType(XmlNodeType type) {
+            NodeType = type;
         }
 
-        public void SetName(string name)
-        {
-            _currentName = name;
+        public void SetName(string name) {
+            CurrentName = name;
         }
-
     }
 }

@@ -2,12 +2,13 @@
 using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
 
 namespace HPeSimpleParser.Test.Builders {
-    public class HierarchiesBuilder {
-        private List<Hierarchy> _data;
+    public sealed class HierarchiesBuilder {
+        private readonly List<Hierarchy> _data;
 
         private HierarchiesBuilder() {
             _data = new List<Hierarchy>();
         }
+
         public static HierarchiesBuilder With() {
             return new HierarchiesBuilder();
         }

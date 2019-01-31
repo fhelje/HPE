@@ -13,9 +13,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc {
 
         public override async Task Execute() {
             VerifyPaths(_configuration);
-            await Import(_configuration, new HPEParserDefinition(), VariantType.HPE);
-
+            await Import(_configuration, new HPEParserDefinition(), VariantType.HPE).ConfigureAwait(false);
         }
-
     }
 }

@@ -2,7 +2,8 @@
 
 namespace FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model {
     public class Specification {
-        public Specification(string name, string value, SpecificationType type, string unitOfMeasure, string id, string groupId, string groupName, string label) {
+        public Specification(string name, string value, SpecificationType type, string unitOfMeasure, string id,
+            string groupId, string groupName, string label) {
             Name = name;
             Value = value;
             Type = type;

@@ -5,6 +5,6 @@
         CentiMeter,
         Meter,
         Inches,
-        Feet,
+        Feet
     }
 }

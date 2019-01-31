@@ -2,20 +2,20 @@
 using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
 
 namespace HPeSimpleParser.Test.Builders {
-    public class ProductRootBuilder {
-        private string _file = "File";
-        private string _partNumber = "PartNumber";
-        private string _partnerPartNumber = "PartnerPartNumber";
-        private string _languageId = "sv-SE";
-        private readonly ProductBuilder _product;
+    public sealed class ProductRootBuilder {
         private readonly BranchBuilder _branch;
-        private readonly ProductVariantsBuilder _productVariants;
+        private readonly DetailBuilder _details;
+        private readonly string _file = "File";
+        private readonly HierarchiesBuilder _hierarchies;
+        private readonly string _languageId = "sv-SE";
+        private readonly LinksBuilder _links;
         private readonly MarketingBuilder _marketing;
         private readonly OptionItemsBuilder _optionItems;
+        private readonly string _partnerPartNumber = "PartnerPartNumber";
+        private readonly string _partNumber = "PartNumber";
+        private readonly ProductBuilder _product;
+        private readonly ProductVariantsBuilder _productVariants;
         private readonly SpecificationItemsBuilder _specificationItems;
-        private readonly LinksBuilder _links;
-        private readonly HierarchiesBuilder _hierarchies;
-        private readonly DetailBuilder _details;
 
         private ProductRootBuilder() {
             _product = ProductBuilder.With();

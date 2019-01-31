@@ -14,14 +14,23 @@
 
         public bool HasValues => Height.HasValue && Width.HasValue && Depth.HasValue;
 
-        public decimal? GetHeightInMillimeter() => GetInMillimeter(Height, UnitOfMeasure);
+        public decimal? GetHeightInMillimeter() {
+            return GetInMillimeter(Height, UnitOfMeasure);
+        }
 
-        public decimal? GetWidthInMillimeter() => GetInMillimeter(Width, UnitOfMeasure);
+        public decimal? GetWidthInMillimeter() {
+            return GetInMillimeter(Width, UnitOfMeasure);
+        }
 
-        public decimal? GetDepthInMillimeter() => GetInMillimeter(Depth, UnitOfMeasure);
+        public decimal? GetDepthInMillimeter() {
+            return GetInMillimeter(Depth, UnitOfMeasure);
+        }
 
         private decimal? GetInMillimeter(decimal? value, DimensionUnitOfMeasure uom) {
-            if (uom == DimensionUnitOfMeasure.None) return null;
+            if (uom == DimensionUnitOfMeasure.None) {
+                return null;
+            }
+
             switch (uom) {
                 case DimensionUnitOfMeasure.Millimeter:
                     return value;

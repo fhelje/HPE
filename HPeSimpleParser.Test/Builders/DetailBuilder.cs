@@ -2,34 +2,35 @@
 using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
 
 namespace HPeSimpleParser.Test.Builders {
-    public class DetailBuilder {
-        private string _productPartnerID = "ProductPartnerID";
-        private decimal? _weight;
-        private decimal? _weightWithPackage;
-        private decimal? _volume;
-        private decimal? _palletSize;
-        private decimal? _width;
-        private decimal? _height;
-        private decimal? _depth;
-        private int? _packQty;
-        private decimal? _minimumOrderQty;
-        private bool? _isRequireSerialNumber;
-        private string _manufacturingCountry;
+    public sealed class DetailBuilder {
+        private readonly string _productPartnerID = "ProductPartnerID";
         private string _customsStatisticsNumber;
-        private bool? _extendedWarranty;
-        private int? _unspsc;
+        private decimal? _depth;
         private DateTime? _endOfSupport;
         private string _erpAltPartNumber;
-        private bool? _teleSalesFlag;
+        private bool? _extendedWarranty;
+        private decimal? _height;
+        private bool? _isRequireSerialNumber;
         private string _itemDefFulfillSource;
+        private string _manufacturingCountry;
         private bool? _meterEnabled;
+        private decimal? _minimumOrderQty;
+        private int? _packQty;
+        private decimal? _palletSize;
         private decimal? _swedishChemicalTaxReduction;
+        private bool? _teleSalesFlag;
+        private int? _unspsc;
+        private decimal? _volume;
         private int? _warrantyTime;
+        private decimal? _weight;
+        private decimal? _weightWithPackage;
+        private decimal? _width;
 
         private DetailBuilder() {
             _minimumOrderQty = null;
             _manufacturingCountry = null;
         }
+
         public static DetailBuilder With() {
             return new DetailBuilder();
         }
@@ -74,7 +75,7 @@ namespace HPeSimpleParser.Test.Builders {
             _customsStatisticsNumber = "CustomsStatisticsNumber";
             _extendedWarranty = true;
             _unspsc = 0;
-            _endOfSupport = new DateTime(2000,1,1);
+            _endOfSupport = new DateTime(2000, 1, 1);
             _erpAltPartNumber = "ErpAltPartNumber";
             _teleSalesFlag = true;
             _itemDefFulfillSource = "ItemDefFulfillSource";

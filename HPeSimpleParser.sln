@@ -9,6 +9,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HPeSimpleParser.Test", "HPe
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSSystem.ContentAdapter.HPEAndHPInc", "HPeSimpleParser.lib\FSSystem.ContentAdapter.HPEAndHPInc.csproj", "{11C5FA7E-EA1E-4FA1-B33E-50E5294858EC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSSystem.ContentAdapter.GenericOutput", "FSSystem.ContentAdapter.GenericOutput\FSSystem.ContentAdapter.GenericOutput.csproj", "{23A4554A-5FEC-4114-82F0-C1ADD2EB1D2D}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FSSystem.ContentAdapter.Model", "FSSystem.ContentAdapter.Model\FSSystem.ContentAdapter.Model.csproj", "{8492E862-6D13-4F2F-855C-30566EC33E7A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +31,14 @@ Global
 		{11C5FA7E-EA1E-4FA1-B33E-50E5294858EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{11C5FA7E-EA1E-4FA1-B33E-50E5294858EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{11C5FA7E-EA1E-4FA1-B33E-50E5294858EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{23A4554A-5FEC-4114-82F0-C1ADD2EB1D2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{23A4554A-5FEC-4114-82F0-C1ADD2EB1D2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{23A4554A-5FEC-4114-82F0-C1ADD2EB1D2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{23A4554A-5FEC-4114-82F0-C1ADD2EB1D2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8492E862-6D13-4F2F-855C-30566EC33E7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8492E862-6D13-4F2F-855C-30566EC33E7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8492E862-6D13-4F2F-855C-30566EC33E7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8492E862-6D13-4F2F-855C-30566EC33E7A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

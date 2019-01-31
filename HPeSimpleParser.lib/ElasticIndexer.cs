@@ -12,18 +12,19 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc {
             var settings = new ConnectionSettings(new Uri("http://localhost:9200"))
                 .DefaultIndex("item");
             _client = new ElasticClient(settings);
-
         }
 
         public void CreateIndex() {
-            _client.CreateIndex("item", c => c.Mappings(ms => ms.Map<ProductRoot>(m => m.AutoMap(new TextAndKeywordPropertyVisitor()))));
+            _client.CreateIndex("item",
+                c => c.Mappings(ms => ms.Map<ProductRoot>(m => m.AutoMap(new TextAndKeywordPropertyVisitor()))));
         }
+
         public void DeleteIndex() {
             _client.DeleteIndex("item");
         }
 
         public async Task IndexMany(List<ProductRoot> items) {
-            var result = await _client.IndexManyAsync(items, "item");
+            var result = await _client.IndexManyAsync(items, "item").ConfigureAwait(false);
             if (!result.IsValid) {
                 Console.WriteLine("Error indexing to elastic");
             }

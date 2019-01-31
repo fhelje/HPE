@@ -1,10 +1,15 @@
 ﻿using System;
 
-namespace FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model
-{
-    public class Detail
-    {
-        public Detail(string productPartnerID, decimal? weight = default, decimal? weightWithPackage = default, decimal? volume = default, decimal? palletSize = default, decimal? width = default, decimal? height = default, decimal? depth = default, int? packQty = default, decimal? minimumOrderQty = default, bool? isRequireSerialNumber = default, string manufacturingCountry = null, string customsStatisticsNumber = null, bool? extendedWarranty = default, int? unspsc = default, DateTime? endOfSupport = default, string erpAltPartNumber = null, bool? teleSalesFlag = default, string itemDefFulfillSource = null, bool? meterEnabled = default, decimal? swedishChemicalTaxReduction = default, int? warrantyTime = default) {
+namespace FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model {
+    public class Detail {
+        public Detail(string productPartnerID, decimal? weight = default, decimal? weightWithPackage = default,
+            decimal? volume = default, decimal? palletSize = default, decimal? width = default,
+            decimal? height = default, decimal? depth = default, int? packQty = default,
+            decimal? minimumOrderQty = default, bool? isRequireSerialNumber = default,
+            string manufacturingCountry = null, string customsStatisticsNumber = null, bool? extendedWarranty = default,
+            int? unspsc = default, DateTime? endOfSupport = default, string erpAltPartNumber = null,
+            bool? teleSalesFlag = default, string itemDefFulfillSource = null, bool? meterEnabled = default,
+            decimal? swedishChemicalTaxReduction = default, int? warrantyTime = default) {
             ProductPartnerID = productPartnerID;
             Weight = weight;
             WeightWithPackage = weightWithPackage;

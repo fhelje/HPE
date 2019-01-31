@@ -1,6 +1,5 @@
 ﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model {
     public class Marketing {
-
         public Marketing(string marketingText, string marketingCode, string url, string changeCode) {
             MarketingText = marketingText;
             MarketingCode = marketingCode;

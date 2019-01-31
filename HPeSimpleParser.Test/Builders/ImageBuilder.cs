@@ -5,15 +5,15 @@ using FSSystem.ContentAdapter.HPEAndHPInc.Parser.HPE;
 namespace HPeSimpleParser.Test.Builders {
     public class ImageBuilder {
         private readonly HPEImageParser _ip;
+        private string _contentType;
+        private string _fullTitle;
         private string _groupingKey1;
         private string _groupingKey2;
-        private string _contentType;
-        private string _pixelHeight;
-        private string _orientation;
-        private string _pixelWidth;
         private string _imageUrlHttp;
+        private string _orientation;
+        private string _pixelHeight;
+        private string _pixelWidth;
         private string _typeDetail;
-        private string _fullTitle;
 
         private ImageBuilder() {
             _ip = new HPEImageParser();
@@ -33,7 +33,7 @@ namespace HPeSimpleParser.Test.Builders {
             _imageUrlHttp = Guid.NewGuid().ToString();
             _typeDetail = "product image";
             _fullTitle = "FullTitle";
-            
+
             return this;
         }
 
@@ -53,7 +53,7 @@ namespace HPeSimpleParser.Test.Builders {
                 _ip.ParseTypeDetail(_typeDetail),
                 _ip.ParseIntWithDefault(_pixelHeight),
                 _ip.ParseIntWithDefault(_pixelWidth)
-            );;
+            );
         }
 
         public ImageBuilder SetHeight(string height) {
@@ -71,6 +71,7 @@ namespace HPeSimpleParser.Test.Builders {
                 _pixelWidth = "";
                 _pixelHeight = "";
             }
+
             return this;
         }
 

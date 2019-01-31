@@ -2,6 +2,7 @@
 using FSSystem.ContentAdapter.HPEAndHPInc.Parser;
 using FSSystem.ContentAdapter.HPEAndHPInc.Parser.State;
 using Xunit;
+
 namespace HPeSimpleParser.Test {
     public class DetailParserTests {
         // "INPUT" W, "Enhet"
@@ -36,7 +37,6 @@ namespace HPeSimpleParser.Test {
         [InlineData("1014 lbs", 1014, WeightUnitOfMeasure.Pounds)]
         [InlineData("102 lbs", 102, WeightUnitOfMeasure.Pounds)]
         public void ParseWeight(string input, decimal weight, WeightUnitOfMeasure unitOfMeasure) {
-
             var (actualWeight, uom) = DetailValueParser.TryParseWeight(input);
             actualWeight.Should().Be(weight);
             uom.Should().Be(unitOfMeasure);
@@ -48,7 +48,6 @@ namespace HPeSimpleParser.Test {
         [InlineData("Any input not including weight")]
         [InlineData("dependent on model")]
         public void ParseInvalidWeight(string input) {
-
             var (actualWeight, uom) = DetailValueParser.TryParseWeight(input);
             actualWeight.Should().Be(null);
             uom.Should().Be(WeightUnitOfMeasure.None);
@@ -72,7 +71,8 @@ namespace HPeSimpleParser.Test {
         [InlineData("26x29x11 in.", 26, 29, 11, DimensionUnitOfMeasure.Inches)]
         [InlineData("0.72 x 2.86 x 0.33 in for the transceiver part", 0.72, 2.86, 0.33, DimensionUnitOfMeasure.Inches)]
         [InlineData("0.54 x 2.19 x 0.47 Inch at transceiver end", 0.54, 2.19, 0.47, DimensionUnitOfMeasure.Inches)]
-        [InlineData("2.19(d) x 0.54(w) x 0.47(h) in. (5.57 x 1.38 x 1.19cm)", 0.47, 0.54, 2.19, DimensionUnitOfMeasure.Inches)]
+        [InlineData("2.19(d) x 0.54(w) x 0.47(h) in. (5.57 x 1.38 x 1.19cm)", 0.47, 0.54, 2.19,
+            DimensionUnitOfMeasure.Inches)]
         [InlineData("18.2 (H) x 25.51 (D) x 6.85 (W) in", 18.2, 6.85, 25.51, DimensionUnitOfMeasure.Inches)]
         [InlineData("8.75 x 0.25 x5.63 in", 8.75, 0.25, 5.63, DimensionUnitOfMeasure.Inches)]
         [InlineData("HxWxD 1.66 x 17.17 x 17.05 in", 1.66, 17.17, 17.05, DimensionUnitOfMeasure.Inches)]
@@ -93,11 +93,14 @@ namespace HPeSimpleParser.Test {
         [InlineData("\r1 2 3 cm ", 1, 2, 3, DimensionUnitOfMeasure.CentiMeter)]
         [InlineData("\n1 2 3 cm ", 1, 2, 3, DimensionUnitOfMeasure.CentiMeter)]
         [InlineData("\r\n1\r\n2\r\n3\r\ncm\r\n", 1, 2, 3, DimensionUnitOfMeasure.CentiMeter)]
-        [InlineData("Cooling Unit: 2,007 x 600 x 1,660 mm; 42U rack: 2,007 x 600 x 1,660 mm; 48U rack: 2,295 x 600 x 1,660 mm", 2007, 600, 1660, DimensionUnitOfMeasure.Millimeter)]
+        [InlineData(
+            "Cooling Unit: 2,007 x 600 x 1,660 mm; 42U rack: 2,007 x 600 x 1,660 mm; 48U rack: 2,295 x 600 x 1,660 mm",
+            2007, 600, 1660, DimensionUnitOfMeasure.Millimeter)]
         [InlineData("17.4 (H/4U) x 64.8 (D) x 44.5 (W) cm", 17.4, 44.5, 64.8, DimensionUnitOfMeasure.CentiMeter)]
         // Questionable!: Should probably take last 3 but takes 1, 2, 4
-        [InlineData("2 x 8.3 x 10.6 x 3.4 cm", 2, 8.3, 3.4, DimensionUnitOfMeasure.CentiMeter)] 
-        public void ParseDimension(string input, decimal height, decimal width, decimal depth, DimensionUnitOfMeasure uom) {
+        [InlineData("2 x 8.3 x 10.6 x 3.4 cm", 2, 8.3, 3.4, DimensionUnitOfMeasure.CentiMeter)]
+        public void ParseDimension(string input, decimal height, decimal width, decimal depth,
+            DimensionUnitOfMeasure uom) {
             var dim = DetailValueParser.ParseDimensions(input);
             dim.UnitOfMeasure.Should().Be(uom);
             dim.Height.Should().Be(height);
@@ -105,11 +108,11 @@ namespace HPeSimpleParser.Test {
             dim.Depth.Should().Be(depth);
         }
 
-
         [Theory]
         [InlineData("17.4 (H/4U) x 64.8 (D) x 44.5 (W) cm", 17.4, 44.5, 64.8, DimensionUnitOfMeasure.CentiMeter)]
         //[InlineData("3 m cable", null, null, null, "null")]
-        public void ParseDimensionDebug(string input, decimal height, decimal width, decimal depth, DimensionUnitOfMeasure uom) {
+        public void ParseDimensionDebug(string input, decimal height, decimal width, decimal depth,
+            DimensionUnitOfMeasure uom) {
             var dim = DetailValueParser.ParseDimensions(input);
             dim.UnitOfMeasure.Should().Be(uom);
             dim.Height.Should().Be(height);
@@ -132,10 +135,5 @@ namespace HPeSimpleParser.Test {
             dim.Width.Should().Be(null);
             dim.Depth.Should().Be(null);
         }
-
-
     }
-
-
-
 }

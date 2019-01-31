@@ -14,12 +14,11 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
             // Group by master object name
             var monGroups = linksImageLinks.GroupBy(x => x.GroupingKey2);
             foreach (var monGroup in monGroups) {
-
                 // Group by SizeCategory
                 var sizeGroups = monGroup.GroupBy(x => x.SizeCategory);
                 foreach (var sizeGroup in sizeGroups) {
-                    if (sizeGroup.Key == SizeCategoryEnum.Wrong || sizeGroup.Key == SizeCategoryEnum.XLarge ||
-                        sizeGroup.Key == SizeCategoryEnum.Small) {
+                    if (sizeGroup.Key == SizeCategoryEnum.Wrong || sizeGroup.Key == SizeCategoryEnum.XLarge
+                        || sizeGroup.Key == SizeCategoryEnum.Small) {
                         continue;
                     }
 
@@ -30,14 +29,14 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
                             .ThenBy(x => x.DocumentTypeDetailPriority)
                             .ThenByDescending(x => x.Height)
                             .ThenByDescending(x => x.Width)
-
                             .First());
                     }
                 }
             }
 
-            if (selectedImages.Count > selectedImages.Where(RemoveSpecificDocDetailTypes).Count()) {
-                selectedImages = selectedImages.Where(RemoveSpecificDocDetailTypes).ToList();
+            var images = selectedImages.Where(RemoveSpecificDocDetailTypes).ToList();
+            if (selectedImages.Count > images.Count) {
+                selectedImages = images.ToList();
             }
 
             return selectedImages.DistinctBy(x => x.ImageUrlHttp).ToList();

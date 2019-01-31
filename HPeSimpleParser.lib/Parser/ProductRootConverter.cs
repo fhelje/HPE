@@ -1,13 +1,15 @@
 using System.Collections.Generic;
 using System.Linq;
+using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
 using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
+using Hierarchy = FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model.Hierarchy;
 using Image = FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model.Image;
 using Option = FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model.Option;
 using Specification = FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model.Specification;
 
 namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
     public static class ProductRootConverter {
-        public static Generic.Model.Item ToItem(this ProductRoot input) {
+        public static Item ToItem(this ProductRoot input) {
             var product = input.Product;
             var detail = input.Detail;
             var links = input.Links;
@@ -19,7 +21,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
             decimal? height = null;
             decimal? width = null;
             decimal? depth = null;
-            
+
             if (specifications.LabeledItems.TryFindDimensionsInSpecifications(out var dim, "dimenmet", "dimenus")) {
                 if (dim != null) {
                     var dimension = dim.Value;
@@ -31,10 +33,8 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
 
             var arr = new string[input.ProductVariants.Count + 1];
             arr[0] = "";
-            for (var i = 0; i < input.ProductVariants.Count; i++) {
-                arr[i + 1] = input.ProductVariants[i].Opt;
-            }
-            return new Generic.Model.Item {
+            for (var i = 0; i < input.ProductVariants.Count; i++) arr[i + 1] = input.ProductVariants[i].Opt;
+            return new Item {
                 PartnerPartNumber = input.PartnerPartNumber,
                 Product = {
                     PartnerPartNumber = product.PartnerPartNumber,
@@ -46,19 +46,20 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
                     AlternateCategoryName = product.AlternateCategoryName,
                     AlternatePartnerHierarchyCode = product.AlternatePartnerHierarchyCode,
                     Description = product.Description,
-                    DescriptionLong= product.DescriptionLong ?? product.Description,
+                    DescriptionLong = product.DescriptionLong ?? product.Description,
                     ChangeDate = product.ChangeDate,
-                    IsEol= product.IsEol,
+                    IsEol = product.IsEol,
                     ManufacturerCode = product.ManufacturerCode,
                     ManufacturerName = product.ManufacturerName,
-                    ProductCode = product.ProductCode,
+                    ProductCode = product.ProductCode
                 },
                 Detail = {
                     PartnerPartNumber = input.PartnerPartNumber,
                     Unspsc = detail.Unspsc,
                     //ProductPartnerID = detail.ProductPartnerID,
                     EndOfSupport = detail.EndOfSupport,
-                    Weight = detail.Weight ?? specifications.LabeledItems.TryFindWeightInSpecifications("weightmet", "weightus"),
+                    Weight = detail.Weight ??
+                             specifications.LabeledItems.TryFindWeightInSpecifications("weightmet", "weightus"),
                     WeightwithPackage = detail.WeightWithPackage,
                     Volume = detail.Volume,
                     PalletSize = detail.PalletSize,
@@ -76,43 +77,42 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
                     ItemDefFulfillSource = detail.ItemDefFulfillSource,
                     MeterEnabled = detail.MeterEnabled,
                     SwedishChemicalTaxReduction = detail.SwedishChemicalTaxReduction,
-                    WarrantyTime = detail.WarrantyTime,
+                    WarrantyTime = detail.WarrantyTime
                 },
                 Link = {
                     PartnerPartNumber = input.PartnerPartNumber,
                     PdfLinkDataSheet = links.PdfLinkDataSheet,
                     PdfLinkManual = links.PdfLinkManual,
-                    Images = links.SelectedImages.Select(x=> new Image {
+                    Images = links.SelectedImages.Select(x => new Image {
                             ContentType = x.ContentType,
                             Height = x.Height,
                             Width = x.Width,
                             Url = x.ImageUrlHttp,
-                            Title = x.FullTitle,
+                            Title = x.FullTitle
                         }
-                    ).ToList(),
-
+                    ).ToList()
                 },
                 Hierarchies = {
                     PartnerPartNumber = input.PartnerPartNumber,
-                    Items= hierarchies.Select(x=>
-                        new Generic.Model.Hierarchy{
+                    Items = hierarchies.Select(x =>
+                        new Generic.Model.Hierarchy {
                             CategoryID = x.CategoryID,
                             CategoryName = x.CategoryName,
                             Level = x.Level,
                             Name = x.Name,
-                            ParentCategoryID= x.ParentCategoryID
+                            ParentCategoryID = x.ParentCategoryID
                         }
                     ).ToList()
                 },
                 Marketing = {
                     PartnerPartNumber = input.PartnerPartNumber,
-                    LanguageId =input.LanguageId,
+                    LanguageId = input.LanguageId,
                     MarketingCode = marketing.MarketingCode,
                     MarketingText = marketing.MarketingText
                 },
                 Specifications = {
                     PartnerPartNumber = input.PartnerPartNumber,
-                    Items= specifications.LabeledItems.Select(x => new Specification {
+                    Items = specifications.LabeledItems.Select(x => new Specification {
                         GroupId = x.GroupId,
                         GroupName = x.GroupName,
                         Id = x.Id,
@@ -126,7 +126,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
                 Supplier = {
                     PartnerPartNumber = input.PartnerPartNumber,
                     SupplierId = product.ManufacturerCode,
-                    SupplierName = product.ManufacturerName,
+                    SupplierName = product.ManufacturerName
                 },
                 Options = {
                     PartnerPartNumber = input.PartnerPartNumber,
@@ -134,7 +134,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
                         GroupId = x.OptionGroupCode.RemoveLineEndings(),
                         GroupName = x.OptionGroupName.RemoveLineEndings(),
                         Name = x.ManufacturerCode.RemoveLineEndings(),
-                        PartNumber =x.OptionPartnerPartNumber.RemoveLineEndings(),
+                        PartNumber = x.OptionPartnerPartNumber.RemoveLineEndings()
                     }).ToList()
                 },
                 ProductVariants = arr

@@ -12,15 +12,16 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
     public static class HPEParserFunctions {
         public static async Task CarePackRegistrationParser(ParseState state, XmlReader reader) {
             if (state.NodeType == XmlNodeType.Text) {
-                var text = await reader.GetValueAsync();
+                var text = await reader.GetValueAsync().ConfigureAwait(false);
                 state.Product.CarePackRegistration = text == "Yes";
             }
         }
 
         public static Task LinkParser(ParseState state, XmlReader reader) {
-            if (state.NodeType == XmlNodeType.Element && reader.GetAttribute("type") == "child" && !reader.IsEmptyElement) {
+            if (state.NodeType == XmlNodeType.Element && reader.GetAttribute("type") == "child"
+                && !reader.IsEmptyElement) {
                 state.InnerState = InnerState.Option;
-                state.Option = new OptionState { ManufacturerCode = state.ManufacturerCode };
+                state.Option = new OptionState {ManufacturerCode = state.ManufacturerCode};
             }
 
             if (state.NodeType == XmlNodeType.EndElement && state.InnerState == InnerState.Option) {
@@ -30,7 +31,6 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
             }
 
             return Task.CompletedTask;
-
         }
 
         public static Task ParentHierarchyParser(ParseState state, XmlReader reader) {
@@ -52,7 +52,8 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
                 // ReSharper disable once StringLiteralTypo
                 var id = reader.GetAttribute("pmoid");
                 var name = reader.GetAttribute("name");
-                state.Hierarchy.Add(new Hierarchy(state.HierarchyName, id, name, state.ParentHierarchy, state.HierarchyName));
+                state.Hierarchy.Add(new Hierarchy(state.HierarchyName, id, name, state.ParentHierarchy,
+                    state.HierarchyName));
                 state.Branch.SmallSeries = (name, id);
                 if (string.IsNullOrWhiteSpace(state.Branch.ProductType.Name)) {
                     Console.Write("x");
@@ -63,7 +64,6 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
         }
 
         public static Task ImageParser(ParseState state, XmlReader reader) {
-
             if (state.NodeType == XmlNodeType.Element && !reader.IsEmptyElement) {
                 state.InnerState = InnerState.Image;
                 state.Image = new ImageState();
@@ -74,22 +74,23 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
                 if (string.IsNullOrEmpty(state.Image.ContentType)) {
                     state.Image.ContentType = state.Image.ImageUrlHttp.GetContentType();
                 }
+
                 var image = new Image(
                     state.Image.GroupingKey1,
-                    state.Image.GroupingKey2, 
-                    state.Image.ContentType, 
-                    state.Image.PixelHeight, 
-                    state.Image.Orientation, 
-                    state.Image.PixelWidth, 
-                    state.Image.ImageUrlHttp, 
-                    state.Image.TypeDetail, 
+                    state.Image.GroupingKey2,
+                    state.Image.ContentType,
+                    state.Image.PixelHeight,
+                    state.Image.Orientation,
+                    state.Image.PixelWidth,
+                    state.Image.ImageUrlHttp,
+                    state.Image.TypeDetail,
                     state.Image.FullTitle,
                     ip.ParseContentTypePriority(state.Image.ContentType),
                     ip.GetSizeCategory(state.Image.PixelHeight, state.Image.PixelWidth),
                     ip.ParseTypeDetail(state.Image.TypeDetail),
                     ip.ParseIntWithDefault(state.Image.PixelHeight),
                     ip.ParseIntWithDefault(state.Image.PixelWidth)
-                    );
+                );
                 state.Links.ImageLinks.Add(image);
                 state.Image = null;
                 state.InnerState = InnerState.None;
@@ -99,9 +100,8 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
         }
 
         public static async Task ImageInnerParser(ParseState state, XmlReader reader) {
-
             if (state.NodeType == XmlNodeType.Text && state.InnerState == InnerState.Image) {
-                var text = await reader.GetValueAsync();
+                var text = await reader.GetValueAsync().ConfigureAwait(false);
                 switch (state.CurrentName) {
                     case "cmg_acronym":
                         state.Image.GroupingKey1 = text;
@@ -135,13 +135,11 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
         }
 
         public static Task UpcParser(ParseState state, XmlReader reader) {
-
             if (state.NodeType == XmlNodeType.Element && !reader.IsEmptyElement) {
                 state.InnerState = InnerState.Upc;
             }
 
             if (state.NodeType == XmlNodeType.EndElement) {
-
                 state.InnerState = InnerState.None;
             }
 
@@ -149,7 +147,6 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
         }
 
         public static async Task UpcInnerParser(ParseState state, XmlReader reader) {
-
             if (state.NodeType == XmlNodeType.Element && state.InnerState == InnerState.Upc) {
                 switch (state.CurrentName) {
                     case "content_data":
@@ -161,6 +158,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
                             state.ProductVariants.Add(variant);
                             state.ProductVariant = null;
                         }
+
                         break;
                 }
             }
@@ -174,7 +172,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
             }
 
             if (state.NodeType == XmlNodeType.Text && state.InnerState == InnerState.Upc) {
-                var text = await reader.GetValueAsync();
+                var text = await reader.GetValueAsync().ConfigureAwait(false);
                 if (state.ProductVariant != null) {
                     switch (state.CurrentName) {
                         case "content_data":
@@ -189,7 +187,8 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
                     }
                 }
                 else {
-                    Console.WriteLine($"Error in file {state.File} with current node {state.CurrentName} {state.InnerState.ToString()}");
+                    Console.WriteLine(
+                        $"Error in file {state.File} with current node {state.CurrentName} {state.InnerState.ToString()}");
                 }
             }
         }
@@ -202,8 +201,11 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
             }
 
             if (state.NodeType == XmlNodeType.EndElement) {
+                if (state.MarketingText != null) {
+                    state.Marketing.MarketingText = string.Join(" ",
+                        state.MarketingText.OrderBy(x => x.Key).Select(x => x.Value.ToString()));
+                }
 
-                if (state.MarketingText != null) state.Marketing.MarketingText = string.Join(" ", state.MarketingText.OrderBy(x => x.Key).Select(x => x.Value.ToString()));
                 state.MarketingText = null;
                 state.InnerState = InnerState.None;
             }
@@ -215,12 +217,12 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
             if (state.NodeType != XmlNodeType.Text) {
                 return;
             }
-            var text = await reader.GetValueAsync();
+
+            var text = await reader.GetValueAsync().ConfigureAwait(false);
             state.Product.DescriptionLong = text;
         }
 
-        public static Task TechnicalSpecificationsParser(ParseState state, XmlReader reader) {
-
+        public static Task TechnicalSpecificationsParser(ParseState state, XmlReader _) {
             if (state.NodeType == XmlNodeType.Element) {
                 state.InnerState = InnerState.TechnicalSpecifications;
             }
@@ -234,7 +236,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
 
         public static async Task UnspscParser(ParseState state, XmlReader reader) {
             if (state.NodeType == XmlNodeType.Text) {
-                var text = await reader.GetValueAsync();
+                var text = await reader.GetValueAsync().ConfigureAwait(false);
                 if (int.TryParse(text.Replace(" ", "").Replace("-", ""), out var unspsc)) {
                     state.Product.Unspsc = unspsc;
                 }
@@ -243,7 +245,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
 
         public static async Task QuickSpecParser(ParseState state, XmlReader reader) {
             if (state.NodeType == XmlNodeType.Text) {
-                var text = await reader.GetValueAsync();
+                var text = await reader.GetValueAsync().ConfigureAwait(false);
                 var url = GetPdfUrl(text);
                 state.Links.PdfLinkDataSheet = url;
             }
@@ -251,7 +253,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
 
         public static string GetPdfUrl(string url) {
             if (!url.StartsWith("https://www")) {
-                return url;                
+                return url;
             }
 
             var parts = url.Split('/');
@@ -260,15 +262,17 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
                              ?.Split('?')
                              ?.LastOrDefault()
                              ?.Split('&')
-                             ?.FirstOrDefault(x => x.StartsWith("docname")) 
-                            ?? string.Empty;
-            if (idPart == string.Empty) {
+                             ?.FirstOrDefault(x => x.StartsWith("docname"))
+                         ?? string.Empty;
+            if (idPart?.Length == 0) {
                 return url;
             }
+
             var idSubParts = idPart.Split('=');
             if (idSubParts.Length != 2) {
                 return url;
             }
+
             return $"https://{code}.www2.hpe.com/v2/getpdf.aspx/{idSubParts.Last()}.pdf";
         }
 
@@ -276,6 +280,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
             if (state.NodeType != XmlNodeType.Element) {
                 return Task.CompletedTask;
             }
+
             // ReSharper disable StringLiteralTypo
             state.Product.ManufacturerCode = state.ManufacturerName;
             state.Product.ManufacturerName = state.ManufacturerCode;
@@ -285,22 +290,25 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
             if (DateTime.TryParse(reader.GetAttribute("lastupdatedate"), out var changeDate)) {
                 state.Product.ChangeDate = changeDate;
             }
+
             state.PartnerPartNumber = state.PartNumber;
             var productLine = reader.GetAttribute("productline");
             if (!string.IsNullOrEmpty(productLine)) {
-                state.Hierarchy.Add(new Hierarchy(state.PLHierarchyName, productLine, productLine, null, state.PLHierarchyName, 1));                
+                state.Hierarchy.Add(new Hierarchy(state.PLHierarchyName, productLine, productLine, null,
+                    state.PLHierarchyName, 1));
             }
             // ReSharper restore StringLiteralTypo
+
             return Task.CompletedTask;
         }
 
         public static Task BranchParser(ParseState state, XmlReader reader) {
             if (state.NodeType == XmlNodeType.Element && state.InnerState == InnerState.Hierarchy) {
-
                 var tuple = (Name: reader.GetAttribute("name"), Item: reader.GetAttribute("pmoid"));
                 if (string.IsNullOrEmpty(tuple.Name)) {
                     Console.Write("x");
                 }
+
                 switch (reader.Name) {
                     case "product_type":
                         state.Branch.ProductType = tuple;
@@ -317,7 +325,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
             return Task.CompletedTask;
         }
 
-        public static Task HierarchyRootParser(ParseState state, XmlReader reader) {
+        public static Task HierarchyRootParser(ParseState state, XmlReader _) {
             if (state.NodeType == XmlNodeType.Element) {
                 state.InnerState = InnerState.Hierarchy;
             }
@@ -327,19 +335,18 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
             }
 
             return Task.CompletedTask;
-
-
         }
 
         public static async Task PartNumber(ParseState state, XmlReader reader) {
             if (state.NodeType == XmlNodeType.Text) {
-                var text = await reader.GetValueAsync();
+                var text = await reader.GetValueAsync().ConfigureAwait(false);
                 if (string.IsNullOrEmpty(text)) {
                     return;
                 }
+
                 state.PartNumber = text;
                 state.PartnerPartNumber = text;
-            }           
+            }
         }
     }
 }

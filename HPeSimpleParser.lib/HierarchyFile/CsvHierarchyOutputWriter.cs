@@ -1,6 +1,5 @@
 ﻿using System;
 using System.IO;
-using System.Threading.Tasks;
 using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter;
 
 namespace FSSystem.ContentAdapter.HPEAndHPInc.HierarchyFile {
@@ -11,7 +10,8 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.HierarchyFile {
 
         public CsvHierarchyOutputWriter(WriterConfiguration configuration) {
             _hierarchyGenerator = new CsvHierarchyGenerator();
-            _hierarchyWriter = new StreamWriter(File.OpenWrite(Path.Combine(configuration.OutputPath, "pure_hierarchy.txt")));
+            _hierarchyWriter =
+                new StreamWriter(File.OpenWrite(Path.Combine(configuration.OutputPath, "pure_hierarchy.txt")));
         }
 
         public CsvHierarchyOutputWriter(TextWriter writer) {
@@ -20,14 +20,16 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.HierarchyFile {
             _shouldDispose = false;
         }
 
-        public async Task WriteAsync(HierarchyNode node) {
-            if (_hierarchyGenerator.TryGenerateLine(node, out var line)) {
-                await _hierarchyWriter.WriteAsync(line);                
+        public void Dispose() {
+            if (_shouldDispose) {
+                _hierarchyWriter?.Dispose();
             }
         }
 
-        public void Dispose() {
-            if(_shouldDispose) _hierarchyWriter?.Dispose();
+        public void Write(HierarchyNode node) {
+            if (_hierarchyGenerator.TryGenerateLine(node, out var line)) {
+                _hierarchyWriter.Write(line);
+            }
         }
     }
 }

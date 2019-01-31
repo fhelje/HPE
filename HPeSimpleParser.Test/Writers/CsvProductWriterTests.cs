@@ -1,6 +1,6 @@
-﻿using FluentAssertions;
-using System;
+﻿using System;
 using System.Text;
+using FluentAssertions;
 using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter;
 using FSSystem.ContentAdapter.HPEAndHPInc.Generic.Model;
 using Microsoft.Extensions.ObjectPool;
@@ -27,9 +27,12 @@ namespace HPeSimpleParser.Test.Writers {
                 AlternateCategoryName = "11",
                 AlternatePartnerHierarchyCode = "12"
             };
-            var writer = new CsvProductGenerator(new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy()));
+            var writer =
+                new CsvProductGenerator(new DefaultObjectPool<StringBuilder>(new StringBuilderPooledObjectPolicy()));
             writer.TryGenerateLine(product, out var data);
-            data.Should().Be($"0{FileSeparators.ColumnSeparator}1{FileSeparators.ColumnSeparator}2{FileSeparators.ColumnSeparator}3{FileSeparators.ColumnSeparator}4{FileSeparators.ColumnSeparator}5{FileSeparators.ColumnSeparator}6.1{FileSeparators.ColumnSeparator}6{FileSeparators.ColumnSeparator}7{FileSeparators.ColumnSeparator}8{FileSeparators.ColumnSeparator}True{FileSeparators.ColumnSeparator}2000-01-01T00:00:00{FileSeparators.ColumnSeparator}10{FileSeparators.ColumnSeparator}11{FileSeparators.ColumnSeparator}12{Environment.NewLine}");
+            data.Should()
+                .Be(
+                    $"0{FileSeparators.ColumnSeparator}1{FileSeparators.ColumnSeparator}2{FileSeparators.ColumnSeparator}3{FileSeparators.ColumnSeparator}4{FileSeparators.ColumnSeparator}5{FileSeparators.ColumnSeparator}6.1{FileSeparators.ColumnSeparator}6{FileSeparators.ColumnSeparator}7{FileSeparators.ColumnSeparator}8{FileSeparators.ColumnSeparator}True{FileSeparators.ColumnSeparator}2000-01-01T00:00:00{FileSeparators.ColumnSeparator}10{FileSeparators.ColumnSeparator}11{FileSeparators.ColumnSeparator}12{Environment.NewLine}");
         }
     }
 }

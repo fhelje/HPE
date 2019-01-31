@@ -5,10 +5,12 @@ using FSSystem.ContentAdapter.HPEAndHPInc.Parser.State;
 
 namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
     public static class SpecificationParser {
-        public static decimal? TryFindWeightInSpecifications(this IReadOnlyList<Specification> specifications, params string[] names) {
+        public static decimal? TryFindWeightInSpecifications(this IReadOnlyList<Specification> specifications,
+            params string[] names) {
             if (specifications == null) {
                 return null;
             }
+
             foreach (var name in names) {
                 var spec = specifications.FirstOrDefault(x => x.Name == name);
                 if (spec != null) {
@@ -28,20 +30,24 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
                     }
                 }
             }
+
             return null;
         }
 
-        public static bool TryFindDimensionsInSpecifications(this IReadOnlyList<Specification> specifications, out Dimension? dimension, params string[] names) {
+        public static bool TryFindDimensionsInSpecifications(this IReadOnlyList<Specification> specifications,
+            out Dimension? dimension, params string[] names) {
             dimension = null;
             if (specifications == null) {
                 return false;
             }
+
             foreach (var name in names) {
                 var spec = specifications.FirstOrDefault(x => x.Name == name);
                 if (spec != null) {
                     var dim = DetailValueParser.ParseDimensions(spec.Value);
                     spec.UpdateLabel("Dimensions (H x W x D) mm");
-                    spec.UpdateValue($"{dim.GetHeightInMillimeter()} x {dim.GetWidthInMillimeter()} x {dim.GetDepthInMillimeter()} mm");
+                    spec.UpdateValue(
+                        $"{dim.GetHeightInMillimeter()} x {dim.GetWidthInMillimeter()} x {dim.GetDepthInMillimeter()} mm");
                     spec.UpdateUnitOfMeasure("mm");
                     if (dim.HasValues) {
                         dimension = dim;
@@ -49,6 +55,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
                     }
                 }
             }
+
             return false;
         }
     }

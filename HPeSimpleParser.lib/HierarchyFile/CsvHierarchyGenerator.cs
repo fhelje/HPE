@@ -3,14 +3,13 @@ using System.Text;
 using FSSystem.ContentAdapter.HPEAndHPInc.Generic.FileWriter;
 
 namespace FSSystem.ContentAdapter.HPEAndHPInc.HierarchyFile {
-    public class CsvHierarchyGenerator : ICsvGenerator<HierarchyNode>{
+    public class CsvHierarchyGenerator : ICsvGenerator<HierarchyNode> {
         private readonly StringBuilder _sb;
 
-        public CsvHierarchyGenerator()
-        {
+        public CsvHierarchyGenerator() {
             _sb = new StringBuilder();
         }
-        
+
         public bool TryGenerateLine(HierarchyNode item, out string line) {
             _sb.Clear();
 
@@ -29,10 +28,6 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.HierarchyFile {
             _sb.Append(Environment.NewLine);
             line = _sb.ToString();
             return true;
-        }
-
-        public bool TryGenerateLine(HierarchyNode item, string[] variants, ref Span<char> line) {
-            throw new NotImplementedException();
         }
     }
 }

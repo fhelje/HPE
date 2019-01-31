@@ -3,22 +3,20 @@ using System.Collections.Generic;
 
 namespace FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model {
     public class ProductRoot {
-        public string File { get; }
-
         public ProductRoot(string file,
             string partNumber,
             string partnerPartNumber,
             string languageId,
             Product product,
-            IReadOnlyList<Hierarchy> branch, 
+            IReadOnlyList<Hierarchy> branch,
             IReadOnlyList<ProductVariant> productVariants,
-            Marketing marketing, 
-            IReadOnlyList<Option> optionsItems, 
-            IReadOnlyList<Specification> specificationsLabeledItems, 
+            Marketing marketing,
+            IReadOnlyList<Option> optionsItems,
+            IReadOnlyList<Specification> specificationsLabeledItems,
             Links links,
             IReadOnlyList<Hierarchy> hierarchies,
             Detail detail
-            ) {
+        ) {
             File = file;
             Product = product;
             PartNumber = partNumber;
@@ -38,6 +36,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model {
             Detail = detail;
         }
 
+        public string File { get; }
 
         public DateTime TimeStamp { get; } = DateTime.Now;
 
@@ -53,7 +52,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model {
         public IReadOnlyList<Hierarchy> Hierarchy { get; set; }
         public IReadOnlyList<Hierarchy> Branch { get; }
         public Product Product { get; }
-        public Links Links { get;}
+        public Links Links { get; }
         public Marketing Marketing { get; }
         public Options Options { get; }
         public Specifications Specifications { get; }

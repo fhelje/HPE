@@ -20,14 +20,13 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
                 string text;
                 switch (state.CurrentName) {
                     case Item.Links.Link.MarketingCategory:
-                        text = await reader.GetValueAsync();
+                        text = await reader.GetValueAsync().ConfigureAwait(false);
                         state.Option.OptionGroupName = text;
                         break;
                     case Item.Links.Link.Num:
-                        text = await reader.GetValueAsync();
+                        text = await reader.GetValueAsync().ConfigureAwait(false);
                         state.Option.OptionPartnerPartNumber = text;
                         break;
-
                 }
             }
         }
@@ -36,7 +35,8 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
             if (reader.NodeType != XmlNodeType.Text) {
                 return;
             }
-            var text = await reader.GetValueAsync();
+
+            var text = await reader.GetValueAsync().ConfigureAwait(false);
 
             var part = state.CurrentName.Split("_");
 
@@ -57,34 +57,44 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
                 state.Label = reader.GetAttribute("label");
                 return;
             }
+
             if (state.NodeType != XmlNodeType.Text) {
                 return;
             }
-            var text = await reader.GetValueAsync();
-            state.Specifications.Add(new SpecificationState { Name = state.CurrentName, Value = text, Label = state.Label });
+
+            var text = await reader.GetValueAsync().ConfigureAwait(false);
+            state.Specifications.Add(new SpecificationState
+                {Name = state.CurrentName, Value = text, Label = state.Label});
         }
+
         public static async Task TechnicalSpecificationsInnerParserInc(ParseState state, XmlReader reader) {
             if (state.NodeType == XmlNodeType.Element) {
                 state.Label = reader.GetAttribute("label");
                 return;
             }
+
             if (state.NodeType != XmlNodeType.Text) {
                 return;
             }
-            var text = await reader.GetValueAsync();
-            if (state.CurrentName.EndsWith("ftntnbr") 
+
+            var text = await reader.GetValueAsync().ConfigureAwait(false);
+            if (state.CurrentName.EndsWith("ftntnbr")
                 || state.CurrentName.StartsWith("tsfootnote")
                 || state.CurrentName.StartsWith("servicefeaturestandard")
                 || state.CurrentName.StartsWith("filter_")) {
                 return;
             }
-            state.Specifications.Add(new SpecificationState { Name = state.CurrentName, Value = text, Label = state.Label });
+
+            state.Specifications.Add(new SpecificationState
+                {Name = state.CurrentName, Value = text, Label = state.Label});
         }
+
         public static Task TechnicalSpecificationsInnerParserSkipLevel(ParseState state, XmlReader reader) {
             if (state.NodeType == XmlNodeType.Element) {
                 if (reader.Name == "footnotes") {
                     return Task.CompletedTask;
                 }
+
                 state.InnerState = InnerState.TechnicalSpecificationsLevel1;
                 return Task.CompletedTask;
             }
@@ -92,6 +102,7 @@ namespace FSSystem.ContentAdapter.HPEAndHPInc.Parser {
             if (state.NodeType == XmlNodeType.EndElement) {
                 state.InnerState = InnerState.TechnicalSpecifications;
             }
+
             return Task.CompletedTask;
         }
     }

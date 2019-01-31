@@ -1,6 +1,7 @@
 ﻿namespace FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model {
     public class Hierarchy {
-        public Hierarchy(string name, string categoryID, string categoryName, string parentCategoryID, string partnerHierarchyCode, int level = 5) {
+        public Hierarchy(string name, string categoryID, string categoryName, string parentCategoryID,
+            string partnerHierarchyCode, int level = 5) {
             Name = name;
             CategoryID = categoryID;
             CategoryName = categoryName;

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using FSSystem.ContentAdapter.HPEAndHPInc.HPE.Model;
 
 namespace HPeSimpleParser.Test.Builders {
-    public class ImageListBuilder {
+    public sealed class ImageListBuilder {
         private List<Image> _data;
+
         private ImageListBuilder() {
             _data = new List<Image>();
         }
